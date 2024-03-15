@@ -1,0 +1,112 @@
+body {
+  position: relative;
+  color: white;
+  height: 100vh;
+  background: linear-gradient(
+    200.96deg,
+    var(--body) -29.09%,
+    var(--primary) 51.77%,
+    #62a6ea 129.35%
+  );
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-w);
+  font-size: var(--fnt-sz-lg);
+  font-weight: var(--fnt-wg-lg);
+}
+
+:root {
+  /* COLORS SYSTEM */
+  --primary: #a98aff;
+  --secundary: #fff58a;
+  --border: #a98aff;
+  --shadown: #403461;
+  --body: #0a0f1d;
+  --background: #0a0f1d;
+  --components: #1d1340;
+
+  /* GRAYSCALE */
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+
+  /* TYPOGRAPHY */
+  --text-d: #212529;
+  --text-w: #f8f9fc;
+  --text-primary: var(--primary);
+  --text-secundary: var(--secundary);
+
+  /* FONT */
+  --fnt-sz: 1rem;
+  --fnt-sz-lg: 1.25rem;
+  --fnt-sz-sm: 0.875rem;
+  --fnt-wg: 400;
+  --fnt-wg-md: 500;
+  --fnt-wg-lg: 600;
+
+
+  /* ICONS */
+  --icon: var(--primary);
+
+  /* BUTTONS */
+  --btn: var(--primary);
+  --btn-hover: var(--secundary);
+
+  /* PADDING */
+  --padding-sm: 0.5rem;
+  --padding-md: 1rem;
+  --padding-lg: 1.5rem;
+
+  /* MARGIN */
+  --margin-sm: 0.5rem;
+  --margin-md: 1rem;
+  --margin-lg: 1.5rem;
+
+  /* GAP */
+  --gap-sm: 0.5rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.5rem;
+
+  /* BORDER-RADIUS */
+  --bd-rds-sm: 0.25rem;
+  --bd-rds-md: 0.5rem;
+  --bd-rds-lg: 1rem;
+
+  /* SHADOW */
+  --shd: 0 0.5rem 1rem var(--shadown);
+
+  /* TRANSITION */
+  --trns: 0.5s ease-in-out;
+
+  /* Z-INDEX */
+  --zindex: 1000;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: quicksand, sans-serif;
+
+  &::-webkit-scrollbar {
+      width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      background-color: var(--primary);
+  }
+
+  &::-webkit-scrollbar-track {
+      background: var(--components);
+  }
+}

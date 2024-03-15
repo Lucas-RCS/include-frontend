@@ -1,22 +1,14 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
+import React from "react";
+import "./App.scss";
 
-function Hello() {
-  return (
-    <div>
-      <p className="Hello">
-        Aopa! Hello World
-      </p>
-    </div>
-  );
+class App extends React.Component<any, any> {
+  render() {
+    return (
+      <>
+        {this.props.children}
+      </>
+    );
+  }
 }
 
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-    </Router>
-  );
-}
+export default App;
