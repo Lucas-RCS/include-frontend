@@ -1,0 +1,92 @@
+:root {
+  /* COLORS SYSTEM */
+  --primary: #5865f2;
+  --secondary: #f2e457;
+  --tertiary: #f25757;
+  --intermediary: #292c53;
+
+  --background: #23242a;
+  --components: #2c2e33;
+  --shadown: #17181c;
+  --border: #5865f2;
+
+  --primarydark: #5360e3;
+  --secondarydark: #e3d053;
+
+  /* TYPOGRAPHY */
+  --text-d: #000012;
+  --text-l: #f8f9fc;
+  --text-primary: var(--primary);
+  --text-disabled: var(--intermediary);
+
+  /* FONT */
+  --fnt-sz-sm: 1rem;
+  --fnt-sz-md: 1.25rem;
+  --fnt-sz-lg: 1.50rem;
+
+  --fnt-wg-sm: 400;
+  --fnt-wg-md: 500;
+  --fnt-wg-lg: 600;
+
+  /* ICONS */
+  --icon: var(--primary);
+
+  /* BUTTONS */
+  --btn: var(--primary);
+  --btn-hover: var(--secondary);
+
+  /* PADDING */
+  --padding-sm: 1rem;
+  --padding-md: 1.5rem;
+  --padding-lg: 2rem;
+
+  /* MARGIN */
+  --margin-sm: 1rem;
+  --margin-md: 1.25rem;
+  --margin-lg: 1.5rem;
+
+  /* GAP */
+  --gap-sm: 1rem;
+  --gap-md: 1.25rem;
+  --gap-lg: 1.5rem;
+
+  /* BORDER-RADIUS */
+  --bd-rds-sm: 1rem;
+  --bd-rds-md: 1.25rem;
+  --bd-rds-lg: 1.5rem;
+
+  /* TRANSITION */
+  --trns: 0.5s ease-in-out;
+
+  /* Z-INDEX */
+  --zindex: 1;
+}
+
+
+@font-face {
+ font-family: 'gg sans Normal Regular';
+ src: local('gg sans Normal Regular'), url('../utils/fonts/gg sans Regular.woff') format('woff');
+ font-style: normal;
+ font-weight: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'gg sans Normal Regular';
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: var(--bd-rds-lg);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--components);
+  }
+}

@@ -1,11 +1,12 @@
 import { MemoryRouter as Router, Routes as Switch, Route } from 'react-router-dom';
-import Main from '../views/pages/Main/Main';
+import Login from '../views/pages/Login/Login';
 
 export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Login />} />
+        <Route path='/login' element={<Login />} />
       </Switch>
     </Router>
   );
