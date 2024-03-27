@@ -1,12 +1,17 @@
+import Sidebar from '../../assets/components/Sidebar/Sidebar';
+import style from './main.module.scss';
 
-function Main() {
+interface IMain {
+  children?: any;
+}
+
+function Main({ children }: IMain) {
   return (
-    <div>
-      <header>
-        <p>
-          Aopa! Olá Mundo!
-        </p>
-      </header>
+    <div className={style.container}>
+      <div className={style.sidebar}>
+        <Sidebar />
+      </div>
+      <div className={style.content}>{children}</div>
     </div>
   );
 }

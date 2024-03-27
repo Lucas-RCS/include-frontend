@@ -12,9 +12,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60dvw;
-    height: 66dvh;
-    border-radius: var(--bd-rds-md);
+    width: 50dvw;
+    height: 46dvh;
+    border-radius: var(--bd-rds-sm);
     background-color: var(--background);
 
     .container_form {
@@ -30,8 +30,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        gap: var(--gap-md);
         align-items: center;
-        padding: var(--padding-lg);
       }
     }
 
@@ -39,13 +39,12 @@
       width: 50%;
       height: 100%;
       padding: var(--padding-lg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .container_shape_img {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
+        position: absolute;
       }
     }
   }

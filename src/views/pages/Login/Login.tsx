@@ -46,7 +46,7 @@ function Login() {
           </div>
         </div>
         <Divider
-          $width="4px"
+          $width="3px"
           $height="80%"
           $radius="16px"
           $colorBG={
@@ -54,10 +54,16 @@ function Login() {
           }
         />
         <div className={style.container_shape}>
+          <Svg
+            name="svg_shape"
+            svgPath="./shape_login.svg"
+            style={svgStyle}
+            key={`${svgStyle['--first-color']}`}
+          />
           <div className={style.container_shape_img}>
             <Svg
-              name="svg_shape"
-              svgPath="./shape_login.svg"
+              name="svg_mascot"
+              svgPath="./Kode.svg"
               style={svgStyle}
               key={`${svgStyle['--first-color']}`}
             />

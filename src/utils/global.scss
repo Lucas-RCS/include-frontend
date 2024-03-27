@@ -16,13 +16,14 @@
   /* TYPOGRAPHY */
   --text-d: #000012;
   --text-l: #f8f9fc;
+  --text-g: #737482;
   --text-primary: var(--primary);
   --text-disabled: var(--intermediary);
 
   /* FONT */
   --fnt-sz-sm: 1rem;
   --fnt-sz-md: 1.25rem;
-  --fnt-sz-lg: 1.50rem;
+  --fnt-sz-lg: 1.5rem;
 
   --fnt-wg-sm: 400;
   --fnt-wg-md: 500;
@@ -36,6 +37,7 @@
   --btn-hover: var(--secondary);
 
   /* PADDING */
+  --padding-lt: 0.5rem;
   --padding-sm: 1rem;
   --padding-md: 1.5rem;
   --padding-lg: 2rem;
@@ -46,11 +48,13 @@
   --margin-lg: 1.5rem;
 
   /* GAP */
+  --gap-lt: 0.5rem;
   --gap-sm: 1rem;
   --gap-md: 1.25rem;
   --gap-lg: 1.5rem;
 
   /* BORDER-RADIUS */
+  --bd-rds-lt: 0.5rem;
   --bd-rds-sm: 1rem;
   --bd-rds-md: 1.25rem;
   --bd-rds-lg: 1.5rem;
@@ -62,12 +66,13 @@
   --zindex: 1;
 }
 
-
 @font-face {
- font-family: 'gg sans Normal Regular';
- src: local('gg sans Normal Regular'), url('../utils/fonts/gg sans Regular.woff') format('woff');
- font-style: normal;
- font-weight: normal;
+  font-family: 'gg sans Normal Regular';
+  src:
+    local('gg sans Normal Regular'),
+    url('../utils/fonts/gg sans Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
 }
 
 * {
@@ -88,5 +93,33 @@
 
   &::-webkit-scrollbar-track {
     background: var(--components);
+  }
+}
+
+div{
+  animation: allFade 0.5s ease-in-out forwards;
+}
+
+.css-95xem3-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 1rem !important;
+}
+
+@keyframes allFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

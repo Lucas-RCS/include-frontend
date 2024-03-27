@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: var(--gap-lg);
+
+  .container_inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--gap-sm);
+  }
+}
