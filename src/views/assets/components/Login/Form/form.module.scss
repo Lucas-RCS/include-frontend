@@ -1,15 +1,45 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   width: 100%;
-  gap: var(--gap-lg);
+  height: 100%;
+  padding-bottom: var(--padding-md);
+  gap: var(--gap-md);
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--padding-sm);
+      border-radius: var(--bd-rds-xl);
+      
+      img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+  span{
+    color: var(--text-l);
+    font-size: var(--fnt-sz-lg);
+    font-weight: var(--fnt-wg-lg);
+  }
 
   .container_inputs {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     width: 100%;
+    padding-block: var(--padding-md);
     gap: var(--gap-sm);
+  
   }
 }

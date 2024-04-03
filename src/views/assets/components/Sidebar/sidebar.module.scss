@@ -1,4 +1,6 @@
 .container_sidebar {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100dvh;
   padding: var(--padding-md);
@@ -42,6 +44,20 @@
       font-weight: var(--fnt-wg-sm);
       color: var(--text-g);
       margin-top: -6px;
+    }
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-top: var(--padding-lg);
+
+    .topic span {
+      font-size: var(--fnt-sz-lt);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-l);
     }
   }
 }

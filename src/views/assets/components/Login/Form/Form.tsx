@@ -1,7 +1,8 @@
 import { TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import style from './form.module.scss';
-import icon from '../../../../../../public/mascot_icon.png';
+import icon from '../../../../../../public/icon.png';
+import icon2 from '../../../../../../public/icon_secondary.png';
 
 interface IFormLogin {
   switchStage?: boolean;
@@ -15,11 +16,14 @@ export default function FormLogin({ switchStage }: IFormLogin) {
     new window.Notification('Bem-vindo!', {
       body: 'Você está logado!',
       icon: icon,
-    })
+    });
   };
 
   return (
     <div className={style.container}>
+      <div className={style.logo}>
+        <span>Bem Vindo(a)!!</span>
+      </div>
       <div className={style.container_inputs}>
         <TextField
           fullWidth
@@ -33,7 +37,6 @@ export default function FormLogin({ switchStage }: IFormLogin) {
               '& fieldset': {
                 borderRadius: '12px ',
               },
-              backgroundColor: 'var(--components)',
               borderRadius: '12px ',
               color: 'var(--text-l)',
             },
@@ -54,7 +57,6 @@ export default function FormLogin({ switchStage }: IFormLogin) {
                 '& fieldset': {
                   borderRadius: '12px ',
                 },
-                backgroundColor: 'var(--components)',
                 borderRadius: '12px ',
                 color: 'var(--text-l)',
               },
@@ -77,7 +79,6 @@ export default function FormLogin({ switchStage }: IFormLogin) {
               '& fieldset': {
                 borderRadius: '12px ',
               },
-              backgroundColor: 'var(--components)',
               borderRadius: '12px ',
               color: 'var(--text-l)',
             },

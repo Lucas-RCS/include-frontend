@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import style from './login.module.scss';
-import SwitchLogin from '../../assets/components/Login/SwitchLogin/Switch';
-import { Divider } from '../../assets/elements/common';
-import Svg from '../../../utils/svg';
 import FormLogin from '../../assets/components/Login/Form/Form';
+import mascot from '../../../../public/Kode.svg';
+import mascot2 from '../../../../public/Kode_secondary.svg';
+import logo from '../../../../public/img/logo-include.png';
+import { Divider } from '../../assets/elements/common';
+import { Button } from '@mui/material';
 
 function Login() {
   const [isSwitchChecked, setIsSwitchChecked] = useState(false);
@@ -12,63 +14,40 @@ function Login() {
     setIsSwitchChecked(checked);
   };
 
-  const rootStyle = getComputedStyle(document.documentElement);
-
-  const cssVariables = {
-    primary: rootStyle.getPropertyValue('--primary').trim(),
-    primaryDark: rootStyle.getPropertyValue('--primarydark').trim(),
-    secondary: rootStyle.getPropertyValue('--secondary').trim(),
-    secondaryDark: rootStyle.getPropertyValue('--secondarydark').trim(),
-  };
-
-  const svgStyle = {
-    '--first-color': isSwitchChecked
-      ? cssVariables.secondary
-      : cssVariables.primary,
-    '--second-color': isSwitchChecked
-      ? cssVariables.secondaryDark
-      : cssVariables.primaryDark,
-  };
-
   return (
-    <div className={style.container}>
-      <Svg
-        name="svg_login"
-        svgPath="./patterns_background.svg"
-        style={svgStyle}
-        key={`${svgStyle['--first-color']}-${svgStyle['--second-color']}`}
-      />
+    <div
+      className={isSwitchChecked ? style.container_secondary : style.container}
+    >
       <div className={style.content}>
         <div className={style.container_form}>
-          <SwitchLogin onChange={handleSwitchChange} />
           <div className={style.content_form}>
             <FormLogin switchStage={isSwitchChecked} />
           </div>
-        </div>
-        <Divider
-          $width="3px"
-          $height="80%"
-          $radius="16px"
-          $colorBG={
-            isSwitchChecked ? cssVariables.secondary : cssVariables.primary
-          }
-        />
-        <div className={style.container_shape}>
-          <Svg
-            name="svg_shape"
-            svgPath="./shape_login.svg"
-            style={svgStyle}
-            key={`${svgStyle['--first-color']}`}
-          />
-          <div className={style.container_shape_img}>
-            <Svg
-              name="svg_mascot"
-              svgPath="./Kode.svg"
-              style={svgStyle}
-              key={`${svgStyle['--first-color']}`}
-            />
+          <Divider $primary $width="80%" $height="2px"/>
+          <div className={style.switchtype}>
+            <Button variant="text"  onClick={() => handleSwitchChange(!isSwitchChecked)}>
+              {isSwitchChecked ? 'Login' : 'Cadastrar'}
+            </Button>
           </div>
         </div>
+        <div
+          className={
+            isSwitchChecked
+              ? style.container_shape_secondary
+              : style.container_shape
+          }
+        >
+          {isSwitchChecked ? (
+            <object type="image/svg+xml" data={mascot2}></object>
+          ) : (
+            <object type="image/svg+xml" data={mascot}></object>
+          )}
+        </div>
+      </div>
+      <div className={style.footer}>
+        <span>powered by</span>
+        <img src={logo} alt="IncludeTeam" />
+        <span>Include Team</span>
       </div>
     </div>
   );

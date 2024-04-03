@@ -10,11 +10,21 @@ function Sidebar() {
     <div className={style.container_sidebar}>
       <div className={style.sidebar_perfil}>
         <div className={style.perfil_img}>
-          <img src="./mascot_icon.png" alt="Icon Mascot Include" />
+          <img src="./img/mascot_icon.png" alt="Icon Mascot Include" />
         </div>
         <div className={style.perfil_user}>
           <span className={style.perfil_user_name}>{User.name}</span>
           <span className={style.perfil_user_id}>{User.id}</span>
+        </div>
+      </div>
+      <div className={style.main}>
+        <div className={style.topic}>
+          <span>MENU</span>
+        </div>
+        <div className={style.actions}>
+          <div className={style.option}>
+
+          </div>
         </div>
       </div>
     </div>

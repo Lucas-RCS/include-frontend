@@ -64,9 +64,11 @@ const IOSSwitch = styled((props: SwitchProps) => (
 
 interface SwitchLoginProps {
   onChange: (checked: boolean) => void;
+  txtActive?: string;
+  txtInactive?: string;
 }
 
-export default function SwitchLogin({ onChange }: SwitchLoginProps) {
+export default function SwitchDefault({ onChange, txtActive, txtInactive }: SwitchLoginProps) {
   const [checked, setChecked] = useState(false);
 
   const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +95,7 @@ export default function SwitchLogin({ onChange }: SwitchLoginProps) {
         checked={checked}
         onChange={handleSwitchChange}
       />
-      <span>{checked ? 'Cadastro' : 'Login'}</span>
+      <span>{checked ? txtActive : txtInactive}</span>
     </div>
   );
 }

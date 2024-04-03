@@ -1,13 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "include-app",
+  "version": "1.0.0",
+  "description": "A desktop social network developed with Electron and React aimed at Developers",
   "license": "MIT",
-  "author": {
-    "name": "IncludeTeam",
-    "email": "IncludeTeam@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
-  },
   "main": "./dist/main/main.js",
   "scripts": {
     "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",

@@ -7,7 +7,7 @@
 
   --background: #23242a;
   --components: #2c2e33;
-  --shadown: #17181c;
+  --shadown: #292c53;
   --border: #5865f2;
 
   --primarydark: #5360e3;
@@ -21,9 +21,11 @@
   --text-disabled: var(--intermediary);
 
   /* FONT */
+  --fnt-sz-lt: 0.75rem;
   --fnt-sz-sm: 1rem;
   --fnt-sz-md: 1.25rem;
   --fnt-sz-lg: 1.5rem;
+  --fnt-sz-xl: 2rem;
 
   --fnt-wg-sm: 400;
   --fnt-wg-md: 500;
@@ -52,12 +54,14 @@
   --gap-sm: 1rem;
   --gap-md: 1.25rem;
   --gap-lg: 1.5rem;
+  --gap-xl: 2rem;
 
   /* BORDER-RADIUS */
   --bd-rds-lt: 0.5rem;
   --bd-rds-sm: 1rem;
   --bd-rds-md: 1.25rem;
   --bd-rds-lg: 1.5rem;
+  --bd-rds-xl: 100%;
 
   /* TRANSITION */
   --trns: 0.5s ease-in-out;

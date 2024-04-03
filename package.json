@@ -1,4 +1,5 @@
 {
+  "name": "include-app",
   "description": "A desktop social network developed with Electron and React aimed at Developers",
   "keywords": [
     "electron",
