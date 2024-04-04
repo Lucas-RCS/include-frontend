@@ -4,8 +4,14 @@ import FormLogin from '../../assets/components/Login/Form/Form';
 import mascot from '../../../../public/Kode.svg';
 import mascot2 from '../../../../public/Kode_secondary.svg';
 import logo from '../../../../public/img/logo-include.png';
-import { Divider } from '../../assets/elements/common';
 import { Button } from '@mui/material';
+
+const rootStyle = getComputedStyle(document.documentElement);
+
+const cssVariables = {
+  primary: rootStyle.getPropertyValue('--primary').trim(),
+  secondary: rootStyle.getPropertyValue('--secondary').trim(),
+};
 
 function Login() {
   const [isSwitchChecked, setIsSwitchChecked] = useState(false);
@@ -23,9 +29,17 @@ function Login() {
           <div className={style.content_form}>
             <FormLogin switchStage={isSwitchChecked} />
           </div>
-          <Divider $primary $width="80%" $height="2px"/>
           <div className={style.switchtype}>
-            <Button variant="text"  onClick={() => handleSwitchChange(!isSwitchChecked)}>
+            {isSwitchChecked ? (
+              <span>Já tem uma conta?</span>
+            ) : (
+              <span>Você ainda não tem conta?</span>
+            )}
+            <Button
+              variant="text"
+              color={isSwitchChecked ? 'secondary' : 'primary'}
+              onClick={() => handleSwitchChange(!isSwitchChecked)}
+            >
               {isSwitchChecked ? 'Login' : 'Cadastrar'}
             </Button>
           </div>

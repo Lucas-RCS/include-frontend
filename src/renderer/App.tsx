@@ -1,25 +1,25 @@
-import React from "react";
-import "../utils/global.scss";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Theme } from "../utils/theme";
+import React from 'react';
+import '../utils/global.scss';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { Theme } from '../utils/theme';
 
 const theme = new Theme();
 
 const rootStyle = getComputedStyle(document.documentElement);
 
 const cssVariables = {
-  secondary: rootStyle.getPropertyValue("--secondary").trim(),
-  background: rootStyle.getPropertyValue("--background").trim(),
+  secondary: rootStyle.getPropertyValue('--secondary').trim(),
+  background: rootStyle.getPropertyValue('--background').trim(),
 
-  textDark: rootStyle.getPropertyValue("--text-d").trim(),
-  textLight: rootStyle.getPropertyValue("--text-l").trim(),
-  textDisabled: rootStyle.getPropertyValue("--intermediary").trim(),
+  textDark: rootStyle.getPropertyValue('--text-d').trim(),
+  textLight: rootStyle.getPropertyValue('--text-l').trim(),
+  textDisabled: rootStyle.getPropertyValue('--intermediary').trim(),
 };
 
 const materialTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
       main: theme.primary,
     },
@@ -49,8 +49,11 @@ const materialTheme = createTheme({
   },
   typography: {
     button: {
-      textTransform: "capitalize",
+      textTransform: 'capitalize',
     },
+  },
+  shape: {
+    borderRadius: 6,
   },
 });
 

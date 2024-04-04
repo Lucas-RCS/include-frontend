@@ -1,17 +1,27 @@
+import { useState } from 'react';
 import Sidebar from '../../assets/components/Sidebar/Sidebar';
 import style from './main.module.scss';
+import Home from '../../assets/components/Home/home';
+import Friends from '../../assets/components/Friends/friends';
+import Chat from '../../assets/components/Chat/chat';
 
-interface IMain {
-  children?: any;
-}
+function Main() {
+  const [currentView, setCurrentView] = useState('home');
 
-function Main({ children }: IMain) {
+  const handleViewChange = (view: string) => {
+    setCurrentView(view);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.sidebar}>
-        <Sidebar />
+        <Sidebar onViewChange={handleViewChange}/>
       </div>
-      <div className={style.content}>{children}</div>
+      <div className={style.content}>
+        {currentView === 'home' && <Home />}
+        {currentView === 'friends' && <Friends />}
+        {currentView === 'chat' && <Chat />}
+      </div>
     </div>
   );
 }

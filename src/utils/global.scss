@@ -3,7 +3,7 @@
   --primary: #5865f2;
   --secondary: #f2e457;
   --tertiary: #f25757;
-  --intermediary: #292c53;
+  --intermediary: #464eaf;
 
   --background: #23242a;
   --components: #2c2e33;
@@ -43,6 +43,7 @@
   --padding-sm: 1rem;
   --padding-md: 1.5rem;
   --padding-lg: 2rem;
+  --padding-xl: 4rem;
 
   /* MARGIN */
   --margin-sm: 1rem;
@@ -83,7 +84,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'gg sans Normal Regular';
+  font-family: 'gg sans Normal Regular' !important;
   scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
@@ -96,7 +97,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--components);
+    background: transparent;
   }
 }
 
