@@ -13,6 +13,41 @@
   --primarydark: #5360e3;
   --secondarydark: #e3d053;
 
+  /* LANGUAGE COLORS */
+  --html: #e44d26;
+  --css: #2965f1;
+  --javascript: #f0db4f;
+  --react: #61dafb;
+  --node: #3c873a;
+  --sql: #336791;
+  --python: #306998;
+  --java: #5382a1;
+  --csharp: #68217a;
+  --php: #8892be;
+  --ruby: #cc342d;
+  --go: #00add8;
+  --swift: #f05138;
+  --kotlin: #0095d5;
+  --typescript: #3178c6;
+  --flutter: #02569b;
+  --dart: #0175c2;
+  --elixir: #4e2a8e;
+  --rust: #000000;
+  --scala: #c22d40;
+  --haskell: #5e5086;
+  --r: #276dc3;
+  --perl: #39457e;
+  --lua: #000080;
+  --shell: #89e051;
+  --docker: #0db7ed;
+  --kubernetes: #326ce5;
+  --jenkins: #d24939;
+  --git: #f34f29;
+  --github: #181717;
+  --gitlab: #fc6d26;
+  --bitbucket: #0052cc;
+  --jira: #0052cc;
+
   /* TYPOGRAPHY */
   --text-d: #000012;
   --text-l: #f8f9fc;
@@ -27,9 +62,11 @@
   --fnt-sz-lg: 1.5rem;
   --fnt-sz-xl: 2rem;
 
+  --fnt-wg-lt: 300;
   --fnt-wg-sm: 400;
   --fnt-wg-md: 500;
   --fnt-wg-lg: 600;
+  --fnt-wg-xl: 700;
 
   /* ICONS */
   --icon: var(--primary);
@@ -44,11 +81,14 @@
   --padding-md: 1.5rem;
   --padding-lg: 2rem;
   --padding-xl: 4rem;
+  --padding-xxl: 8rem;
 
   /* MARGIN */
+  --margin-lt: 0.5rem;
   --margin-sm: 1rem;
   --margin-md: 1.25rem;
   --margin-lg: 1.5rem;
+  --margin-xl: 2rem;
 
   /* GAP */
   --gap-lt: 0.5rem;
@@ -83,7 +123,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: content-box;
   font-family: 'gg sans Normal Regular' !important;
   scroll-behavior: smooth;
 
@@ -101,7 +141,7 @@
   }
 }
 
-div{
+div {
   animation: allFade 0.5s ease-in-out forwards;
 }
 

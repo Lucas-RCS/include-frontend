@@ -12,7 +12,39 @@
 
   .content {
     width: 80%;
+    padding: var(--padding-sm);
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
+  }
+}
+
+.modalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 40dvw;
+  height: 80dvh;
+  border-radius: var(--bd-rds-sm);
+  border: 1px solid var(--components);
+  background-color: var(--background);
+
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--padding-sm);
+    color: var(--text-l);
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
   }
 }

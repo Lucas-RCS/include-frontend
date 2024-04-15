@@ -4,18 +4,23 @@ import style from './form.module.scss';
 import icon from '../../../../../../public/icon.png';
 
 interface IFormLogin {
-  switchStage?: boolean;
+  switchState?: boolean;
 }
 
-export default function FormLogin({ switchStage }: IFormLogin) {
+export default function FormLogin({ switchState }: IFormLogin) {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate('/main');
-    new window.Notification('Bem-vindo!', {
-      body: 'Você está logado!',
-      icon: icon,
-    });
+    navigate('/main', { state: { active: switchState } });
+    switchState
+      ? new window.Notification('Bem-vindo!', {
+          body: 'Finalize seu cadastro!',
+          icon: icon,
+        })
+      : new window.Notification('Bem-vindo!', {
+          body: 'Você está logado!',
+          icon: icon,
+        });
   };
 
   return (
@@ -24,35 +29,14 @@ export default function FormLogin({ switchStage }: IFormLogin) {
         <span>Bem Vindo(a)!!</span>
       </div>
       <div className={style.container_inputs}>
-        <TextField
-          fullWidth
-          label="Nome"
-          variant="outlined"
-          size="small"
-          color={switchStage ? 'secondary' : 'primary'}
-          inputProps={{ maxLength: 30 }}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderRadius: '12px ',
-              },
-              borderRadius: '12px ',
-              color: 'var(--text-l)',
-              '&:hover fieldset': {
-                borderColor: switchStage ? 'var(--secondary)' : 'var(--primary)',
-              },
-            },
-            animation: 'fadeInUp 0.5s ease-out forwards',
-          }}
-        />
-        {switchStage ? (
+        {switchState ? (
           <TextField
             fullWidth
-            type="email"
-            label="Email"
+            label="Nome"
             variant="outlined"
-            inputProps={{ maxLength: 32 }}
-            color={switchStage ? 'secondary' : 'primary'}
+            size="small"
+            color={switchState ? 'secondary' : 'primary'}
+            inputProps={{ maxLength: 30 }}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -61,7 +45,9 @@ export default function FormLogin({ switchStage }: IFormLogin) {
                 borderRadius: '12px ',
                 color: 'var(--text-l)',
                 '&:hover fieldset': {
-                  borderColor: switchStage ? 'var(--secondary)' : 'var(--primary)',
+                  borderColor: switchState
+                    ? 'var(--secondary)'
+                    : 'var(--primary)',
                 },
               },
               animation: 'fadeInUp 0.5s ease-out forwards',
@@ -72,11 +58,35 @@ export default function FormLogin({ switchStage }: IFormLogin) {
         )}
         <TextField
           fullWidth
+          type="email"
+          label="Email"
+          variant="outlined"
+          size="small"
+          color={switchState ? 'secondary' : 'primary'}
+          inputProps={{ maxLength: 30 }}
+          sx={{
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderRadius: '12px ',
+              },
+              borderRadius: '12px ',
+              color: 'var(--text-l)',
+              '&:hover fieldset': {
+                borderColor: switchState
+                  ? 'var(--secondary)'
+                  : 'var(--primary)',
+              },
+            },
+            animation: 'fadeInUp 0.5s ease-out forwards',
+          }}
+        />
+        <TextField
+          fullWidth
           type="password"
           label="Senha"
           size="small"
           variant="outlined"
-          color={switchStage ? 'secondary' : 'primary'}
+          color={switchState ? 'secondary' : 'primary'}
           inputProps={{ maxLength: 20 }}
           sx={{
             '& .MuiOutlinedInput-root': {
@@ -86,7 +96,9 @@ export default function FormLogin({ switchStage }: IFormLogin) {
               borderRadius: '12px ',
               color: 'var(--text-l)',
               '&:hover fieldset': {
-                borderColor: switchStage ? 'var(--secondary)' : 'var(--primary)',
+                borderColor: switchState
+                  ? 'var(--secondary)'
+                  : 'var(--primary)',
               },
             },
             animation: 'fadeInUp 0.5s ease-out forwards',
@@ -96,7 +108,7 @@ export default function FormLogin({ switchStage }: IFormLogin) {
       <Button
         size="medium"
         variant="contained"
-        color={switchStage ? 'secondary' : 'primary'}
+        color={switchState ? 'secondary' : 'primary'}
         sx={{
           fontWeight: 'bold',
           animation: 'fadeInUp 0.5s ease-out forwards',
@@ -104,9 +116,8 @@ export default function FormLogin({ switchStage }: IFormLogin) {
         }}
         onClick={handleButtonClick}
       >
-        {switchStage ? 'Cadastrar' : 'Login'}
+        {switchState ? 'Cadastrar' : 'Login'}
       </Button>
     </div>
-    
   );
 }

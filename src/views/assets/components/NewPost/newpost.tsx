@@ -1,8 +1,11 @@
+// newpost.tsx
+
 import React, { useState } from 'react';
-import { Box, Button, IconButton, Modal } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import style from './newpost.module.scss';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import MonacoEditor from 'react-monaco-editor';
+import Modal from '../Modal/modal';
 
 function NewPost() {
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
@@ -24,21 +27,6 @@ function NewPost() {
   // Modal functions
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const styleModal = {
-    display: 'flex',
-    flexDirection: 'row',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    width: '64dvw',
-    height: '64dvh',
-    p: 'var(--padding-md)',
-    border: '2px solid var(--components)',
-    borderRadius: 'var(--bd-rds-lt)',
-    bgcolor: 'var(--background)',
-    transform: 'translate(-50%, -50%)',
-  };
 
   // Monaco Editor functions
   const editorDidMount = (editor: any, monaco: any) => {
@@ -76,6 +64,7 @@ function NewPost() {
       <div className={style.options}>
         <Button
           onClick={handleOpen}
+          size="small"
           sx={{
             border: '1px solid var(--primary)',
             borderRadius: 'var(--bd-rds-md)',
@@ -85,23 +74,8 @@ function NewPost() {
         >
           Adicionar código
         </Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={styleModal}>
-            <MonacoEditor
-              width="70%"
-              height="56dvh"
-              theme="vs-dark"
-              value={code}
-              options={{ selectOnLineNumbers: true }}
-              onChange={onChange}
-              editorDidMount={editorDidMount}
-            />
-          </Box>
+        <Modal closeButton open={open} onClose={handleClose} setOpen={setOpen}>
+          <span>teste</span>
         </Modal>
       </div>
     </div>

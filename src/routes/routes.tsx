@@ -6,7 +6,7 @@ export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<Login />} />
         <Route path='/login' element={<Login />} />
         <Route path='/main' element={<Main />} />
       </Switch>
