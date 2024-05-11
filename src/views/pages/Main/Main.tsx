@@ -40,7 +40,7 @@ function Main() {
   useEffect(() => {
     getUser(id_user)
       .then((response) => {
-        const [data, status] = response;
+        const [data] = response;
         setUserData([data]);
       })
       .catch((error) => {
