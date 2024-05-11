@@ -8,10 +8,10 @@
 
   .sidebar_perfil {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: var(--gap-md);
+    gap: var(--gap-sm);
     padding: var(--padding-lt);
     border-radius: var(--bd-rds-sm);
     background-color: var(--background);
@@ -24,8 +24,13 @@
       padding: var(--padding-lt);
     }
     img {
-      width: 2.5rem;
+      width: 26px;
       height: 100%;
+    }
+
+    .user_icon{
+      font-size: var(--fnt-sz-md);
+      font-weight: var(--fnt-wg-lg);
     }
 
     .perfil_user {
@@ -33,17 +38,31 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+      width: 100%;
     }
+
     .perfil_user_name {
       font-size: var(--fnt-sz-sm);
       font-weight: var(--fnt-wg-sm);
       color: var(--text-l);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: 150px;
+
     }
-    .perfil_user_id {
-      font-size: var(--fnt-sz-sm);
+
+    .perfil_user_job {
+      font-size: var(--fnt-sz-lt);
       font-weight: var(--fnt-wg-sm);
       color: var(--text-g);
-      margin-top: -6px;
+      margin-top: -6px; // ;-;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: 150px;
     }
   }
 
@@ -56,7 +75,7 @@
     padding-top: var(--padding-lg);
     gap: var(--gap-sm);
 
-    .content{
+    .content {
       display: flex;
       flex-direction: column;
       gap: var(--gap-md);

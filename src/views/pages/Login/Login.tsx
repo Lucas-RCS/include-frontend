@@ -1,54 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import style from './login.module.scss';
 import FormLogin from '../../assets/components/Login/Form/Form';
 import mascot from '../../../../public/Kode.svg';
 import mascot2 from '../../../../public/Kode_secondary.svg';
 import logo from '../../../../public/img/logo-include.png';
-import { Button } from '@mui/material';
-
-import loginAPI from '../../../api/hooks/login';
-import getUserList from '../../../api/hooks/user';
+import { Button, Alert, Snackbar, Slide } from '@mui/material';
 
 function Login() {
   const [isSwitchState, setIsSwitchState] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
 
   const handleSwitchChange = (checked: boolean) => {
     setIsSwitchState(checked);
   };
 
-  // const data = {
-  //   email: 'lucas@gmail.com',
-  //   password: '123',
-  // };
-
-  // useEffect(() => {
-  //   loginAPI(data)
-  //     .then(([data]) => {
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [data]);
-
-   useEffect(() => {
-    getUserList()
-      .then(([data]) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },);
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenToast(false);
+  };
 
   return (
     <div
       className={isSwitchState ? style.container_secondary : style.container}
     >
+      {openToast && (
+        <Snackbar
+          open={openToast}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          TransitionComponent={Slide}
+        >
+          <Alert severity="error" color="error">
+            Ocorreu um erro, por favor tente novamente!
+          </Alert>
+        </Snackbar>
+      )}
       <div className={style.content}>
         <div className={style.container_form}>
           <div className={style.content_form}>
-            <FormLogin switchState={isSwitchState} />
+            <FormLogin
+              switchState={isSwitchState}
+              onToastChange={setOpenToast}
+            />
           </div>
           <div className={style.switchtype}>
             {isSwitchState ? (

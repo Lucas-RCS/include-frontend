@@ -1,26 +1,52 @@
+import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import style from './form.module.scss';
-import icon from '../../../../../../public/icon.png';
+import { Login, Register } from '../../../../../api/hooks/login';
 
 interface IFormLogin {
   switchState?: boolean;
+  onToastChange: (open: boolean) => void;
 }
 
-export default function FormLogin({ switchState }: IFormLogin) {
+export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: switchState ? '' : undefined,
+  });
+
+  const hasSpecialCharacters = (password: string) => {
+    const specialChars = /[!@#$%^&*(),.?":{}|<>]/g;
+    const uppercase = /[A-Z]/;
+    return specialChars.test(password) && uppercase.test(password);
+  };
 
   const handleButtonClick = () => {
-    navigate('/main', { state: { active: switchState } });
     switchState
-      ? new window.Notification('Bem-vindo!', {
-          body: 'Finalize seu cadastro!',
-          icon: icon,
-        })
-      : new window.Notification('Bem-vindo!', {
-          body: 'Você está logado!',
-          icon: icon,
-        });
+      ? Register(formData)
+          .then((data) => {
+            navigate('/main', { state: { active: switchState, data } });
+          })
+          .catch((error) => {
+            console.log(error);
+            onToastChange(true);
+            setTimeout(() => {
+              onToastChange(false);
+            }, 2000);
+          })
+      : Login(formData)
+          .then((data) => {
+            navigate('/main', { state: { active: switchState, data } });
+          })
+          .catch((error) => {
+            console.log(error);
+            onToastChange(true);
+            setTimeout(() => {
+              onToastChange(false);
+            }, 2000);
+          });
   };
 
   return (
@@ -37,6 +63,8 @@ export default function FormLogin({ switchState }: IFormLogin) {
             size="small"
             color={switchState ? 'secondary' : 'primary'}
             inputProps={{ maxLength: 30 }}
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -64,6 +92,8 @@ export default function FormLogin({ switchState }: IFormLogin) {
           size="small"
           color={switchState ? 'secondary' : 'primary'}
           inputProps={{ maxLength: 30 }}
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -88,6 +118,10 @@ export default function FormLogin({ switchState }: IFormLogin) {
           variant="outlined"
           color={switchState ? 'secondary' : 'primary'}
           inputProps={{ maxLength: 20 }}
+          value={formData.password}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -109,6 +143,7 @@ export default function FormLogin({ switchState }: IFormLogin) {
         size="medium"
         variant="contained"
         color={switchState ? 'secondary' : 'primary'}
+        disabled={switchState && !hasSpecialCharacters(formData.password)}
         sx={{
           fontWeight: 'bold',
           animation: 'fadeInUp 0.5s ease-out forwards',

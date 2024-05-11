@@ -46,11 +46,6 @@ class Connection {
     });
   }
 
-  /**
-   * Function that returns a promise with the response of the API
-   *  @public useApiResult
-   *  @returns {Promise<[any, number]>} Promise with the response of the API
-   */
   // Connection.ts
 public getApiResult(
   request: Object,

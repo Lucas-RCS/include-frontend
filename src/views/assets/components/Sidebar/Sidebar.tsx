@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, IconButton } from '@mui/material';
 import style from './sidebar.module.scss';
 import {
@@ -10,23 +10,39 @@ import {
   UserCircle,
 } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
-
-const User = {
-  name: 'Lucas Ribeiro',
-  id: '#LR0001',
-};
+import getUser from '../../../../api/hooks/user';
 
 interface ISidebar {
   onViewChange: (view: string) => void;
+  idUser: number;
 }
 
-function Sidebar({ onViewChange }: ISidebar) {
+function Sidebar({ onViewChange, idUser }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
+  const [userData, setUserData] = useState<{ error: boolean; content: any }[]>(
+    [],
+  );
 
   const handleButtonClick = (view: string) => {
     onViewChange(view);
     setActiveButton(view);
   };
+
+  useEffect(() => {
+    getUser(idUser)
+      .then((response) => {
+        const [data, status] = response;
+        setUserData([data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [idUser]);
+
+  const dataUser = userData[0]?.content;
+
+  const image = '';
+  // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
 
   return (
     <div className={style.container_sidebar}>
@@ -34,15 +50,27 @@ function Sidebar({ onViewChange }: ISidebar) {
         <IconButton
           color="primary"
           sx={{
-            borderRadius: '16px',
+            backgroundColor: 'var(--components)',
+            borderRadius: 'var(--bd-rds-xl)',
+            padding: 'var(--padding-lt)',
           }}
           onClick={() => handleButtonClick('perfil')}
         >
-          <img src="./img/mascot_icon.png" alt="Icon Mascot Include" />
+          {image ? (
+            <img src={`${image}`} alt="User Icon" />
+          ) : (
+            <span className={style.user_icon}>
+              {dataUser && dataUser.nome.substring(0, 2).toUpperCase()}
+            </span>
+          )}
         </IconButton>
         <div className={style.perfil_user}>
-          <span className={style.perfil_user_name}>{User.name}</span>
-          <span className={style.perfil_user_id}>{User.id}</span>
+          <span className={style.perfil_user_name}>
+            {dataUser && dataUser.nome ? dataUser.nome : 'Carregando...'}
+          </span>
+          <span className={style.perfil_user_job}>
+            {dataUser && dataUser.job ? dataUser.job : 'Carregando...'}
+          </span>
         </div>
       </div>
       <div className={style.main}>

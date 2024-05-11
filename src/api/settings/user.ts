@@ -1,14 +1,14 @@
 // Request Settings for API calls
 const apiSettings = {
-  userList: (data: any): [Object, Object | null] => [
+  userList: (id: number): [Object, Object | null] => [
     {
-      url: '/user/list',
+      url: '/user/' + id,
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json:charset=UTF-8',
       },
-      data: JSON.stringify(data),
+      data: [],
     },
     null,
   ],

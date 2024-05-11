@@ -33,8 +33,8 @@ function Modal({
   };
 
   const endRegistration = () => {
-    setShow(false);
-    setOpen(false);
+    // setShow(false);
+    // setOpen(false);
     onClose();
   };
 

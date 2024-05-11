@@ -2,32 +2,36 @@ import { Divider } from '../../elements/common';
 import style from './perfil.module.scss';
 import { IconButton } from '@mui/material';
 import { Pencil } from '@phosphor-icons/react';
+import { colorsLanguages } from '../../../../utils/colorsLanguages';
 
-function Perfil() {
-  const User = {
-    name: 'Lucas Ribeiro',
-    email: 'LucasRibeiro@gmail.com',
-    birth: '31/08/2002',
-    skills: ['React', 'Node', 'TypeScript', 'JavaScript', 'HTML', 'CSS'],
+interface IPerfil {
+  User: {
+    id: number;
+    nome: string;
+    email: string;
+    birthDate: string;
+    skills: string[];
   };
+}
 
-  const skillColors = {
-    React: 'var(--react)',
-    Node: 'var(--node)',
-    TypeScript: 'var(--typescript)',
-    JavaScript: 'var(--javascript)',
-    HTML: 'var(--html)',
-    CSS: 'var(--css)',
-  };
+function Perfil({ User }: IPerfil) {
+  const image = '';
+  // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
+
+  User.skills = ['JavaScript', 'HTML', 'CSS', 'PHP', 'Ruby', 'Node']
 
   return (
     <div className={style.container}>
       <div className={style.header}>
         <div className={style.imgUser}>
-          <img src="../img/logo-include-primary.png" alt="Perfil" />
+          {image ? (
+            <img src={`${image}`} alt="Perfil" />
+          ) : (
+            <img src="../img/logo-include-primary.png" alt="Perfil" />
+          )}
         </div>
         <div className={style.nameUser}>
-          <span>{User.name}</span>
+          <span>{User.nome}</span>
           <IconButton>
             <Pencil weight="fill" />
           </IconButton>
@@ -37,7 +41,7 @@ function Perfil() {
         <div className={style.form}>
           <div className={style.field}>
             <span className={style.title}>Nome</span>
-            <span className={style.text}>{User.name}</span>
+            <span className={style.text}>{User.nome}</span>
           </div>
           <div className={style.field}>
             <span className={style.title}>Email</span>
@@ -45,7 +49,7 @@ function Perfil() {
           </div>
           <div className={style.field}>
             <span className={style.title}>Data de Nascimento</span>
-            <span className={style.text}>{User.birth}</span>
+            <span className={style.text}>{User.birthDate}</span>
           </div>
         </div>
         <Divider
@@ -58,7 +62,6 @@ function Perfil() {
           <div className={style.skills}>
             <span>Skills</span>
           </div>
-
           <div className={style.contentSkills}>
             {User.skills.map((skill, index) => (
               <div
@@ -66,7 +69,7 @@ function Perfil() {
                 className={style.skills}
                 style={{
                   borderColor:
-                    skillColors[skill as keyof typeof skillColors] ||
+                    colorsLanguages[skill as keyof typeof colorsLanguages] ||
                     'var(--primary)',
                 }}
               >

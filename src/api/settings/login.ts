@@ -12,6 +12,18 @@ const apiSettings = {
     },
     null,
   ],
+  register: (data: any): [Object, Object | null] => [
+    {
+      url: '/register',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data: JSON.stringify(data),
+    },
+    null,
+  ],
 };
 
 export default apiSettings;

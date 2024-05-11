@@ -1,9 +1,10 @@
 import Connection from '../Connection';
 import setting from '../settings/user';
 
-export const getUserList = () => {
-  const config = setting.userList(null);
+export const getUser = (id: number) => {
+  const config = setting.userList(id);
   return Connection.getApiResult(...config);
 };
 
-export default getUserList;
+
+export default getUser;

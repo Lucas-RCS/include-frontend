@@ -121,21 +121,6 @@
         justify-content: flex-start;
         width: 100%;
         gap: var(--gap-sm);
-
-        .skills {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 0px var(--padding-sm);
-          border: 2px solid var(--primary);
-          border-radius: var(--bd-rds-lg);
-
-          span {
-            color: var(--text-l);
-            font-size: var(--fnt-sz-lt);
-            font-weight: var(--fnt-wg-md);
-          }
-        }
       }
     }
   }
