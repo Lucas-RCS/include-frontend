@@ -6,5 +6,9 @@ export const getUser = (id: number) => {
   return Connection.getApiResult(...config);
 };
 
+export const updateUser = (id: number, data: Object) => {
+  const config = setting.userUpdate(id, data);
+  return Connection.getApiResult(...config);
+}
 
 export default getUser;

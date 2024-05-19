@@ -7,7 +7,6 @@ interface IModal {
   closeButton?: boolean;
   open: boolean;
   onClose: () => void;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   children?: React.ReactNode;
   className?: string;
 }
@@ -15,7 +14,6 @@ interface IModal {
 function Modal({
   open,
   onClose,
-  setOpen,
   children,
   closeButton,
   className,
@@ -28,13 +26,11 @@ function Modal({
 
   const handleClose = () => {
     setShow(false);
-    setOpen(false);
     onClose();
   };
 
   const endRegistration = () => {
-    // setShow(false);
-    // setOpen(false);
+    setShow(false);
     onClose();
   };
 

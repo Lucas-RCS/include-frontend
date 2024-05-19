@@ -8,7 +8,7 @@ import Perfil from '../../assets/components/Perfil/perfil';
 import { useLocation } from 'react-router-dom';
 import Modal from '../../assets/components/Modal/modal';
 import { Alert, Snackbar, Slide } from '@mui/material';
-import getUser from '../../../api/hooks/user';
+import {getUser, updateUser} from '../../../api/hooks/user';
 import FormUserModal from '../../assets/components/Modal/FormUser/formUserModal';
 
 function Main() {
@@ -48,18 +48,35 @@ function Main() {
       });
   }, [id_user]);
 
+  const updateUserRequest = () => {
+    getUser(id_user)
+      .then((response) => {
+        const [data] = response;
+        setUserData([data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     setOpen(true);
   }, []);
 
   const onModalClose = () => {
-    console.log(userData[0].content);
+    updateUser(id_user, userData[0].content)
+      .then((response) => {
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const updateUserData = (newData: any) => {
     setUserData((prevData) => {
       const updatedData = [...prevData];
-      updatedData[0].content = {...updatedData[0].content,...newData };
+      if (updatedData[0])
+        updatedData[0].content = { ...updatedData[0].content, ...newData };
       return updatedData;
     });
   };
@@ -112,7 +129,6 @@ function Main() {
           className={style.modalContainer}
           open={fistLogin}
           onClose={onModalClose}
-          setOpen={() => {}}
         >
           <div className={style.modalContent}>
             <div className={style.header}>
@@ -126,13 +142,13 @@ function Main() {
         </Modal>
       )}
       <div className={style.sidebar}>
-        <Sidebar onViewChange={handleViewChange} idUser={id_user} />
+        <Sidebar onViewChange={handleViewChange} User={userData[0]?.content} />
       </div>
       <div className={style.content}>
         {currentView === 'home' && <Home />}
         {currentView === 'friends' && <Friends />}
         {currentView === 'chat' && <Chat />}
-        {currentView === 'perfil' && <Perfil User={userData[0]?.content} />}
+        {currentView === 'perfil' && <Perfil User={userData[0]?.content} onUpdateRequest={updateUserRequest} />}
       </div>
     </div>
   );

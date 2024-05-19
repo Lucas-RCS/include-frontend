@@ -5,7 +5,6 @@ import {
   useTheme,
   SelectChangeEvent,
   MenuItem,
-  FormControl,
   IconButton,
   OutlinedInput,
 } from '@mui/material';
@@ -150,6 +149,7 @@ function FormUserModal(props: IFormUserModal) {
   };
 
   useEffect(() => {
+
     if (
       skillName !== formData.skills ||
       jobsName !== formData.jobs ||
@@ -161,11 +161,13 @@ function FormUserModal(props: IFormUserModal) {
         skills: skillName,
         jobs: jobsName,
         birthDate: birthDate,
-        // userImg: selectedImage,
+        userImg: selectedImage,
       };
       props.formData(updatedFormData);
     }
-  }, [skillName, jobsName, birthDate, formData, props.formData]);
+
+  }, [skillName, jobsName, birthDate, selectedImage]);
+
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillName>) => {
     const {
       target: { value },

@@ -10,36 +10,27 @@ import {
   UserCircle,
 } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
-import getUser from '../../../../api/hooks/user';
 
 interface ISidebar {
   onViewChange: (view: string) => void;
-  idUser: number;
+  User: {
+    id: number;
+    name: string;
+    email: string;
+    birthDate: string;
+    skills: string[];
+    jobs: string[];
+    userImg: string;
+  };
 }
 
-function Sidebar({ onViewChange, idUser }: ISidebar) {
+function Sidebar({ onViewChange, User }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
-  const [userData, setUserData] = useState<{ error: boolean; content: any }[]>(
-    [],
-  );
 
   const handleButtonClick = (view: string) => {
     onViewChange(view);
     setActiveButton(view);
   };
-
-  useEffect(() => {
-    getUser(idUser)
-      .then((response) => {
-        const [data, status] = response;
-        setUserData([data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [idUser]);
-
-  const dataUser = userData[0]?.content;
 
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
@@ -60,16 +51,18 @@ function Sidebar({ onViewChange, idUser }: ISidebar) {
             <img src={`${image}`} alt="User Icon" />
           ) : (
             <span className={style.user_icon}>
-              {dataUser && dataUser.nome.substring(0, 2).toUpperCase()}
+              {User && User.name.substring(0, 2).toUpperCase()}
             </span>
           )}
         </IconButton>
         <div className={style.perfil_user}>
           <span className={style.perfil_user_name}>
-            {dataUser && dataUser.nome ? dataUser.nome : 'Carregando...'}
+            {User && User.name ? User.name : 'Carregando...'}
           </span>
           <span className={style.perfil_user_job}>
-            {dataUser && dataUser.job ? dataUser.job : 'Carregando...'}
+            {User && User.jobs && User.jobs.length > 0
+              ? User.jobs.join(', ')
+              : 'Carregando...'}
           </span>
         </div>
       </div>

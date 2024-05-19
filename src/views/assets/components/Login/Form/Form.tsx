@@ -18,9 +18,8 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
   });
 
   const hasSpecialCharacters = (password: string) => {
-    const specialChars = /[!@#$%^&*(),.?":{}|<>]/g;
-    const uppercase = /[A-Z]/;
-    return specialChars.test(password) && uppercase.test(password);
+    const regex = /^(?=.*[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return regex.test(password);
   };
 
   const handleButtonClick = () => {

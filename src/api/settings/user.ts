@@ -12,6 +12,18 @@ const apiSettings = {
     },
     null,
   ],
+  userUpdate: (id: number, data: Object): [Object, Object | null] => [
+    {
+      url: '/user/edit/' + id,
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data: data,
+    },
+    null,
+  ],
 };
 
 export default apiSettings;
