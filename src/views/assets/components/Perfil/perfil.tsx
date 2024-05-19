@@ -85,6 +85,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
       .catch((error) => {
         console.log(error);
         setAlertUserUpdateError(true);
+        setOpenModalUser(false);
         setTimeout(() => {
           setAlertUserUpdateError(false);
         }, 3000);

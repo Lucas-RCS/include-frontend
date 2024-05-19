@@ -17,6 +17,7 @@ function Main() {
   const [userData, setUserData] = useState<{ error: boolean; content: any }[]>(
     [],
   );
+  const [alertUserUpdate, setAlertUserUpdate] = useState(false);
 
   const handleViewChange = (view: string) => {
     setCurrentView(view);
@@ -66,6 +67,11 @@ function Main() {
   const onModalClose = () => {
     updateUser(id_user, userData[0].content)
       .then((response) => {
+        setAlertUserUpdate(true);
+
+        setTimeout(() => {
+          setAlertUserUpdate(false);
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
@@ -87,6 +93,24 @@ function Main() {
 
   return (
     <div className={style.container}>
+      <Snackbar
+        open={alertUserUpdate}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        TransitionComponent={Slide}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'var(--gap-lt)',
+          }}
+        >
+          <Alert severity="info" color="info">
+            Dados atualizados com sucesso!
+          </Alert>
+        </div>
+      </Snackbar>
       {fistLogin ? (
         <Snackbar
           open={open}

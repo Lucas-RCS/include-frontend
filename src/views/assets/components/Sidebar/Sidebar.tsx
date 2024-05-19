@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, IconButton } from '@mui/material';
 import style from './sidebar.module.scss';
 import {

@@ -41,5 +41,13 @@
     padding-block: var(--padding-md);
     gap: var(--gap-sm);
   
+
+    .contentPassword{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      gap: var(--gap-lt);
+    }
   }
 }

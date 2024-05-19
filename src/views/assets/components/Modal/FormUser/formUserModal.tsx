@@ -149,23 +149,27 @@ function FormUserModal(props: IFormUserModal) {
   };
 
   useEffect(() => {
-
+    let userBirthDate = birthDate;
+    if (!birthDate) {
+      userBirthDate = "01/01/0001";
+    }
+  
     if (
-      skillName !== formData.skills ||
-      jobsName !== formData.jobs ||
-      birthDate !== formData.birthDate ||
-      selectedImage !== formData.userImg
+      skillName!== formData.skills ||
+      jobsName!== formData.jobs ||
+      userBirthDate!== formData.birthDate ||
+      selectedImage!== formData.userImg
     ) {
       const updatedFormData = {
-        ...formData,
+       ...formData,
         skills: skillName,
         jobs: jobsName,
-        birthDate: birthDate,
+        birthDate: userBirthDate,
         userImg: selectedImage,
       };
+  
       props.formData(updatedFormData);
     }
-
   }, [skillName, jobsName, birthDate, selectedImage]);
 
   const handleChangeSkill = (event: SelectChangeEvent<typeof skillName>) => {
@@ -192,9 +196,16 @@ function FormUserModal(props: IFormUserModal) {
 
   const handleBirthDateChange = (event: any) => {
     const birthDate = event.target.value;
-    const formattedBirthDate = new Date(birthDate).toLocaleDateString('pt-BR');
-    setBirthDate(formattedBirthDate);
-    handleFormChange('birthDate', formattedBirthDate);
+  
+    const dateParts = birthDate.split('-');
+    const day = dateParts[2];
+    const month = dateParts[1];
+    const year = dateParts[0];
+
+    const ptBrFormattedBirthDate = `${day}/${month}/${year}`;
+
+    setBirthDate(ptBrFormattedBirthDate);
+    handleFormChange('birthDate', ptBrFormattedBirthDate);
   };
 
   const iptRef = useRef<HTMLInputElement>(null);

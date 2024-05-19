@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import style from './form.module.scss';
 import { Login, Register } from '../../../../../api/hooks/login';
+import { Info } from '@phosphor-icons/react';
 
 interface IFormLogin {
   switchState?: boolean;
@@ -109,34 +110,47 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
             animation: 'fadeInUp 0.5s ease-out forwards',
           }}
         />
-        <TextField
-          fullWidth
-          type="password"
-          label="Senha"
-          size="small"
-          variant="outlined"
-          color={switchState ? 'secondary' : 'primary'}
-          inputProps={{ maxLength: 20 }}
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
+        <div className={style.contentPassword}>
+          <TextField
+            fullWidth
+            type="password"
+            label="Senha"
+            size="small"
+            variant="outlined"
+            color={switchState ? 'secondary' : 'primary'}
+            inputProps={{ maxLength: 20 }}
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderRadius: '12px ',
+                },
                 borderRadius: '12px ',
+                color: 'var(--text-l)',
+                '&:hover fieldset': {
+                  borderColor: switchState
+                    ? 'var(--secondary)'
+                    : 'var(--primary)',
+                },
               },
-              borderRadius: '12px ',
-              color: 'var(--text-l)',
-              '&:hover fieldset': {
-                borderColor: switchState
-                  ? 'var(--secondary)'
-                  : 'var(--primary)',
-              },
-            },
-            animation: 'fadeInUp 0.5s ease-out forwards',
-          }}
-        />
+              animation: 'fadeInUp 0.5s ease-out forwards',
+            }}
+          />
+          <Tooltip
+            title="Sua senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas e minúsculas, números e caracteres especiais."
+            arrow
+            placement="right"
+          >
+            <Info
+              size={24}
+              weight="regular"
+              color={switchState ? 'var(--secondary)' : 'var(--primary)'}
+            />
+          </Tooltip>
+        </div>
       </div>
       <Button
         size="medium"

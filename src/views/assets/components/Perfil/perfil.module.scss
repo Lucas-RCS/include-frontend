@@ -98,6 +98,8 @@
       left: 10%;
       width: 15dvw;
       height: 100%;
+      min-width: 15dvw;
+      min-height: 220px;
       padding: var(--padding-lt);
       border-radius: var(--bd-rds-xl);
       background-color: var(--components);
