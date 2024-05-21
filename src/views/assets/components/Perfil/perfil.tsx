@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Divider } from '../../elements/common';
 import style from './perfil.module.scss';
 import {
@@ -17,6 +17,7 @@ import { Pencil } from '@phosphor-icons/react';
 import { colorsLanguages } from '../../../../utils/colorsLanguages';
 import { useState } from 'react';
 import Modal from '../Modal/modal';
+import logoInclude from '../../../../../public/img/logo-include-primary.png';
 import { updateUser } from '../../../../api/hooks/user';
 
 interface IPerfil {
@@ -378,7 +379,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
           {User.userImg ? (
             <img src={`${User.userImg}`} alt="Perfil" />
           ) : (
-            <img src="../img/logo-include-primary.png" alt="Perfil" />
+            <img src={logoInclude} alt="Perfil" />
           )}
         </div>
         <div className={style.nameUser}>
@@ -391,15 +392,15 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
       <div className={style.content}>
         <div className={style.form}>
           <div className={style.field}>
-            <span className={style.title}>Nome</span>
+            <span className={style.title}>NOME</span>
             <span className={style.text}>{User.name}</span>
           </div>
           <div className={style.field}>
-            <span className={style.title}>Email</span>
+            <span className={style.title}>E-MAIL</span>
             <span className={style.text}>{User.email}</span>
           </div>
           <div className={style.field}>
-            <span className={style.title}>Data de Nascimento</span>
+            <span className={style.title}>DATA DE NASCIMENTO</span>
             <span className={style.text}>{User.birthDate}</span>
           </div>
         </div>

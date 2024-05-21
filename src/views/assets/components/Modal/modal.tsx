@@ -4,19 +4,19 @@ import { Button } from '@mui/material';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 
 interface IModal {
-  closeButton?: boolean;
   open: boolean;
   onClose: () => void;
   children?: React.ReactNode;
   className?: string;
+  btnText?: string;
 }
 
 function Modal({
   open,
   onClose,
   children,
-  closeButton,
   className,
+  btnText,
 }: IModal) {
   const [show, setShow] = useState(open);
 
@@ -37,25 +37,17 @@ function Modal({
   return (
     <div className={show ? style.modal : style.modalHidden}>
       <div className={className ? className : style.modalContent}>
-        {closeButton && (
-          <span className={style.close} onClick={handleClose}>
-            &times;
-          </span>
-        )}
         {children}
-
-        {!closeButton && (
-          <div className={style.footer}>
-            <Button
-              color="primary"
-              variant="contained"
-              endIcon={<PaperPlaneTilt weight="fill" />}
-              onClick={endRegistration}
-            >
-              Finalizar
-            </Button>
-          </div>
-        )}
+        <div className={style.footer}>
+          <Button
+            color="primary"
+            variant="contained"
+            endIcon={<PaperPlaneTilt weight="fill" />}
+            onClick={endRegistration}
+          >
+            {btnText ? btnText : 'Enviar'}
+          </Button>
+        </div>
       </div>
     </div>
   );

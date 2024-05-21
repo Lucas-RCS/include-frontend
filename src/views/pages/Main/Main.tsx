@@ -169,7 +169,7 @@ function Main() {
         <Sidebar onViewChange={handleViewChange} User={userData[0]?.content} />
       </div>
       <div className={style.content}>
-        {currentView === 'home' && <Home />}
+        {currentView === 'home' && <Home User={userData[0]?.content} />}
         {currentView === 'friends' && <Friends />}
         {currentView === 'chat' && <Chat />}
         {currentView === 'perfil' && <Perfil User={userData[0]?.content} onUpdateRequest={updateUserRequest} />}

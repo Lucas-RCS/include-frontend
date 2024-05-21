@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 20dvh;
+  border-radius: var(--bd-rds-sm);
+  background-color: var(--components);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-sm) var(--padding-sm) 0 var(--padding-sm);
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+
+      .userAvatar {
+        img {
+          width: 26px;
+          height: 100%;
+        }
+
+        span {
+          font-size: var(--fnt-sz-lg);
+        }
+      }
+
+      .userInfo {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: var(--gap-sm);
+
+        .userName {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-lt);
+          font-size: var(--fnt-sz-md);
+          color: var(--text-l);
+        }
+
+        .userDate {
+          display: flex;
+          align-items: center;
+          font-size: var(--fnt-sz-lt);
+          color: var(--text-g);
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+
+    .textPost {
+      padding: var(--padding-sm) var(--padding-md);
+      font-size: var(--fnt-sz-sm);
+      color: var(--text-l);
+    }
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--gap-md);
+    padding: var(--padding-sm);
+
+    .like {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-lt);
+      padding-inline: var(--padding-sm);
+      border-radius: var(--bd-rds-md);
+      font-size: var(--fnt-sz-lt);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-g);
+      background-color: var(--background);
+    }
+    .comments {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-lt);
+      padding-inline: var(--padding-sm);
+      border-radius: var(--bd-rds-md);
+      font-size: var(--fnt-sz-lt);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-g);
+      background-color: var(--background);
+    }
+  }
+}

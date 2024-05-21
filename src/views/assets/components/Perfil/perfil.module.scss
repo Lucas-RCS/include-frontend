@@ -148,14 +148,14 @@
         flex-direction: column;
 
         .title {
-          color: var(--text-l);
-          font-size: var(--fnt-sz-md);
-          font-weight: var(--fnt-wg-lg);
+          color: var(--text-g);
+          font-size: var(--fnt-sz-sm);
+          font-weight: var(--fnt-wg-xl);
         }
         .text {
-          color: var(--text-g);
-          font-size: var(--fnt-sz-md);
-          font-weight: var(--fnt-wg-lg);
+          color: var(--text-l);
+          font-size: var(--fnt-sz-sm);
+          font-weight: var(--fnt-wg-md);
         }
       }
     }
