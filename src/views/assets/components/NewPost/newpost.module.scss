@@ -48,6 +48,28 @@
     padding-inline: var(--padding-xl);
     gap: var(--gap-lg);
   }
+
+  .contentPost{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-md);
+    padding-inline: var(--padding-xl);
+
+    span{
+      color: var(--text-l);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-sm);
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      max-height: 30dvh ;
+      object-fit: contain;
+    }
+  }
 }
 
 .container_modal {

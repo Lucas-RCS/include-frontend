@@ -73,7 +73,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
     );
     userData.skills = skillName;
     userData.jobs = jobsName;
-
+    console.log(userData);
     updateUser(userData.id, userData)
       .then((response) => {
         setAlertUserUpdate(true);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Button,
   IconButton,
@@ -28,17 +28,7 @@ interface INewPost {
 }
 
 const language = [
-  'abap',
-  'aes',
-  'apex',
-  'azcli',
-  'bat',
-  'bicep',
-  'brainfuck',
   'c',
-  'cameligo',
-  'clike',
-  'clojure',
   'coffeescript',
   'cpp',
   'csharp',
@@ -49,12 +39,8 @@ const language = [
   'ecl',
   'elixir',
   'erlang',
-  'flow9',
-  'freemarker2',
   'fsharp',
   'graphql',
-  'handlebars',
-  'hcl',
   'html',
   'ini',
   'java',
@@ -80,13 +66,10 @@ const language = [
   'perl',
   'pgsql',
   'php',
-  'pla',
   'plaintext',
   'postiats',
   'powerquery',
   'powershell',
-  'proto',
-  'pug',
   'python',
   'qsharp',
   'r',
@@ -111,7 +94,6 @@ const language = [
   'tsx',
   'twig',
   'typescript',
-  'vbscript',
   'verilog',
   'vue',
 ];
@@ -141,8 +123,7 @@ function NewPost({ User }: INewPost) {
   const [openModal, setOpenModal] = useState(false);
   const [languageName, setLanguageName] = React.useState<string[]>([]);
   const [code, setCode] = useState(``);
-
-  console.log(code);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
@@ -161,8 +142,6 @@ function NewPost({ User }: INewPost) {
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => {
     setOpenModal(false);
-    setLanguageName([]);
-    setCode(``); // TIRAR ISSO DEPOIS, ELE SÓ PODE LIMPAR O CAMPO QUANDO ENVIAR O POST
   };
 
   const handleChangeLanguage = (
@@ -172,6 +151,32 @@ function NewPost({ User }: INewPost) {
       target: { value },
     } = event;
     setLanguageName(typeof value === 'string' ? value.split(',') : value);
+  };
+
+  const iptRef = useRef<HTMLInputElement>(null);
+
+  const HandleUserImg = () => {
+    if (iptRef.current) {
+      iptRef.current.click();
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const fileSize = event.target.files[0].size / (1024 * 1024);
+      if (fileSize > 8) {
+        alert(
+          'O arquivo de imagem é muito grande. Por favor, selecione uma imagem de até 5 MB.',
+        );
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   };
 
   return (
@@ -232,6 +237,7 @@ function NewPost({ User }: INewPost) {
           <Button
             color="success"
             size="small"
+            onClick={HandleUserImg}
             startIcon={<Image weight="fill" color="var(--success)" />}
             sx={{
               borderRadius: 'var(--bd-rds-md)',
@@ -243,6 +249,67 @@ function NewPost({ User }: INewPost) {
           >
             Adicionar Imagem
           </Button>
+          <input
+            type="file"
+            id="images"
+            style={{ display: 'none' }}
+            accept="image/png, image/jpeg"
+            ref={iptRef}
+            onChange={handleImageChange}
+          />
+          <IconButton
+            onClick={() => {
+              setCode('');
+              setLanguageName([])
+              setSelectedImage(null);
+              if (iptRef.current) {
+                iptRef.current.value = '';
+              }
+            }}
+            sx={{
+              backgroundColor: 'var(--background)',
+              borderRadius: '12px',
+            }}
+          >
+            <Broom weight="fill" size={20} />
+          </IconButton>
+        </div>
+        <div className={style.contentPost}>
+          {code ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+              }}
+            >
+              <CodeEditor
+                value={code}
+                language={languageName[0]}
+                readOnly
+                onChange={(evn) => setCode(evn.target.value)}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  maxHeight: '30dvh',
+                  borderRadius: 'var(--bd-rds-lt)',
+                  backgroundColor: 'var(--background)',
+                  overflowY: 'auto',
+                }}
+              />
+            </div>
+          ) : null}
+          {selectedImage ? (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+              }}
+            >
+              <img src={selectedImage} alt="Post Image" />
+            </div>
+          ) : null}
         </div>
       </div>
       <Modal
@@ -303,6 +370,7 @@ function NewPost({ User }: INewPost) {
               height: '50dvh',
               borderRadius: 'var(--bd-rds-lt)',
               backgroundColor: 'var(--components)',
+              fontSize: 'var(--fnt-sz-sm)',
               overflowY: 'auto',
             }}
           />
