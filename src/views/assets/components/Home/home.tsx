@@ -19,7 +19,11 @@ function Home({ User }: IHome) {
     <div className={style.container}>
       <NewPost User={User}/>
       <div className={style.content}>
-        <Post />
+        <Post currentUser={User}/>
+        <Post currentUser={User}/>
+        <Post currentUser={User}/>
+        <Post currentUser={User}/>
+        <Post currentUser={User}/>
       </div>
     </div>
   );

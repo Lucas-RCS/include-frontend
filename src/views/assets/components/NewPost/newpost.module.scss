@@ -50,7 +50,7 @@
   }
 }
 
-.container_modal{
+.container_modal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -61,4 +61,24 @@
   border: 1px solid var(--components);
   background-color: var(--background);
   animation: popUp 0.5s ease-in-out forwards;
+
+  .editor_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding-sm) var(--padding-md);
+    gap: var(--gap-sm);
+    width: 100%;
+
+    .language{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+      color: var(--text-l);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-sm);
+    }
+  }
 }

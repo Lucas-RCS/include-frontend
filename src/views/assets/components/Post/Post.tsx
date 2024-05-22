@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './post.module.scss';
 import { IconButton } from '@mui/material';
 import {
@@ -9,8 +9,35 @@ import {
 } from '@phosphor-icons/react';
 import moment from 'moment';
 
-function Post() {
+interface IPost {
+  currentUser: {
+    id: number;
+    name: string;
+    email: string;
+    birthDate: string;
+    skills: string[];
+    jobs: string[];
+    userImg: string;
+  };
+}
+
+function Post({ currentUser }: IPost) {
   const [likeState, setLikeState] = useState(false);
+  const [randomColor, setRandomColor] = useState('');
+
+  // Função para gerar uma cor aleatória
+  const generateRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    setRandomColor(color);
+  };
+
+  useEffect(() => {
+    generateRandomColor();
+  }, []);
 
   const handleLike = () => {
     setLikeState(!likeState);
@@ -21,7 +48,7 @@ function Post() {
   const name = 'User Name';
 
   moment.locale('pt-br');
-  const datePost = moment('2024-05-21T09:40:00').startOf('minute').fromNow();
+  const datePost = moment('2024-05-21T11:30:00').startOf('minute').fromNow();
 
   return (
     <div className={style.container}>
@@ -39,7 +66,16 @@ function Post() {
               {image ? (
                 <img src={`${image}`} alt="User Icon" />
               ) : (
-                <span>{name && name.substring(0, 2).toUpperCase()}</span>
+                <span
+                  style={{
+                    color:
+                      currentUser?.name !== name
+                        ? randomColor
+                        : 'var(--primary)',
+                  }}
+                >
+                  {name && name.substring(0, 2).toUpperCase()}
+                </span>
               )}
             </IconButton>
           </div>
@@ -77,10 +113,8 @@ function Post() {
           <span>100 likes</span>
         </div>
         <div className={style.comments}>
-          <IconButton
-            color='default'
-          >
-            <ChatCircleDots weight='regular' />
+          <IconButton color="default">
+            <ChatCircleDots weight="regular" />
           </IconButton>
           <span>100 comentarios</span>
         </div>

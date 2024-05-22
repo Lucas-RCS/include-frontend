@@ -1,11 +1,19 @@
-// newpost.tsx
-
 import React, { useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  Theme,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+  useTheme,
+} from '@mui/material';
 import style from './newpost.module.scss';
-import { Code, Image, PaperPlaneTilt } from '@phosphor-icons/react';
-import MonacoEditor from 'react-monaco-editor';
+import { Broom, Code, Image, PaperPlaneTilt } from '@phosphor-icons/react';
 import Modal from '../Modal/modal';
+
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 interface INewPost {
   User: {
@@ -19,10 +27,122 @@ interface INewPost {
   };
 }
 
+const language = [
+  'abap',
+  'aes',
+  'apex',
+  'azcli',
+  'bat',
+  'bicep',
+  'brainfuck',
+  'c',
+  'cameligo',
+  'clike',
+  'clojure',
+  'coffeescript',
+  'cpp',
+  'csharp',
+  'csp',
+  'css',
+  'dart',
+  'dockerfile',
+  'ecl',
+  'elixir',
+  'erlang',
+  'flow9',
+  'freemarker2',
+  'fsharp',
+  'graphql',
+  'handlebars',
+  'hcl',
+  'html',
+  'ini',
+  'java',
+  'javascript',
+  'json',
+  'jsx',
+  'julia',
+  'kotlin',
+  'less',
+  'lex',
+  'lexon',
+  'liquid',
+  'livescript',
+  'lua',
+  'markdown',
+  'mips',
+  'msdax',
+  'mysql',
+  'nginx',
+  'objective-c',
+  'pascal',
+  'pascaligo',
+  'perl',
+  'pgsql',
+  'php',
+  'pla',
+  'plaintext',
+  'postiats',
+  'powerquery',
+  'powershell',
+  'proto',
+  'pug',
+  'python',
+  'qsharp',
+  'r',
+  'razor',
+  'redis',
+  'redshift',
+  'restructuredtext',
+  'ruby',
+  'rust',
+  'scala',
+  'scheme',
+  'scss',
+  'shell',
+  'sol',
+  'sparql',
+  'sql',
+  'stylus',
+  'swift',
+  'systemverilog',
+  'tcl',
+  'toml',
+  'tsx',
+  'twig',
+  'typescript',
+  'vbscript',
+  'verilog',
+  'vue',
+];
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name: string, skillName: string[], theme: Theme) {
+  return {
+    fontWeight:
+      skillName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+    color: 'var(--text-l)',
+  };
+}
+
 function NewPost({ User }: INewPost) {
+  const theme = useTheme();
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
-  const [open, setOpen] = React.useState(false);
-  const [code, setCode] = useState('// Insira seu código...');
+  const [openModal, setOpenModal] = useState(false);
+  const [languageName, setLanguageName] = React.useState<string[]>([]);
+  const [code, setCode] = useState(``);
+
+  console.log(code);
 
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
@@ -38,16 +158,20 @@ function NewPost({ User }: INewPost) {
     }
   };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const editorDidMount = (editor: any, monaco: any) => {
-    editor.focus();
+  const handleOpen = () => setOpenModal(true);
+  const handleClose = () => {
+    setOpenModal(false);
+    setLanguageName([]);
+    setCode(``); // TIRAR ISSO DEPOIS, ELE SÓ PODE LIMPAR O CAMPO QUANDO ENVIAR O POST
   };
 
-  const onChange = (newValue: any, e: any) => {
-    console.log('code', newValue, e);
-    setCode(newValue);
+  const handleChangeLanguage = (
+    event: SelectChangeEvent<typeof languageName>,
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    setLanguageName(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
@@ -123,10 +247,81 @@ function NewPost({ User }: INewPost) {
       </div>
       <Modal
         className={style.container_modal}
-        open={open}
+        open={openModal}
         onClose={handleClose}
+        btnText="Adicionar Código"
+        iconBtn={<Code weight="bold" />}
       >
-        <span>teste</span>  
+        <div className={style.editor_container}>
+          <div className={style.language}>
+            <label htmlFor="language">Selecione a Linguagem</label>
+            <Select
+              id="language"
+              displayEmpty
+              fullWidth
+              size="small"
+              value={languageName}
+              onChange={handleChangeLanguage}
+              input={
+                <OutlinedInput
+                  sx={{
+                    color: 'var(--text-l)',
+                    borderColor: 'var(--primary)',
+                  }}
+                />
+              }
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>Linguagem</em>;
+                }
+
+                return selected.join(', ');
+              }}
+              MenuProps={MenuProps}
+            >
+              <MenuItem disabled value="">
+                <em style={{ color: 'var(--text-g)' }}>Linguagem</em>
+              </MenuItem>
+              {language.map((job) => (
+                <MenuItem
+                  key={job}
+                  value={job}
+                  style={getStyles(job, languageName, theme)}
+                >
+                  {job}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+          <CodeEditor
+            value={code}
+            language={languageName[0]}
+            placeholder="... Digite seu código aqui ..."
+            onChange={(evn) => setCode(evn.target.value)}
+            style={{
+              width: '100%',
+              height: '50dvh',
+              borderRadius: 'var(--bd-rds-lt)',
+              backgroundColor: 'var(--components)',
+              overflowY: 'auto',
+            }}
+          />
+          <IconButton
+            onClick={() => setCode('')}
+            sx={{
+              position: 'absolute',
+              top: '26%',
+              right: '20%',
+              backgroundColor: 'var(--primary)',
+              borderRadius: '12px',
+              '&:hover': {
+                backgroundColor: 'var(--intermediary)',
+              },
+            }}
+          >
+            <Broom weight="fill" size={20} />
+          </IconButton>
+        </div>
       </Modal>
     </>
   );

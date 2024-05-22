@@ -9,6 +9,7 @@ interface IModal {
   children?: React.ReactNode;
   className?: string;
   btnText?: string;
+  iconBtn?: React.ReactNode;
 }
 
 function Modal({
@@ -17,6 +18,7 @@ function Modal({
   children,
   className,
   btnText,
+  iconBtn,
 }: IModal) {
   const [show, setShow] = useState(open);
 
@@ -29,11 +31,6 @@ function Modal({
     onClose();
   };
 
-  const endRegistration = () => {
-    setShow(false);
-    onClose();
-  };
-
   return (
     <div className={show ? style.modal : style.modalHidden}>
       <div className={className ? className : style.modalContent}>
@@ -42,8 +39,8 @@ function Modal({
           <Button
             color="primary"
             variant="contained"
-            endIcon={<PaperPlaneTilt weight="fill" />}
-            onClick={endRegistration}
+            endIcon={iconBtn ? iconBtn : <PaperPlaneTilt weight="fill" />}
+            onClick={handleClose}
           >
             {btnText ? btnText : 'Enviar'}
           </Button>
