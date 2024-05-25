@@ -25,6 +25,7 @@ interface INewPost {
     jobs: string[];
     userImg: string;
   };
+  sendNewPostData: (post: any) => void;
 }
 
 const language = [
@@ -117,9 +118,10 @@ function getStyles(name: string, skillName: string[], theme: Theme) {
   };
 }
 
-function NewPost({ User }: INewPost) {
+function NewPost({ User, sendNewPostData }: INewPost) {
   const theme = useTheme();
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
+  const [textAreaValue, setTextAreaValue] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [languageName, setLanguageName] = React.useState<string[]>([]);
   const [code, setCode] = useState(``);
@@ -131,6 +133,8 @@ function NewPost({ User }: INewPost) {
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
+    const value = event.target.value;
+    setTextAreaValue(value);
     setTextAreaHeight('auto');
     const scrollHeight = event.target.scrollHeight;
     const clientHeight = event.target.clientHeight;
@@ -179,6 +183,25 @@ function NewPost({ User }: INewPost) {
     }
   };
 
+  const newPost = () => {
+    const post = {
+      text: textAreaValue,
+      code,
+      language: languageName,
+      image: selectedImage,
+    };
+    sendNewPostData(JSON.stringify(post));
+    
+    setTextAreaValue('');
+    setCode('');
+    setLanguageName([]);
+    setSelectedImage(null);
+    if (iptRef.current) {
+      iptRef.current.value = '';
+    }
+
+  };
+
   return (
     <>
       <div className={style.container}>
@@ -203,10 +226,12 @@ function NewPost({ User }: INewPost) {
             placeholder="Faça uma nova postagem.."
             maxLength={300}
             rows={1}
+            value={textAreaValue}
             style={{ height: textAreaHeight }}
             onInput={handleTextAreaChange}
           ></textarea>
           <IconButton
+            onClick={newPost}
             sx={{
               backgroundColor: 'var(--primary)',
               borderRadius: '12px',
@@ -259,8 +284,9 @@ function NewPost({ User }: INewPost) {
           />
           <IconButton
             onClick={() => {
+              setTextAreaValue("");
               setCode('');
-              setLanguageName([])
+              setLanguageName([]);
               setSelectedImage(null);
               if (iptRef.current) {
                 iptRef.current.value = '';

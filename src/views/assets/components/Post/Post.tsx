@@ -49,7 +49,7 @@ function Post({ currentUser }: IPost) {
   const name = 'User Name';
 
   moment.locale('pt-br');
-  const datePost = moment('2024-05-21T11:30:00').startOf('minute').fromNow();
+  const datePost = moment('2024-05-25T15:30:00').startOf('minute').fromNow();
 
   return (
     <div className={style.container}>

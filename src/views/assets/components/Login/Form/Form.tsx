@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { TextField, Button, Tooltip } from '@mui/material';
+import { TextField, Button, Tooltip, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import style from './form.module.scss';
 import { Login, Register } from '../../../../../api/hooks/login';
-import { Info } from '@phosphor-icons/react';
+import { Eye, EyeSlash, Info } from '@phosphor-icons/react';
 
 interface IFormLogin {
   switchState?: boolean;
@@ -11,6 +11,7 @@ interface IFormLogin {
 }
 
 export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -65,6 +66,11 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
             inputProps={{ maxLength: 30 }}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleButtonClick();
+              }
+            }}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
@@ -94,6 +100,11 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
           inputProps={{ maxLength: 30 }}
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleButtonClick();
+            }
+          }}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
@@ -113,7 +124,7 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
         <div className={style.contentPassword}>
           <TextField
             fullWidth
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             label="Senha"
             size="small"
             variant="outlined"
@@ -123,11 +134,17 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleButtonClick();
+              }
+            }}
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                   borderRadius: '12px ',
                 },
+                width: 'calc(100% + 3dvw)',
                 borderRadius: '12px ',
                 color: 'var(--text-l)',
                 '&:hover fieldset': {
@@ -139,6 +156,27 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
               animation: 'fadeInUp 0.5s ease-out forwards',
             }}
           />
+          <div className={style.eyeBtn}>
+            <IconButton
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? (
+                <EyeSlash
+                  size={22}
+                  weight="regular"
+                  color={switchState ? 'var(--secondary)' : 'var(--primary)'}
+                />
+              ) : (
+                <Eye
+                  size={22}
+                  weight="regular"
+                  color={switchState ? 'var(--secondary)' : 'var(--primary)'}
+                />
+              )}
+            </IconButton>
+          </div>
           <Tooltip
             title="Sua senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas e minúsculas, números e caracteres especiais."
             arrow

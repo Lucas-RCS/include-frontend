@@ -37,7 +37,7 @@ function Login() {
           TransitionComponent={Slide}
         >
           <Alert severity="error" color="error">
-            Ocorreu um erro, por favor tente novamente!
+            Usuário ou senha inválidos! Tente novamente.
           </Alert>
         </Snackbar>
       )}
