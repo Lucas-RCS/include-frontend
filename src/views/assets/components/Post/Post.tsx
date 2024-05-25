@@ -5,7 +5,7 @@ import {
   ChatCircleDots,
   DotOutline,
   Heart,
-  UserCircle,
+  SealCheck,
 } from '@phosphor-icons/react';
 import moment from 'moment';
 
@@ -27,11 +27,12 @@ function Post({ currentUser }: IPost) {
 
   // Função para gerar uma cor aleatória
   const generateRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
+    const hue = Math.floor(Math.random() * 360);
+    const saturation = 60;
+    const lightness = 50;
+    
+    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    
     setRandomColor(color);
   };
 
@@ -82,7 +83,7 @@ function Post({ currentUser }: IPost) {
           <div className={style.userInfo}>
             <div className={style.userName}>
               {name}
-              <UserCircle color="var(--primary)" weight="fill" />
+              <SealCheck color="var(--primary)" size={18} weight="fill" />
             </div>
             <div className={style.userDate}>
               <DotOutline weight="fill" size={26} />

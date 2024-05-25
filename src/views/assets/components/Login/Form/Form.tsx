@@ -87,7 +87,7 @@ export default function FormLogin({ switchState, onToastChange }: IFormLogin) {
         <TextField
           fullWidth
           type="email"
-          label="Email"
+          label="E-mail"
           variant="outlined"
           size="small"
           color={switchState ? 'secondary' : 'primary'}

@@ -268,7 +268,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
               />
             </div>
             <div className={style.inputContainer}>
-              <label htmlFor="userEmail">Email</label>
+              <label htmlFor="userEmail">E-mail</label>
               <input
                 id="userEmail"
                 type="text"
