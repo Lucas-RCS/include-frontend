@@ -185,12 +185,14 @@ function NewPost({ User, sendNewPostData }: INewPost) {
 
   const newPost = () => {
     const post = {
-      text: textAreaValue,
-      code,
-      language: languageName,
-      image: selectedImage,
+      body: {
+        text: textAreaValue,
+        code,
+        language: languageName[0] ? languageName[0] : '',
+        image: selectedImage ? selectedImage : "",
+      },
     };
-    sendNewPostData(JSON.stringify(post));
+    sendNewPostData(post);
     
     setTextAreaValue('');
     setCode('');

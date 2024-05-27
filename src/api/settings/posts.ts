@@ -24,6 +24,44 @@ const apiSettings = {
     },
     null,
   ],
+  updatePost: (id: number, data: any): [Object, Object | null] => [
+    {
+      url: 'post/' + id + '/edit',
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data,
+    },
+    null,
+  ],
+  deletePost: (id: number, data: any): [Object, Object | null] => [
+    {
+      url: 'post/' + id + '/edit',
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data,
+    },
+    null,
+  ],
+  like: (id: number, status: any): [Object, Object | null] => [
+    {
+      url: '/feed/post/' + id + '/like',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data: {
+        statusLike: status,
+      },
+    },
+    null,
+  ],
 };
 
 export default apiSettings;

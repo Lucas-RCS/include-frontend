@@ -11,4 +11,19 @@ export const newPost = (data: any) => {
   return Connection.getApiResult(...config);
 };
 
+export const updatePost = (id: any, data: any) => {
+  const config = setting.updatePost(id, data);
+  return Connection.getApiResult(...config);
+};
+
+export const deletePost = (id: any, data: any) => {
+  const config = setting.deletePost(id, data);
+  return Connection.getApiResult(...config);
+};
+
+export const likes = (id: any, status: boolean) => {
+  const config = setting.like(id, status);
+  return Connection.getApiResult(...config);
+};
+
 export default feed;

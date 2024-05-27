@@ -55,12 +55,21 @@
   .content {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-sm);
+    gap: var(--gap-xlt);
 
     .textPost {
       padding: var(--padding-sm) var(--padding-md);
       font-size: var(--fnt-sz-sm);
       color: var(--text-l);
+    }
+
+    .body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--padding-sm) var(--padding-md);
     }
   }
 
@@ -83,6 +92,7 @@
       color: var(--text-g);
       background-color: var(--background);
     }
+
     .comments {
       display: flex;
       align-items: center;

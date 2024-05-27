@@ -8,6 +8,9 @@ import {
   SealCheck,
 } from '@phosphor-icons/react';
 import moment from 'moment';
+import { userList } from '../../../../api/hooks/user';
+
+import CodeEditor from '@uiw/react-textarea-code-editor';
 
 interface IPost {
   currentUser: {
@@ -19,26 +22,71 @@ interface IPost {
     jobs: string[];
     userImg: string;
   };
+  post: {
+    id: number;
+    author: number;
+    body: {
+      text: string;
+      code: string;
+      language: string;
+      image: string;
+    };
+    date: string;
+    updateDate: string;
+    likes: number;
+    comments: [];
+    images: [];
+    likesIdUser: [];
+  };
 }
 
-function Post({ currentUser }: IPost) {
+function Post({ currentUser, post }: IPost) {
   const [likeState, setLikeState] = useState(false);
   const [randomColor, setRandomColor] = useState('');
+  const [usersList, setUsersList] = useState([]);
+  const [userName, setUserName] = useState('');
+  const [languageName] = useState(post.body.language);
+  const [code, setCode] = useState(post.body.code);
+  const [selectedImage] = useState<string | null>(
+    post.body.image,
+  );
+
+  useEffect(() => {
+    getUserList();
+    generateRandomColor();
+  }, []);
+
+  const getUserList = () => {
+    userList()
+      .then((response) => {
+        const users = response[0].content;
+        setUsersList(users);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const findUserNameById = (userId: number, usersList: any[]) => {
+    const user = usersList.find((user) => user.id === userId);
+    return user ? user.name : '';
+  };
+
+  useEffect(() => {
+    const userName = findUserNameById(post.author, usersList);
+    setUserName(userName);
+  }, [post.author, usersList]);
 
   // Função para gerar uma cor aleatória
   const generateRandomColor = () => {
     const hue = Math.floor(Math.random() * 360);
     const saturation = 60;
     const lightness = 50;
-    
+
     const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-    
+
     setRandomColor(color);
   };
-
-  useEffect(() => {
-    generateRandomColor();
-  }, []);
 
   const handleLike = () => {
     setLikeState(!likeState);
@@ -46,10 +94,16 @@ function Post({ currentUser }: IPost) {
 
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
-  const name = 'User Name';
+
+  const formatDateForMoment = (updateDate: string) => {
+    const formattedDate = moment(updateDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    return formattedDate;
+  };
 
   moment.locale('pt-br');
-  const datePost = moment('2024-05-25T15:30:00').startOf('minute').fromNow();
+  const datePost = moment(formatDateForMoment(post.updateDate))
+    .startOf('days')
+    .fromNow();
 
   return (
     <div className={style.container}>
@@ -70,19 +124,19 @@ function Post({ currentUser }: IPost) {
                 <span
                   style={{
                     color:
-                      currentUser?.name !== name
+                      currentUser?.name !== userName
                         ? randomColor
                         : 'var(--primary)',
                   }}
                 >
-                  {name && name.substring(0, 2).toUpperCase()}
+                  {userName && userName.substring(0, 2).toUpperCase()}
                 </span>
               )}
             </IconButton>
           </div>
           <div className={style.userInfo}>
             <div className={style.userName}>
-              {name}
+              {userName}
               <SealCheck color="var(--primary)" size={18} weight="fill" />
             </div>
             <div className={style.userDate}>
@@ -94,13 +148,38 @@ function Post({ currentUser }: IPost) {
       </div>
       <div className={style.content}>
         <div className={style.textPost}>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            vehicula, nisl sed tincidunt fermentum, nunc justo fringilla nunc,
-            quis ultricies justo mi et nunc. Nullam vehicula, nisl sed tincidunt
-            fermentum, nunc justo fringilla nunc, quis ultricies justo mi et
-            nunc.
-          </p>
+          <p>{post.body.text}</p>
+        </div>
+        <div className={style.body}>
+        {code ? (
+          <CodeEditor
+            value={code}
+            language={languageName}
+            readOnly
+            onChange={(evn) => setCode(evn.target.value)}
+            style={{
+              width: '100%',
+              height: '100%',
+              maxHeight: '30dvh',
+              borderRadius: 'var(--bd-rds-lt)',
+              backgroundColor: 'var(--background)',
+              overflowY: 'auto',
+            }}
+          />
+        ) : null}
+        {selectedImage ? (
+          <img
+            src={selectedImage}
+            alt="Post"
+            style={{
+              width: '100%',
+              height: '100%',
+              maxHeight: '30dvh',
+              borderRadius: 'var(--bd-rds-lt)',
+              objectFit: 'cover',
+            }}
+          />
+        ) : null}
         </div>
       </div>
       <div className={style.footer}>
@@ -111,13 +190,13 @@ function Post({ currentUser }: IPost) {
           >
             <Heart weight={likeState ? 'fill' : 'bold'} />
           </IconButton>
-          <span>100 likes</span>
+          <span>{post.likes} likes</span>
         </div>
         <div className={style.comments}>
           <IconButton color="default">
             <ChatCircleDots weight="regular" />
           </IconButton>
-          <span>100 comentarios</span>
+          <span>{post.comments.length} comentarios</span>
         </div>
       </div>
     </div>
