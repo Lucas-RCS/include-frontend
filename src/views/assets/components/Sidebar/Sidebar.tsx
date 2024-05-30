@@ -62,7 +62,7 @@ function Sidebar({ onViewChange, User }: ISidebar) {
           <span className={style.perfil_user_job}>
             {User && User.jobs && User.jobs.length > 0
               ? User.jobs.join(', ')
-              : 'Carregando...'}
+              : 'Aprendendo...'}
           </span>
         </div>
       </div>

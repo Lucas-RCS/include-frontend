@@ -4,7 +4,8 @@ import Post from '../Post/Post';
 
 import { feed, newPost } from '../../../../api/hooks/posts';
 import { useEffect, useState } from 'react';
-import { Alert, Snackbar, Slide } from '@mui/material';
+import { Alert, Snackbar, Slide, Fab } from '@mui/material';
+import { CaretUp } from '@phosphor-icons/react';
 
 interface IHome {
   User: {
@@ -18,8 +19,25 @@ interface IHome {
   };
 }
 
+interface Post {
+  id: number;
+  author: number;
+  body: {
+    text: string;
+    code: string;
+    language: string;
+    image: string;
+  };
+  date: string;
+  updateDate: string;
+  likes: number;
+  comments: [];
+  images: [];
+  likesIdUser: [];
+}
+
 function Home({ User }: IHome) {
-  const [feedPost, setFeedPost] = useState([]);
+  const [feedPost, setFeedPost] = useState<Post[]>([]);
   const [statusPost, setStatusPost] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -105,9 +123,15 @@ function Home({ User }: IHome) {
       )}
       <NewPost User={User} sendNewPostData={createNewPost} />
       <div className={style.content}>
-        {feedPost.map((post) => (
-          <Post post={post} currentUser={User} />
-        ))}
+        {feedPost.length > 0 ? (
+          feedPost.map((post) => (
+            <Post key={post.id} post={post} currentUser={User} updateFeed={getFeed} />
+          ))
+        ) : (
+          <div className={style.noPost}>
+            <span>Nenhuma postagem ainda...</span>
+          </div>
+        )}
       </div>
     </div>
   );

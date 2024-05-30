@@ -48,7 +48,7 @@ const apiSettings = {
     },
     null,
   ],
-  like: (id: number, status: any): [Object, Object | null] => [
+  like: (id: number, status: boolean): [Object, Object | null] => [
     {
       url: '/feed/post/' + id + '/like',
       method: 'POST',
@@ -56,9 +56,9 @@ const apiSettings = {
         Accept: 'application/json',
         'Content-Type': 'application/json:charset=UTF-8',
       },
-      data: {
+      data: JSON.stringify({
         statusLike: status,
-      },
+      }),
     },
     null,
   ],

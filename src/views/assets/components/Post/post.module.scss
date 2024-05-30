@@ -14,39 +14,63 @@
 
     .user {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: var(--gap-sm);
+      width: 100%;
+      position: relative;
 
-      .userAvatar {
-        img {
-          width: 26px;
-          height: 100%;
+      .contentUser {
+        display: flex;
+        align-items: center;
+        gap: var(--gap-sm);
+
+        .userAvatar {
+          img {
+            width: 26px;
+            height: 100%;
+          }
         }
 
-        span {
-          font-size: var(--fnt-sz-lg);
+        .userInfo {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          gap: var(--gap-sm);
+
+          .userName {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-lt);
+            font-size: var(--fnt-sz-md);
+            color: var(--text-l);
+          }
+
+          .userDate {
+            display: flex;
+            align-items: center;
+            font-size: var(--fnt-sz-lt);
+            color: var(--text-g);
+          }
         }
       }
 
-      .userInfo {
+      .actions {
         display: flex;
-        align-items: center;
-        width: 100%;
-        gap: var(--gap-sm);
+        position: relative;
 
-        .userName {
+        .dropdown {
           display: flex;
+          justify-content: center;
           align-items: center;
-          gap: var(--gap-lt);
-          font-size: var(--fnt-sz-md);
-          color: var(--text-l);
-        }
-
-        .userDate {
-          display: flex;
-          align-items: center;
-          font-size: var(--fnt-sz-lt);
-          color: var(--text-g);
+          flex-direction: column;
+          position: absolute;
+          top: calc(100% + 0.3dvh );
+          right: 0;
+          gap: var(--gap-xs);
+          border-radius: var(--bd-rds-sm);
+          background-color: var(--background);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          z-index: 999;
         }
       }
     }
@@ -56,6 +80,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-xlt);
+    z-index: -1;
 
     .textPost {
       padding: var(--padding-sm) var(--padding-md);
@@ -63,7 +88,7 @@
       color: var(--text-l);
     }
 
-    .body{
+    .body {
       display: flex;
       flex-direction: column;
       justify-content: center;

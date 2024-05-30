@@ -8,6 +8,7 @@ import {
   Select,
   SelectChangeEvent,
   useTheme,
+  Avatar,
 } from '@mui/material';
 import style from './newpost.module.scss';
 import { Broom, Code, Image, PaperPlaneTilt } from '@phosphor-icons/react';
@@ -189,11 +190,11 @@ function NewPost({ User, sendNewPostData }: INewPost) {
         text: textAreaValue,
         code,
         language: languageName[0] ? languageName[0] : '',
-        image: selectedImage ? selectedImage : "",
+        image: selectedImage ? selectedImage : '',
       },
     };
     sendNewPostData(post);
-    
+
     setTextAreaValue('');
     setCode('');
     setLanguageName([]);
@@ -201,28 +202,32 @@ function NewPost({ User, sendNewPostData }: INewPost) {
     if (iptRef.current) {
       iptRef.current.value = '';
     }
-
   };
 
   return (
     <>
       <div className={style.container}>
         <div className={style.msg}>
-          <IconButton
+          <Avatar
             color="primary"
             sx={{
               backgroundColor: 'var(--background)',
-              borderRadius: 'var(--bd-rds-sm)',
+              padding: 'var(--padding-md)',
             }}
           >
             {image ? (
               <img src={`${image}`} alt="User Icon" />
             ) : (
-              <span className={style.user_icon}>
+              <span
+                style={{
+                  color: 'var(--primary)',
+                  fontWeight: 'var(--fnt-wg-lg)',
+                }}
+              >
                 {User && User.name.substring(0, 2).toUpperCase()}
               </span>
             )}
-          </IconButton>
+          </Avatar>
           <textarea
             className={style.textarea}
             placeholder="Faça uma nova postagem.."
@@ -286,7 +291,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
           />
           <IconButton
             onClick={() => {
-              setTextAreaValue("");
+              setTextAreaValue('');
               setCode('');
               setLanguageName([]);
               setSelectedImage(null);

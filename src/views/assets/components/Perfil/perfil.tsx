@@ -13,7 +13,7 @@ import {
   Slide,
   Alert,
 } from '@mui/material';
-import { Pencil } from '@phosphor-icons/react';
+import { FloppyDisk, Pencil } from '@phosphor-icons/react';
 import { colorsLanguages } from '../../../../utils/colorsLanguages';
 import { useState } from 'react';
 import Modal from '../Modal/modal';
@@ -251,6 +251,8 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
         className={style.modalContainer}
         open={openModalUser}
         onClose={closeModal}
+        btnText='Salvar'
+        iconBtn={<FloppyDisk weight="fill" />}
       >
         <div className={style.headerModal}>
           <span>Atualize os seus dados!</span>
