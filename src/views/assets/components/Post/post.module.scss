@@ -64,13 +64,13 @@
           align-items: center;
           flex-direction: column;
           position: absolute;
-          top: calc(100% + 0.3dvh );
-          right: 0;
+          top: calc(100% + 0.4dvh);
+          right: calc(0% - 0.5dvh);
           gap: var(--gap-xs);
           border-radius: var(--bd-rds-sm);
           background-color: var(--background);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-          z-index: 999;
+          z-index: 2;
         }
       }
     }
@@ -128,6 +128,111 @@
       font-weight: var(--fnt-wg-lg);
       color: var(--text-g);
       background-color: var(--background);
+    }
+  }
+}
+.container_modal {
+  display: flex;
+  position: absolute;
+  width: 90dvw;
+  height: 90dvh;
+  z-index: 1000;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0.5dvh;
+    right: 0.5dvw;
+    z-index: 1000;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    padding: var(--padding-md);
+    gap: var(--gap-md);
+    border-radius: var(--bd-rds-lt) 0 0 var(--bd-rds-lt);
+    background-color: var(--backgroundGlass);
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--padding-lt);
+    gap: var(--gap-md);
+    background-color: var(--components);
+    overflow-y: auto;
+
+    .modalPost {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-md);
+      padding: var(--padding-lt);
+      padding-bottom: 0;
+
+      .modalPostHeader {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--gap-md);
+
+        .user {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-sm);
+
+          .contentNameUser {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .userName {
+              display: flex;
+              align-items: center;
+              gap: var(--gap-xlt);
+              font-size: var(--fnt-sz-md);
+              color: var(--text-l);
+            }
+            .userJob{
+              margin-top: -6px;
+              font-size: var(--fnt-sz-lt);
+              color: var(--text-g);
+              width: 100%;
+              max-width: 200px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+
+      .commentText{
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--padding-lt);
+        padding-block: 0;
+        font-size: var(--fnt-sz-sm);
+        color: var(--text-l);
+
+        .postDate{
+          display: flex;
+          align-items: center;
+          font-size: var(--fnt-sz-lt);
+          color: var(--text-g);
+
+          ::first-letter{
+            text-transform: uppercase;
+          }
+        }
+      }
     }
   }
 }

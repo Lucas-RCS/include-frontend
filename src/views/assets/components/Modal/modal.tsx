@@ -10,6 +10,8 @@ interface IModal {
   className?: string;
   btnText?: string;
   iconBtn?: React.ReactNode;
+  closeBtnFalse?: boolean;
+  styleCss?: React.CSSProperties;
 }
 
 function Modal({
@@ -19,6 +21,8 @@ function Modal({
   className,
   btnText,
   iconBtn,
+  closeBtnFalse,
+  styleCss,
 }: IModal) {
   const [show, setShow] = useState(open);
 
@@ -33,18 +37,20 @@ function Modal({
 
   return (
     <div className={show ? style.modal : style.modalHidden}>
-      <div className={className ? className : style.modalContent}>
+      <div className={className ? className : style.modalContent} style={styleCss ? styleCss : {}}>
         {children}
-        <div className={style.footer}>
-          <Button
-            color="primary"
-            variant="contained"
-            endIcon={iconBtn ? iconBtn : <PaperPlaneTilt weight="fill" />}
-            onClick={handleClose}
-          >
-            {btnText ? btnText : 'Enviar'}
-          </Button>
-        </div>
+        { !closeBtnFalse &&
+          <div className={style.footer}>
+            <Button
+              color="primary"
+              variant="contained"
+              endIcon={iconBtn ? iconBtn : <PaperPlaneTilt weight="fill" />}
+              onClick={handleClose}
+            >
+              {btnText ? btnText : 'Enviar'}
+            </Button>
+          </div>
+        }
       </div>
     </div>
   );

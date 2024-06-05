@@ -44,6 +44,7 @@ function Sidebar({ onViewChange, User }: ISidebar) {
             backgroundColor: 'var(--components)',
             borderRadius: 'var(--bd-rds-xl)',
             padding: 'var(--padding-lt)',
+            minWidth: '42px'
           }}
           onClick={() => handleButtonClick('perfil')}
         >
