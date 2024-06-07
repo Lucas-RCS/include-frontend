@@ -1,6 +1,6 @@
 {
   "name": "include-app",
-  "version": "2.0.0",
+  "version": "2.5.0",
   "description": "A desktop social network developed with Electron and React aimed at Developers",
   "license": "MIT",
   "main": "./dist/main/main.js",

@@ -26,4 +26,9 @@ export const likes = (id: any, status: boolean) => {
   return Connection.getApiResult(...config);
 };
 
+export const newComment = (id: any, data: any) => {
+  const config = setting.newComment(id, data);
+  return Connection.getApiResult(...config);
+}
+
 export default feed;

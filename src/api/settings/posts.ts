@@ -62,6 +62,18 @@ const apiSettings = {
     },
     null,
   ],
+  newComment: (id: number, data: any): [Object, Object | null] => [
+    {
+      url: '/post/' + id + '/comment/publish',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data,
+    },
+    null,
+  ],
 };
 
 export default apiSettings;

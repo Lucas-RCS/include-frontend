@@ -15,8 +15,10 @@ import moment from 'moment';
 import { userList } from '../../../../api/hooks/user';
 import { likes } from '../../../../api/hooks/posts';
 import Modal from '../Modal/modal';
+import { newComment } from '../../../../api/hooks/posts';
 
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import NewComments from './NewComment/NewComment';
 
 interface IPost {
   currentUser: {
@@ -57,6 +59,7 @@ function Post({ currentUser, post, updateFeed }: IPost) {
   const [selectedImage] = useState<string | null>(post.body.image);
   const [dropdown, setDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   useEffect(() => {
     getUserList();
@@ -115,19 +118,25 @@ function Post({ currentUser, post, updateFeed }: IPost) {
       });
   };
 
+  const createNewComment = (data: any) => {
+    newComment(post.id, data)
+      .then((response) => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
 
   const formatDateForMoment = (updateDate: string) => {
-    const formattedDate = moment(updateDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    const formattedDate = moment(updateDate, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
     return formattedDate;
   };
-
+  
   moment.locale('pt-br');
-  const datePost = moment(formatDateForMoment(post.updateDate))
-    .startOf('days')
-    .fromNow();
-
+  const datePost = moment(formatDateForMoment(post.updateDate)).fromNow();
+  
   const findUserPostInUserList = (userId: number, usersList: any[]) => {
     const user = usersList.find((user) => user.id === userId);
     return user;
@@ -198,6 +207,9 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                     <IconButton
                       size="large"
                       color="error"
+                      onClick={() => {
+                        setOpenModalDelete(true);
+                      }}
                       sx={{ background: 'var(--background)', zIndex: 999 }}
                     >
                       <Trash size={20} />
@@ -262,6 +274,24 @@ function Post({ currentUser, post, updateFeed }: IPost) {
           </div>
         </div>
       </div>
+      <Modal
+        className={style.container_modal_delete}
+        open={openModalDelete}
+        closeBtnFalse
+        onClose={() => {}}
+      >
+        <div className={style.modalDelete}>
+          <div className={style.modalDeleteContent}>
+            <p>Tem certeza que deseja excluir essa publicação?</p>
+            <div className={style.modalDeleteActions}>
+              <button onClick={() => setOpenModalDelete(false)}>
+                Cancelar
+              </button>
+              <button>Excluir</button>
+            </div>
+          </div>
+        </div>
+      </Modal>
       <Modal
         className={style.container_modal}
         open={openModal}
@@ -332,7 +362,7 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                 </Avatar>
                 <div className={style.contentNameUser}>
                   <div className={style.userName}>
-                    {userName}
+                    <span>{userName}</span>
                     <SealCheck color="var(--primary)" size={18} weight="fill" />
                   </div>
                   <div className={style.userJob}>
@@ -348,7 +378,7 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                 </div>
               </div>
             </div>
-            <div className={style.commentText}>
+            <div className={style.modalPostContent}>
               <p>{post.body.text}</p>
               {code ? (
                 <CodeEditor
@@ -368,11 +398,18 @@ function Post({ currentUser, post, updateFeed }: IPost) {
               ) : null}
               <div className={style.postDate}>
                 <span>{extendDatePost}</span>
+                <DotOutline weight="fill" size={20} />
+                <span>{post.comments.length} Comentários</span>
               </div>
             </div>
           </div>
           <Divider />
-          <div className={style.comments}></div>
+          <div className={style.comments}>
+            <NewComments
+              User={currentUser}
+              sendNewCommentData={createNewComment}
+            />
+          </div>
         </div>
       </Modal>
     </>

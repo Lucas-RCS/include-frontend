@@ -4,8 +4,7 @@ import Post from '../Post/Post';
 
 import { feed, newPost } from '../../../../api/hooks/posts';
 import { useEffect, useState } from 'react';
-import { Alert, Snackbar, Slide, Fab } from '@mui/material';
-import { CaretUp } from '@phosphor-icons/react';
+import { Alert, Snackbar, Slide } from '@mui/material';
 
 interface IHome {
   User: {

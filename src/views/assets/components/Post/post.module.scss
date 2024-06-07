@@ -109,6 +109,8 @@
     .like {
       display: flex;
       align-items: center;
+      min-width: 120px;
+      max-width: 120px;
       gap: var(--gap-lt);
       padding-inline: var(--padding-sm);
       border-radius: var(--bd-rds-md);
@@ -121,6 +123,8 @@
     .comments {
       display: flex;
       align-items: center;
+      min-width: 170px;
+      max-width: 170px;
       gap: var(--gap-lt);
       padding-inline: var(--padding-sm);
       border-radius: var(--bd-rds-md);
@@ -131,6 +135,17 @@
     }
   }
 }
+
+.container_modal_delete {
+  display: flex;
+  position: absolute;
+  width: 40dvw;
+  height: 20dvh;
+  border-radius: var(--bd-rds-sm);
+  z-index: 1000;
+  background-color: var(--components);
+}
+
 .container_modal {
   display: flex;
   position: absolute;
@@ -198,8 +213,15 @@
               gap: var(--gap-xlt);
               font-size: var(--fnt-sz-md);
               color: var(--text-l);
+
+              span {
+                max-width: 160px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
             }
-            .userJob{
+            .userJob {
               margin-top: -6px;
               font-size: var(--fnt-sz-lt);
               color: var(--text-g);
@@ -213,7 +235,7 @@
         }
       }
 
-      .commentText{
+      .modalPostContent {
         display: flex;
         flex-direction: column;
         gap: var(--gap-sm);
@@ -222,17 +244,23 @@
         font-size: var(--fnt-sz-sm);
         color: var(--text-l);
 
-        .postDate{
+        .postDate {
           display: flex;
           align-items: center;
           font-size: var(--fnt-sz-lt);
           color: var(--text-g);
+          white-space: nowrap;
 
-          ::first-letter{
+          ::first-letter {
             text-transform: uppercase;
           }
         }
       }
+    }
+
+    .comments {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
