@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { Avatar, Button, IconButton } from '@mui/material';
 import style from './sidebar.module.scss';
 import {
   CaretRight,
@@ -20,42 +20,41 @@ interface ISidebar {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
 }
 
 function Sidebar({ onViewChange, User }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
-
+  
   const handleButtonClick = (view: string) => {
     onViewChange(view);
     setActiveButton(view);
   };
 
-  const image = '';
-  // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
-
   return (
     <div className={style.container_sidebar}>
       <div className={style.sidebar_perfil}>
-        <IconButton
+        <Avatar
           color="primary"
           sx={{
             backgroundColor: 'var(--components)',
             borderRadius: 'var(--bd-rds-xl)',
-            padding: 'var(--padding-lt)',
-            minWidth: '42px'
+            cursor: 'pointer',
           }}
           onClick={() => handleButtonClick('perfil')}
         >
-          {image ? (
-            <img src={`${image}`} alt="User Icon" />
+          {User && User.imageIconProfile ? (
+            <img src={`${User.imageIconProfile}`} alt="User Icon" style={{
+              borderRadius: 'var(--bd-rds-xl)',
+              minHeight: '28px',
+            }}/>
           ) : (
             <span className={style.user_icon}>
               {User && User.name.substring(0, 2).toUpperCase()}
             </span>
           )}
-        </IconButton>
+        </Avatar>
         <div className={style.perfil_user}>
           <span className={style.perfil_user_name}>
             {User && User.name ? User.name : 'Carregando...'}

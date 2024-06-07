@@ -36,15 +36,14 @@ const apiSettings = {
     },
     null,
   ],
-  deletePost: (id: number, data: any): [Object, Object | null] => [
+  deletePost: (id: number): [Object, Object | null] => [
     {
-      url: 'post/' + id + '/edit',
+      url: 'post/' + id + '/delete',
       method: 'DELETE',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json:charset=UTF-8',
       },
-      data,
     },
     null,
   ],

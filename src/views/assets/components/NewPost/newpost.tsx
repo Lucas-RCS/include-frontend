@@ -24,7 +24,7 @@ interface INewPost {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
   sendNewPostData: (post: any) => void;
 }
@@ -128,9 +128,6 @@ function NewPost({ User, sendNewPostData }: INewPost) {
   const [code, setCode] = useState(``);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const image = '';
-  // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
-
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
@@ -211,12 +208,14 @@ function NewPost({ User, sendNewPostData }: INewPost) {
           <Avatar
             color="primary"
             sx={{
-              backgroundColor: 'var(--background)',
-              padding: 'var(--padding-md)',
+              backgroundColor:
+                User && User.imageIconProfile ? '' : 'var(--background)',
+              padding: User && User.imageIconProfile ? '' : 'var(--padding-md)',
+              borderRadius: 'var(--bd-rds-xl)',
             }}
           >
-            {image ? (
-              <img src={`${image}`} alt="User Icon" />
+            {User && User.imageIconProfile ? (
+              <img src={`${User.imageIconProfile}`} alt="User Icon" />
             ) : (
               <span
                 style={{

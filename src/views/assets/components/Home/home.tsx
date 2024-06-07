@@ -14,7 +14,7 @@ interface IHome {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
 }
 

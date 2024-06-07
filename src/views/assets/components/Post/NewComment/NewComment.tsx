@@ -11,7 +11,7 @@ interface INewComment {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
   sendNewCommentData: (post: any) => void;
 }

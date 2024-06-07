@@ -17,13 +17,15 @@
     background-color: var(--background);
 
     img {
-      width: 26px;
+      width: 100%;
       height: 100%;
+      object-fit: cover;
     }
 
     .user_icon{
       font-size: var(--fnt-sz-md);
       font-weight: var(--fnt-wg-lg);
+      color: var(--primary);
     }
 
     .perfil_user {

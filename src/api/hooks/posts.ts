@@ -16,8 +16,8 @@ export const updatePost = (id: any, data: any) => {
   return Connection.getApiResult(...config);
 };
 
-export const deletePost = (id: any, data: any) => {
-  const config = setting.deletePost(id, data);
+export const deletePost = (id: any) => {
+  const config = setting.deletePost(id);
   return Connection.getApiResult(...config);
 };
 

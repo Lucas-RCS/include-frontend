@@ -122,7 +122,7 @@ function FormUserModal(props: IFormUserModal) {
   const [jobsName, setJobsName] = React.useState<string[]>([]);
   const [birthDate, setBirthDate] = React.useState<string>('');
   const [formData, setFormData] = React.useState({
-    userImg: '',
+    imageIconProfile: '',
     birthDate: '',
     skills: [],
     jobs: [],
@@ -136,7 +136,7 @@ function FormUserModal(props: IFormUserModal) {
       case 'jobs':
         setJobsName(value);
         break;
-      case 'userImg':
+      case 'imageIconProfile':
         setSelectedImage(value);
         break;
       default:
@@ -158,14 +158,14 @@ function FormUserModal(props: IFormUserModal) {
       skillName!== formData.skills ||
       jobsName!== formData.jobs ||
       userBirthDate!== formData.birthDate ||
-      selectedImage!== formData.userImg
+      selectedImage!== formData.imageIconProfile
     ) {
       const updatedFormData = {
        ...formData,
         skills: skillName,
         jobs: jobsName,
         birthDate: userBirthDate,
-        userImg: selectedImage,
+        imageIconProfile: selectedImage,
       };
   
       props.formData(updatedFormData);
@@ -229,7 +229,7 @@ function FormUserModal(props: IFormUserModal) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedImage(e.target?.result as string);
-        handleFormChange('userImg', e.target?.result as string);
+        handleFormChange('imageIconProfile', e.target?.result as string);
       };
       reader.readAsDataURL(event.target.files[0]);
     }

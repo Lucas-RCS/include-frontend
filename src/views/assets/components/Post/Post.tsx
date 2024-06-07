@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import style from './post.module.scss';
-import { Avatar, Divider, IconButton } from '@mui/material';
+import { Avatar, Button, Divider, IconButton } from '@mui/material';
 import {
   ChatCircleDots,
   DotOutline,
   DotsThreeOutlineVertical,
+  FloppyDisk,
   Heart,
   Pencil,
   SealCheck,
@@ -15,7 +16,7 @@ import moment from 'moment';
 import { userList } from '../../../../api/hooks/user';
 import { likes } from '../../../../api/hooks/posts';
 import Modal from '../Modal/modal';
-import { newComment } from '../../../../api/hooks/posts';
+import { newComment, deletePost } from '../../../../api/hooks/posts';
 
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import NewComments from './NewComment/NewComment';
@@ -28,7 +29,7 @@ interface IPost {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
   post: {
     id: number;
@@ -60,6 +61,11 @@ function Post({ currentUser, post, updateFeed }: IPost) {
   const [dropdown, setDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [editPost, setEditPost] = useState(false);
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
+  const [textAreaValue, setTextAreaValue] = useState<string | null>(
+    post.body.text,
+  );
 
   useEffect(() => {
     getUserList();
@@ -126,17 +132,30 @@ function Post({ currentUser, post, updateFeed }: IPost) {
       });
   };
 
+  const postDelete = () => {
+    deletePost(post.id)
+      .then((response) => {
+        setOpenModalDelete(false);
+        updateFeed();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const image = '';
   // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
 
   const formatDateForMoment = (updateDate: string) => {
-    const formattedDate = moment(updateDate, 'DD/MM/YYYY HH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
+    const formattedDate = moment(updateDate, 'DD/MM/YYYY HH:mm:ss').format(
+      'YYYY-MM-DD HH:mm:ss',
+    );
     return formattedDate;
   };
-  
+
   moment.locale('pt-br');
   const datePost = moment(formatDateForMoment(post.updateDate)).fromNow();
-  
+
   const findUserPostInUserList = (userId: number, usersList: any[]) => {
     const user = usersList.find((user) => user.id === userId);
     return user;
@@ -145,6 +164,19 @@ function Post({ currentUser, post, updateFeed }: IPost) {
   const extendDatePost = moment(formatDateForMoment(post.updateDate)).format(
     'LLLL',
   );
+
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const value = event.target.value;
+    setTextAreaValue(value);
+    setTextAreaHeight('auto');
+    const scrollHeight = event.target.scrollHeight;
+    const clientHeight = event.target.clientHeight;
+    if (scrollHeight > clientHeight) {
+      setTextAreaHeight(`${scrollHeight}px`);
+    }
+  };
 
   return (
     <>
@@ -190,6 +222,50 @@ function Post({ currentUser, post, updateFeed }: IPost) {
             </div>
             {currentUser?.name == userName ? (
               <div className={style.actions}>
+                {editPost ? (
+                  <div
+                    style={{
+                      display: 'flex',
+                      gap: 'var(--gap-sm)',
+                    }}
+                  >
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      color="error"
+                      sx={{
+                        borderRadius: 'var(--bd-rds-md)',
+                        background: 'var(--background)',
+                        border: '0',
+                        paddingInline: 'var(--padding-sm)',
+                        '&:hover': {
+                          border: '0',
+                        },
+                      }}
+                      onClick={() => setEditPost(false)}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      color="primary"
+                      sx={{
+                        borderRadius: 'var(--bd-rds-md)',
+                        background: 'var(--background)',
+                        border: '0',
+                        paddingInline: 'var(--padding-sm)',
+                        '&:hover': {
+                          border: '0',
+                        },
+                      }}
+                      endIcon={<FloppyDisk size={20} weight='fill' />}
+                      onClick={() => setEditPost(false)}
+                    >
+                      Salvar
+                    </Button>
+                  </div>
+                ) : null}
                 <IconButton
                   onClick={() => setDropdown(!dropdown)}
                   sx={{ background: 'var(--background)' }}
@@ -200,6 +276,10 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                   <div className={style.dropdown}>
                     <IconButton
                       size="large"
+                      onClick={() => {
+                        setEditPost(true);
+                        setDropdown(false);
+                      }}
                       sx={{ background: 'var(--background)', zIndex: 999 }}
                     >
                       <Pencil size={20} />
@@ -222,7 +302,15 @@ function Post({ currentUser, post, updateFeed }: IPost) {
         </div>
         <div className={style.content}>
           <div className={style.textPost}>
-            <p>{post.body.text}</p>
+            <textarea
+              className={editPost ? style.textArea : style.textAreaDefault}
+              maxLength={300}
+              rows={1}
+              {...(editPost ? { readOnly: false } : { readOnly: true })}
+              value={textAreaValue || ''}
+              style={{ height: textAreaHeight }}
+              onInput={handleTextAreaChange}
+            ></textarea>
           </div>
           <div className={style.body}>
             {code ? (
@@ -280,15 +368,23 @@ function Post({ currentUser, post, updateFeed }: IPost) {
         closeBtnFalse
         onClose={() => {}}
       >
-        <div className={style.modalDelete}>
-          <div className={style.modalDeleteContent}>
-            <p>Tem certeza que deseja excluir essa publicação?</p>
-            <div className={style.modalDeleteActions}>
-              <button onClick={() => setOpenModalDelete(false)}>
-                Cancelar
-              </button>
-              <button>Excluir</button>
-            </div>
+        <div className={style.contentModal}>
+          <span>Tem certeza que deseja excluir essa publicação?</span>
+          <div className={style.modalDeleteActions}>
+            <Button
+              variant="contained"
+              size="small"
+              color="error"
+              onClick={() => {
+                setOpenModalDelete(false);
+                setDropdown(false);
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button variant="contained" size="small" onClick={postDelete}>
+              Excluir
+            </Button>
           </div>
         </div>
       </Modal>

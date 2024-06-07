@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Divider } from '../../elements/common';
 import style from './perfil.module.scss';
 import {
@@ -13,7 +13,7 @@ import {
   Slide,
   Alert,
 } from '@mui/material';
-import { FloppyDisk, Pencil } from '@phosphor-icons/react';
+import { FloppyDisk, Image, Pencil } from '@phosphor-icons/react';
 import { colorsLanguages } from '../../../../utils/colorsLanguages';
 import { useState } from 'react';
 import Modal from '../Modal/modal';
@@ -28,7 +28,7 @@ interface IPerfil {
     birthDate: string;
     skills: string[];
     jobs: string[];
-    userImg: string;
+    imageIconProfile: string;
   };
   onUpdateRequest: () => void;
 }
@@ -47,6 +47,9 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
   const [openModalUser, setOpenModalUser] = useState(false);
   const theme = useTheme();
 
+  const [selectedImage, setSelectedImage] = useState<string>(
+    User.imageIconProfile,
+  );
   const [skillName, setSkillName] = React.useState<string[]>(User.skills);
   const [jobsName, setJobsName] = React.useState<string[]>(User.jobs);
   const [nameUser, setNameUser] = React.useState<string>(User.name);
@@ -73,9 +76,12 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
     );
     userData.skills = skillName;
     userData.jobs = jobsName;
-    console.log(userData);
+    userData.imageIconProfile = selectedImage;
+
     updateUser(userData.id, userData)
       .then((response) => {
+        console.log(userData);
+
         setAlertUserUpdate(true);
         setOpenModalUser(false);
         onUpdateRequest();
@@ -209,6 +215,32 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
     },
   };
 
+  const iptRef = useRef<HTMLInputElement>(null);
+
+  const HandleUserImg = () => {
+    if (iptRef.current) {
+      iptRef.current.click();
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const fileSize = event.target.files[0].size / (1024 * 1024);
+      if (fileSize > 5) {
+        alert(
+          'O arquivo de imagem é muito grande. Por favor, selecione uma imagem de até 5 MB.',
+        );
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
   return (
     <div className={style.container}>
       <Snackbar
@@ -251,13 +283,34 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
         className={style.modalContainer}
         open={openModalUser}
         onClose={closeModal}
-        btnText='Salvar'
+        btnText="Salvar"
         iconBtn={<FloppyDisk weight="fill" />}
       >
         <div className={style.headerModal}>
           <span>Atualize os seus dados!</span>
         </div>
         <div className={style.bodyModal}>
+          <div className={style.perfil_image}>
+            <IconButton
+              className={style.user_img_btn}
+              color="primary"
+              onClick={HandleUserImg}
+            >
+              {selectedImage ? (
+                <img src={selectedImage} alt="User Image" />
+              ) : (
+                <Image size={40} />
+              )}
+              <input
+                type="file"
+                id="images"
+                className={style.ipt_img}
+                accept="image/png, image/jpeg"
+                ref={iptRef}
+                onChange={handleImageChange}
+              />
+            </IconButton>
+          </div>
           <div className={style.sectionModal}>
             <div className={style.inputContainer}>
               <label htmlFor="userName">Nome</label>
@@ -378,8 +431,8 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
       </Modal>
       <div className={style.header}>
         <div className={style.imgUser}>
-          {User.userImg ? (
-            <img src={`${User.userImg}`} alt="Perfil" />
+          {User.imageIconProfile ? (
+            <img src={`${User.imageIconProfile}`} alt="Perfil" />
           ) : (
             <img src={logoInclude} alt="Perfil" />
           )}
