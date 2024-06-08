@@ -2,7 +2,6 @@ import { useState } from 'react';
 import style from './newcomment.module.scss';
 import { Avatar, Button, TextField } from '@mui/material';
 
-
 interface INewComment {
   User: {
     id: number;
@@ -12,6 +11,7 @@ interface INewComment {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
   sendNewCommentData: (post: any) => void;
 }
@@ -21,11 +21,11 @@ function NewComments({ User, sendNewCommentData }: INewComment) {
   const [mensagem, setMensagem] = useState('');
 
   const createNewComment = () => {
-    const data ={
-      bodyComment : {
+    const data = {
+      bodyComment: {
         text: mensagem,
-      }
-    }
+      },
+    };
     sendNewCommentData(data);
     setMensagem('');
   };

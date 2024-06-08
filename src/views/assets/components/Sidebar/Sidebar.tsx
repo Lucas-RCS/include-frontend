@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Avatar, Button, IconButton } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import style from './sidebar.module.scss';
 import {
   CaretRight,
@@ -21,12 +21,13 @@ interface ISidebar {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
 }
 
 function Sidebar({ onViewChange, User }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
-  
+
   const handleButtonClick = (view: string) => {
     onViewChange(view);
     setActiveButton(view);
@@ -45,10 +46,14 @@ function Sidebar({ onViewChange, User }: ISidebar) {
           onClick={() => handleButtonClick('perfil')}
         >
           {User && User.imageIconProfile ? (
-            <img src={`${User.imageIconProfile}`} alt="User Icon" style={{
-              borderRadius: 'var(--bd-rds-xl)',
-              minHeight: '28px',
-            }}/>
+            <img
+              src={`${User.imageIconProfile}`}
+              alt="User Icon"
+              style={{
+                borderRadius: 'var(--bd-rds-xl)',
+                minHeight: '28px',
+              }}
+            />
           ) : (
             <span className={style.user_icon}>
               {User && User.name.substring(0, 2).toUpperCase()}
@@ -79,9 +84,10 @@ function Sidebar({ onViewChange, User }: ISidebar) {
                 startIcon={<Compass weight="fill" />}
                 endIcon={<CaretRight weight="fill" />}
                 sx={{
-                  padding: 'var(--padding-sm)',
                   display: 'flex',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
+                  padding: 'var(--padding-sm)',
+                  paddingInline: 'var(--padding-md)',
                   backgroundColor:
                     activeButton === 'home'
                       ? 'var(--primary)'
@@ -98,9 +104,10 @@ function Sidebar({ onViewChange, User }: ISidebar) {
                 startIcon={<UsersThree weight="fill" />}
                 endIcon={<CaretRight weight="fill" />}
                 sx={{
-                  padding: 'var(--padding-sm)',
                   display: 'flex',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
+                  padding: 'var(--padding-sm)',
+                  paddingInline: 'var(--padding-md)',
                   backgroundColor:
                     activeButton === 'friends'
                       ? 'var(--primary)'
@@ -118,9 +125,10 @@ function Sidebar({ onViewChange, User }: ISidebar) {
                 startIcon={<WechatLogo weight="fill" />}
                 endIcon={<CaretRight weight="fill" />}
                 sx={{
-                  padding: 'var(--padding-sm)',
                   display: 'flex',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
+                  padding: 'var(--padding-sm)',
+                  paddingInline: 'var(--padding-md)',
                   backgroundColor:
                     activeButton === 'chat'
                       ? 'var(--primary)'
@@ -142,9 +150,10 @@ function Sidebar({ onViewChange, User }: ISidebar) {
             startIcon={<UserCircle weight="fill" />}
             endIcon={<CaretRight weight="fill" />}
             sx={{
-              padding: 'var(--padding-sm)',
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
+              padding: 'var(--padding-sm)',
+              paddingInline: 'var(--padding-md)',
               backgroundColor:
                 activeButton === 'perfil'
                   ? 'var(--primary)'

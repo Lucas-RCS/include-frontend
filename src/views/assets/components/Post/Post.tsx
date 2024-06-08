@@ -1,12 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import style from './post.module.scss';
-import { Avatar, Button, Divider, IconButton } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Divider,
+  IconButton,
+  Tooltip,
+  Zoom,
+} from '@mui/material';
 import {
   ChatCircleDots,
   DotOutline,
   DotsThreeOutlineVertical,
+  Eraser,
   FloppyDisk,
   Heart,
+  Image,
   Pencil,
   SealCheck,
   Trash,
@@ -16,7 +25,11 @@ import moment from 'moment';
 import { userList } from '../../../../api/hooks/user';
 import { likes } from '../../../../api/hooks/posts';
 import Modal from '../Modal/modal';
-import { newComment, deletePost } from '../../../../api/hooks/posts';
+import {
+  newComment,
+  deletePost,
+  updatePost,
+} from '../../../../api/hooks/posts';
 
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import NewComments from './NewComment/NewComment';
@@ -30,6 +43,7 @@ interface IPost {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
   post: {
     id: number;
@@ -48,16 +62,22 @@ interface IPost {
     likesIdUser: [];
   };
   updateFeed: () => void;
+  notifyPost: (
+    message: string,
+    type: 'error' | 'warning' | 'info' | 'success',
+  ) => void;
 }
 
-function Post({ currentUser, post, updateFeed }: IPost) {
+function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
   const [likeState, setLikeState] = useState(false);
   const [randomColor, setRandomColor] = useState('');
   const [usersList, setUsersList] = useState([]);
   const [userName, setUserName] = useState('');
   const [languageName] = useState(post.body.language);
   const [code, setCode] = useState(post.body.code);
-  const [selectedImage] = useState<string | null>(post.body.image);
+  const [selectedImage, setSelectedImage] = useState<string | null>(
+    post.body.image,
+  );
   const [dropdown, setDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -137,14 +157,13 @@ function Post({ currentUser, post, updateFeed }: IPost) {
       .then((response) => {
         setOpenModalDelete(false);
         updateFeed();
+        notifyPost('Postagem excluído com sucesso!', 'success');
       })
       .catch((error) => {
         console.log(error);
+        notifyPost('Erro ao excluir postagem!', 'error');
       });
   };
-
-  const image = '';
-  // 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
 
   const formatDateForMoment = (updateDate: string) => {
     const formattedDate = moment(updateDate, 'DD/MM/YYYY HH:mm:ss').format(
@@ -160,6 +179,8 @@ function Post({ currentUser, post, updateFeed }: IPost) {
     const user = usersList.find((user) => user.id === userId);
     return user;
   };
+
+  const authorUserPost = findUserPostInUserList(post.author, usersList);
 
   const extendDatePost = moment(formatDateForMoment(post.updateDate)).format(
     'LLLL',
@@ -178,6 +199,64 @@ function Post({ currentUser, post, updateFeed }: IPost) {
     }
   };
 
+  const iptRef = useRef<HTMLInputElement>(null);
+
+  const HandleUserImg = () => {
+    if (iptRef.current) {
+      iptRef.current.click();
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const fileSize = event.target.files[0].size / (1024 * 1024);
+      if (fileSize > 8) {
+        alert(
+          'O arquivo de imagem é muito grande. Por favor, selecione uma imagem de até 5 MB.',
+        );
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
+
+  const dataUpdatePost = () => {
+    const data = {
+      body: {
+        text: textAreaValue,
+        code,
+        language: languageName ? languageName : '',
+        image: selectedImage ? selectedImage : '',
+      },
+    };
+
+    updatePost(post.id, data)
+      .then((response) => {
+        setEditPost(false);
+        updateFeed();
+        notifyPost('Postagem atualizado com sucesso!', 'success');
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyPost('Erro ao atualizar postagem!', 'error');
+      });
+
+    setEditPost(false);
+  };
+
+  const cancelEditPost = () => {
+    setTextAreaValue(post.body.text);
+    setCode(post.body.code);
+    setSelectedImage(post.body.image);
+
+    setEditPost(false);
+  };
+
   return (
     <>
       <div className={style.container}>
@@ -189,11 +268,24 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                   color="primary"
                   sx={{
                     backgroundColor: 'var(--background)',
-                    padding: 'var(--padding-md)',
+                    padding:
+                      authorUserPost && authorUserPost.imageIconProfile
+                        ? '0'
+                        : 'var(--padding-md)',
+                    borderRadius: 'var(--bd-rds-xl)',
+                    minWidth: '48px',
+                    minHeight: '48px',
                   }}
                 >
-                  {image ? (
-                    <img src={`${image}`} alt="User Icon" />
+                  {authorUserPost && authorUserPost.imageIconProfile ? (
+                    <img
+                      src={`${authorUserPost.imageIconProfile}`}
+                      alt="User Icon"
+                      style={{
+                        borderRadius: 'var(--bd-rds-xl)',
+                        minHeight: '28px',
+                      }}
+                    />
                   ) : (
                     <span
                       style={{
@@ -212,7 +304,24 @@ function Post({ currentUser, post, updateFeed }: IPost) {
               <div className={style.userInfo}>
                 <div className={style.userName}>
                   {userName}
-                  <SealCheck color="var(--primary)" size={18} weight="fill" />
+                  {authorUserPost &&
+                  authorUserPost.jobs.length > 0 &&
+                  authorUserPost.skills.length > 0 &&
+                  authorUserPost.birthDate &&
+                  authorUserPost.imageIconProfile ? (
+                    <Tooltip
+                      title="Usuário verificado"
+                      placement="top"
+                      TransitionComponent={Zoom}
+                      arrow
+                    >
+                      <SealCheck
+                        color="var(--primary)"
+                        size={18}
+                        weight="fill"
+                      />
+                    </Tooltip>
+                  ) : null}
                 </div>
                 <div className={style.userDate}>
                   <DotOutline weight="fill" size={26} />
@@ -242,7 +351,7 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                           border: '0',
                         },
                       }}
-                      onClick={() => setEditPost(false)}
+                      onClick={() => cancelEditPost()}
                     >
                       Cancelar
                     </Button>
@@ -259,8 +368,8 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                           border: '0',
                         },
                       }}
-                      endIcon={<FloppyDisk size={20} weight='fill' />}
-                      onClick={() => setEditPost(false)}
+                      endIcon={<FloppyDisk size={20} weight="fill" />}
+                      onClick={() => dataUpdatePost()}
                     >
                       Salvar
                     </Button>
@@ -317,11 +426,12 @@ function Post({ currentUser, post, updateFeed }: IPost) {
               <CodeEditor
                 value={code}
                 language={languageName}
-                readOnly
+                {...(editPost ? { readOnly: false } : { readOnly: true })}
                 onChange={(evn) => setCode(evn.target.value)}
                 style={{
                   width: '100%',
                   height: '100%',
+                  minHeight: editPost ? '10dvh' : 'auto',
                   maxHeight: '30dvh',
                   borderRadius: 'var(--bd-rds-lt)',
                   backgroundColor: 'var(--background)',
@@ -329,19 +439,68 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                 }}
               />
             ) : null}
-            {selectedImage ? (
-              <img
-                src={selectedImage}
-                alt="Post"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  maxHeight: '60dvh',
-                  borderRadius: 'var(--bd-rds-lt)',
-                  objectFit: 'cover',
-                }}
-              />
-            ) : null}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+                position: 'relative',
+              }}
+            >
+              {selectedImage ? (
+                <>
+                  <img
+                    src={selectedImage}
+                    alt="Post"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      maxHeight: '60dvh',
+                      borderRadius: 'var(--bd-rds-lt)',
+                      objectFit: 'cover',
+                    }}
+                  />
+                  <input
+                    type="file"
+                    id="images"
+                    style={{ display: 'none' }}
+                    accept="image/png, image/jpeg"
+                    ref={iptRef}
+                    onChange={handleImageChange}
+                  />
+                </>
+              ) : null}
+              {editPost && selectedImage ? (
+                <div className={style.editImagePost}>
+                  <IconButton
+                    color="error"
+                    onClick={() => setSelectedImage(null)}
+                    sx={{
+                      background: 'var(--background)',
+                      '&:hover': {
+                        background: 'var(--components)',
+                      },
+                    }}
+                  >
+                    <Eraser size={20} weight="fill" />
+                  </IconButton>
+                  <IconButton
+                    color="success"
+                    onClick={HandleUserImg}
+                    sx={{
+                      background: 'var(--background)',
+                      '&:hover': {
+                        background: 'var(--components)',
+                      },
+                    }}
+                  >
+                    <Image size={20} weight="fill" />
+                  </IconButton>
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
         <div className={style.footer}>
@@ -437,11 +596,24 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                   color="primary"
                   sx={{
                     backgroundColor: 'var(--background)',
-                    padding: 'var(--padding-md)',
+                    padding:
+                      authorUserPost && authorUserPost.imageIconProfile
+                        ? '0'
+                        : 'var(--padding-md)',
+                    borderRadius: 'var(--bd-rds-xl)',
+                    minWidth: '48px',
+                    minHeight: '48px',
                   }}
                 >
-                  {image ? (
-                    <img src={`${image}`} alt="User Icon" />
+                  {authorUserPost && authorUserPost.imageIconProfile ? (
+                    <img
+                      src={`${authorUserPost.imageIconProfile}`}
+                      alt="User Icon"
+                      style={{
+                        borderRadius: 'var(--bd-rds-xl)',
+                        minHeight: '28px',
+                      }}
+                    />
                   ) : (
                     <span
                       style={{
@@ -459,7 +631,24 @@ function Post({ currentUser, post, updateFeed }: IPost) {
                 <div className={style.contentNameUser}>
                   <div className={style.userName}>
                     <span>{userName}</span>
-                    <SealCheck color="var(--primary)" size={18} weight="fill" />
+                    {authorUserPost &&
+                    authorUserPost.jobs.length > 0 &&
+                    authorUserPost.skills.length > 0 &&
+                    authorUserPost.birthDate &&
+                    authorUserPost.imageIconProfile ? (
+                      <Tooltip
+                        title="Usuário verificado"
+                        placement="top"
+                        TransitionComponent={Zoom}
+                        arrow
+                      >
+                        <SealCheck
+                          color="var(--primary)"
+                          size={18}
+                          weight="fill"
+                        />
+                      </Tooltip>
+                    ) : null}
                   </div>
                   <div className={style.userJob}>
                     {findUserPostInUserList(post.author, usersList)?.jobs &&

@@ -26,8 +26,9 @@
 
         .userAvatar {
           img {
-            width: 26px;
+            width: 100%;
             height: 100%;
+            object-fit: cover;
           }
         }
 
@@ -114,7 +115,7 @@
         transition: var(--trns);
 
         &:focus {
-          border: 1px solid var(--primary);
+          border: 1px dashed var(--primary);
         }
       }
     }
@@ -125,6 +126,14 @@
       align-items: center;
       gap: var(--gap-sm);
       padding: var(--padding-lt) var(--padding-md);
+
+      .editImagePost{
+        display: flex;
+        position: absolute;
+        top: 1dvh;
+        right: 1dvw;
+        gap: var(--gap-lt);
+      }
     }
   }
 
@@ -250,6 +259,12 @@
           display: flex;
           align-items: center;
           gap: var(--gap-sm);
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
 
           .contentNameUser {
             display: flex;

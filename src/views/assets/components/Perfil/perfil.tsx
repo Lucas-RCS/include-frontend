@@ -29,6 +29,7 @@ interface IPerfil {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
   onUpdateRequest: () => void;
 }
@@ -80,8 +81,6 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
 
     updateUser(userData.id, userData)
       .then((response) => {
-        console.log(userData);
-
         setAlertUserUpdate(true);
         setOpenModalUser(false);
         onUpdateRequest();

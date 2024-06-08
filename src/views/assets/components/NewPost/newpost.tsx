@@ -25,6 +25,7 @@ interface INewPost {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
   sendNewPostData: (post: any) => void;
 }
@@ -191,7 +192,6 @@ function NewPost({ User, sendNewPostData }: INewPost) {
       },
     };
     sendNewPostData(post);
-
     setTextAreaValue('');
     setCode('');
     setLanguageName([]);
@@ -208,10 +208,12 @@ function NewPost({ User, sendNewPostData }: INewPost) {
           <Avatar
             color="primary"
             sx={{
-              backgroundColor:
-                User && User.imageIconProfile ? '' : 'var(--background)',
-              padding: User && User.imageIconProfile ? '' : 'var(--padding-md)',
+              backgroundColor: 'var(--background)',
+              padding:
+                User && User.imageIconProfile ? '0' : 'var(--padding-md)',
               borderRadius: 'var(--bd-rds-xl)',
+              minWidth: '48px',
+              minHeight: '48px',
             }}
           >
             {User && User.imageIconProfile ? (

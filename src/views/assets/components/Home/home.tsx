@@ -3,8 +3,8 @@ import NewPost from '../NewPost/newpost';
 import Post from '../Post/Post';
 
 import { feed, newPost } from '../../../../api/hooks/posts';
-import { useEffect, useState } from 'react';
-import { Alert, Snackbar, Slide } from '@mui/material';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { Alert, Snackbar, Slide, SnackbarCloseReason } from '@mui/material';
 
 interface IHome {
   User: {
@@ -15,6 +15,7 @@ interface IHome {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
+    friends: string[];
   };
 }
 
@@ -40,6 +41,27 @@ function Home({ User }: IHome) {
   const [statusPost, setStatusPost] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [toastQueue, setToastQueue] = useState<ToastMessage[]>([]);
+
+  type ToastMessage = {
+    message: string;
+    type: 'error' | 'warning' | 'info' | 'success';
+  };
+
+  const showToast = (message: string, type: ToastMessage['type']) => {
+    setToastQueue((prev) => [...prev, { message, type }]);
+  };
+
+  const handleToastClose = (
+    event: Event | SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setToastQueue((prev) => prev.slice(1));
+  };
+
   useEffect(() => {
     getFeed();
   }, []);
@@ -51,17 +73,15 @@ function Home({ User }: IHome) {
         setFeedPost(posts);
       })
       .catch((error) => {
-        console.log(error);
+        setFeedPost([]);
       });
   };
-
   const createNewPost = (data: any) => {
     if (!data.body.text.trim()) {
       setStatusPost(false);
       setOpen(true);
       return;
     }
-
     newPost(data)
       .then((response) => {
         setStatusPost(true);
@@ -85,8 +105,31 @@ function Home({ User }: IHome) {
     setOpen(false);
   };
 
+  useEffect(() => {
+    console.log(feedPost);
+  }, [feedPost]);
+
   return (
     <div className={style.container}>
+      {toastQueue.map((toast, index) => (
+        <Snackbar
+          key={index}
+          open={true}
+          autoHideDuration={3000}
+          onClose={handleToastClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          TransitionComponent={Slide}
+          style={{ marginTop: index * 60, marginBottom: 60 }}
+        >
+          <Alert
+            severity={toast.type}
+            onClose={handleToastClose}
+            sx={{ width: '100%' }}
+          >
+            {toast.message}
+          </Alert>
+        </Snackbar>
+      ))}
       {statusPost ? (
         <Snackbar
           open={open}
@@ -124,7 +167,13 @@ function Home({ User }: IHome) {
       <div className={style.content}>
         {feedPost.length > 0 ? (
           feedPost.map((post) => (
-            <Post key={post.id} post={post} currentUser={User} updateFeed={getFeed} />
+            <Post
+              key={`${post.id}-${post.date}`}
+              post={post}
+              currentUser={User}
+              updateFeed={getFeed}
+              notifyPost={showToast}
+            />
           ))
         ) : (
           <div className={style.noPost}>
