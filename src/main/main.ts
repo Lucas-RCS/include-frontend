@@ -66,7 +66,8 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 1360,
     height: 768,
-    backgroundColor: "#23242a",
+    darkTheme: true,
+    backgroundColor: "#2c2e33",
     icon: getAssetPath('icon.png'),
     title: 'Include App',
     webPreferences: {

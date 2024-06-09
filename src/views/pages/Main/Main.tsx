@@ -170,7 +170,7 @@ function Main() {
       </div>
       <div className={style.content}>
         {currentView === 'home' && <Home User={userData[0]?.content} />}
-        {currentView === 'friends' && <Friends />}
+        {currentView === 'friends' && <Friends User={userData[0]?.content} />}
         {currentView === 'chat' && <Chat />}
         {currentView === 'perfil' && <Perfil User={userData[0]?.content} onUpdateRequest={updateUserRequest} />}
       </div>

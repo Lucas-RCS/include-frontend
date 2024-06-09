@@ -19,8 +19,9 @@ import Modal from '../../Modal/modal';
 import {
   deleteComment,
   updateComment,
-  likesComment
+  likesComment,
 } from '../../../../../api/hooks/posts';
+import moment from 'moment';
 
 interface IComment {
   currentUser: {
@@ -42,11 +43,11 @@ interface IComment {
       code: string;
       language: string;
       image: string;
-      };
-      date: string;
-      updateDate: string;
-      likes: number;
-      likesIdUser: [];
+    };
+    date: string;
+    updateDate: string;
+    likes: number;
+    likesIdUser: [];
   };
   idPost: number;
   notifyPost: (
@@ -91,6 +92,15 @@ function Comments({
       setUserName(userName.name);
     }
   }, [comment.idAuthorComment, usersList]);
+
+  useEffect(() => {
+    if (currentUser) {
+      const isCurrentUserLiked = comment.likesIdUser.some(
+        (likeId) => likeId === currentUser.id,
+      );
+      setLikeState(isCurrentUserLiked);
+    }
+  }, [comment, currentUser]);
 
   const getUserList = () => {
     userList()
@@ -227,6 +237,18 @@ function Comments({
       });
   };
 
+  const formatDateForMoment = (updateDate: string) => {
+    const formattedDate = moment(updateDate, 'DD/MM/YYYY HH:mm:ss').format(
+      'YYYY-MM-DD HH:mm:ss',
+    );
+    return formattedDate;
+  };
+
+  moment.locale('pt-br');
+  const extendDatePost = moment(formatDateForMoment(comment.updateDate)).format(
+    'LLLL',
+  );
+
   return (
     <div className={style.container}>
       <div className={style.comment}>
@@ -284,6 +306,9 @@ function Comments({
                   <SealCheck color="var(--primary)" size={18} weight="fill" />
                 </Tooltip>
               ) : null}
+            </div>
+            <div className={style.date}>
+              <span>{extendDatePost}</span>
             </div>
           </div>
           {currentUser?.name == userName ? (

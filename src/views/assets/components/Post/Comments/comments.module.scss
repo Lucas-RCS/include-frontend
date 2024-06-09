@@ -43,6 +43,14 @@
             text-overflow: ellipsis;
           }
         }
+
+        .date {
+          display: flex;
+          align-items: center;
+          font-size: var(--fnt-sz-lt);
+          color: var(--text-g);
+          margin-top: -6px;
+        }
       }
       .actions {
         display: flex;
@@ -120,43 +128,43 @@
         }
       }
     }
-    
+
     .commentFooter {
-        width: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var(--gap-md);
+      z-index: -1;
+
+      .like {
         display: flex;
-        justify-content: flex-start;
         align-items: center;
-        gap: var(--gap-md);
-        z-index: -1;
-    
-        .like {
-          display: flex;
-          align-items: center;
-          min-width: 120px;
-          max-width: 120px;
-          gap: var(--gap-lt);
-          padding-inline: var(--padding-sm);
-          border-radius: var(--bd-rds-md);
-          font-size: var(--fnt-sz-lt);
-          font-weight: var(--fnt-wg-lg);
-          color: var(--text-g);
-          background-color: var(--background);
-        }
-    
-        .comments {
-          display: flex;
-          align-items: center;
-          min-width: 170px;
-          max-width: 170px;
-          gap: var(--gap-lt);
-          padding-inline: var(--padding-sm);
-          border-radius: var(--bd-rds-md);
-          font-size: var(--fnt-sz-lt);
-          font-weight: var(--fnt-wg-lg);
-          color: var(--text-g);
-          background-color: var(--background);
-        }
+        min-width: 120px;
+        max-width: 120px;
+        gap: var(--gap-lt);
+        padding-inline: var(--padding-sm);
+        border-radius: var(--bd-rds-md);
+        font-size: var(--fnt-sz-lt);
+        font-weight: var(--fnt-wg-lg);
+        color: var(--text-g);
+        background-color: var(--background);
       }
+
+      .comments {
+        display: flex;
+        align-items: center;
+        min-width: 170px;
+        max-width: 170px;
+        gap: var(--gap-lt);
+        padding-inline: var(--padding-sm);
+        border-radius: var(--bd-rds-md);
+        font-size: var(--fnt-sz-lt);
+        font-weight: var(--fnt-wg-lg);
+        color: var(--text-g);
+        background-color: var(--background);
+      }
+    }
   }
   .container_modal_delete {
     display: flex;
