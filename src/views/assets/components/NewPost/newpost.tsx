@@ -11,7 +11,13 @@ import {
   Avatar,
 } from '@mui/material';
 import style from './newpost.module.scss';
-import { Broom, Code, Image, PaperPlaneTilt } from '@phosphor-icons/react';
+import {
+  Broom,
+  Code,
+  Eraser,
+  Image,
+  PaperPlaneTilt,
+} from '@phosphor-icons/react';
 import Modal from '../Modal/modal';
 
 import CodeEditor from '@uiw/react-textarea-code-editor';
@@ -291,6 +297,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
             onChange={handleImageChange}
           />
           <IconButton
+            color="error"
             onClick={() => {
               setTextAreaValue('');
               setCode('');
@@ -305,7 +312,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
               borderRadius: '12px',
             }}
           >
-            <Broom weight="fill" size={20} />
+            <Eraser weight="fill" size={20} />
           </IconButton>
         </div>
         <div className={style.contentPost}>
@@ -355,9 +362,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
       >
         <div className={style.editor_container}>
           <div className={style.language}>
-            <label htmlFor="language">Selecione a Linguagem</label>
             <Select
-              id="language"
               displayEmpty
               fullWidth
               size="small"
@@ -373,7 +378,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
               }
               renderValue={(selected) => {
                 if (selected.length === 0) {
-                  return <em>Linguagem</em>;
+                  return <em>Selecione uma Linguagem</em>;
                 }
 
                 return selected.join(', ');
@@ -381,7 +386,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
               MenuProps={MenuProps}
             >
               <MenuItem disabled value="">
-                <em style={{ color: 'var(--text-g)' }}>Linguagem</em>
+                <em style={{ color: 'var(--text-g)' }}>Selecione uma Linguagem</em>
               </MenuItem>
               {language.map((job) => (
                 <MenuItem
@@ -401,7 +406,7 @@ function NewPost({ User, sendNewPostData }: INewPost) {
             onChange={(evn) => setCode(evn.target.value)}
             style={{
               width: '100%',
-              height: '50dvh',
+              height: '53dvh',
               borderRadius: 'var(--bd-rds-lt)',
               backgroundColor: 'var(--components)',
               fontSize: 'var(--fnt-sz-sm)',
@@ -409,19 +414,17 @@ function NewPost({ User, sendNewPostData }: INewPost) {
             }}
           />
           <IconButton
+            color="error"
             onClick={() => setCode('')}
             sx={{
               position: 'absolute',
-              top: '26%',
-              right: '20%',
-              backgroundColor: 'var(--primary)',
+              top: '11dvh',
+              right: '2.5dvw',
+              backgroundColor: 'var(--background)',
               borderRadius: '12px',
-              '&:hover': {
-                backgroundColor: 'var(--intermediary)',
-              },
             }}
           >
-            <Broom weight="fill" size={20} />
+            <Eraser weight="fill" size={20} />
           </IconButton>
         </div>
       </Modal>

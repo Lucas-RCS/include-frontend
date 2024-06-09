@@ -73,6 +73,51 @@ const apiSettings = {
     },
     null,
   ],
+  updateComment: (
+    id: number,
+    idPost: number,
+    data: any,
+  ): [Object, Object | null] => [
+    {
+      url: '/post/' + idPost + '/comment/' + id + '/edit',
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data,
+    },
+    null,
+  ],
+  deleteComment: (id: number, idPost: number): [Object, Object | null] => [
+    {
+      url: '/post/' + idPost + '/comment/' + id + '/delete',
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+    },
+    null,
+  ],
+  likesComment: (
+    id: number,
+    idPost: number,
+    status: boolean,
+  ): [Object, Object | null] => [
+    {
+      url: '/post/' + idPost + '/comment/' + id + '/like',
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data: JSON.stringify({
+        statusLike: status,
+      }),
+    },
+    null,
+  ],
 };
 
 export default apiSettings;

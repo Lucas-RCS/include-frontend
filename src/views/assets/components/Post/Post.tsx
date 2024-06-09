@@ -20,6 +20,7 @@ import {
   SealCheck,
   Trash,
   X,
+  XCircle,
 } from '@phosphor-icons/react';
 import moment from 'moment';
 import { userList } from '../../../../api/hooks/user';
@@ -33,6 +34,7 @@ import {
 
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import NewComments from './NewComment/NewComment';
+import Comments from './Comments/Comments';
 
 interface IPost {
   currentUser: {
@@ -57,7 +59,23 @@ interface IPost {
     date: string;
     updateDate: string;
     likes: number;
-    comments: [];
+    comments: [
+      {
+        id: number;
+        idAuthorComment: number;
+        idPost: number;
+        body: {
+          text: string;
+          code: string;
+          language: string;
+          image: string;
+        };
+        date: string;
+        updateDate: string;
+        likes: number;
+        likesIdUser: [];
+      },
+    ];
     images: [];
     likesIdUser: [];
   };
@@ -145,8 +163,18 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
   };
 
   const createNewComment = (data: any) => {
+    if (!data.bodyComment.text) {
+      notifyPost(
+        'A caixa de texto não pode estar vazia! Comentário não enviado!',
+        'warning',
+      );
+      return;
+    }
     newComment(post.id, data)
-      .then((response) => {})
+      .then((response) => {
+        updateFeed();
+        notifyPost('Comentário realizado com sucesso!', 'success');
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -163,6 +191,44 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
         console.log(error);
         notifyPost('Erro ao excluir postagem!', 'error');
       });
+  };
+
+  const dataUpdatePost = () => {
+    if (!textAreaValue) {
+      notifyPost('A caixa de texto não pode estar vazia!', 'warning');
+      setOpenModalDelete(true);
+      return;
+    }
+
+    const data = {
+      body: {
+        text: textAreaValue,
+        code,
+        language: languageName ? languageName : '',
+        image: selectedImage ? selectedImage : '',
+      },
+    };
+
+    updatePost(post.id, data)
+      .then((response) => {
+        setEditPost(false);
+        updateFeed();
+        notifyPost('Postagem atualizado com sucesso!', 'success');
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyPost('Erro ao atualizar postagem!', 'error');
+      });
+
+    setEditPost(false);
+  };
+
+  const cancelEditPost = () => {
+    setTextAreaValue(post.body.text);
+    setCode(post.body.code);
+    setSelectedImage(post.body.image);
+
+    setEditPost(false);
   };
 
   const formatDateForMoment = (updateDate: string) => {
@@ -223,38 +289,6 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
-  };
-
-  const dataUpdatePost = () => {
-    const data = {
-      body: {
-        text: textAreaValue,
-        code,
-        language: languageName ? languageName : '',
-        image: selectedImage ? selectedImage : '',
-      },
-    };
-
-    updatePost(post.id, data)
-      .then((response) => {
-        setEditPost(false);
-        updateFeed();
-        notifyPost('Postagem atualizado com sucesso!', 'success');
-      })
-      .catch((error) => {
-        console.log(error);
-        notifyPost('Erro ao atualizar postagem!', 'error');
-      });
-
-    setEditPost(false);
-  };
-
-  const cancelEditPost = () => {
-    setTextAreaValue(post.body.text);
-    setCode(post.body.code);
-    setSelectedImage(post.body.image);
-
-    setEditPost(false);
   };
 
   return (
@@ -342,6 +376,7 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
                       variant="outlined"
                       size="small"
                       color="error"
+                      startIcon={<XCircle size={20} weight="fill" />}
                       sx={{
                         borderRadius: 'var(--bd-rds-md)',
                         background: 'var(--background)',
@@ -368,7 +403,7 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
                           border: '0',
                         },
                       }}
-                      endIcon={<FloppyDisk size={20} weight="fill" />}
+                      startIcon={<FloppyDisk size={20} weight="fill" />}
                       onClick={() => dataUpdatePost()}
                     >
                       Salvar
@@ -411,15 +446,25 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
         </div>
         <div className={style.content}>
           <div className={style.textPost}>
-            <textarea
-              className={editPost ? style.textArea : style.textAreaDefault}
-              maxLength={300}
-              rows={1}
-              {...(editPost ? { readOnly: false } : { readOnly: true })}
-              value={textAreaValue || ''}
-              style={{ height: textAreaHeight }}
-              onInput={handleTextAreaChange}
-            ></textarea>
+            {!editPost ? (
+              <p
+                style={{
+                  color: 'var(--text-l)',
+                  fontSize: 'var(--fnt-sz-sm)',
+                }}
+              >
+                {textAreaValue}
+              </p>
+            ) : (
+              <textarea
+                className={editPost ? style.textArea : style.textAreaDefault}
+                maxLength={300}
+                {...(editPost ? { readOnly: false } : { readOnly: true })}
+                value={textAreaValue || ''}
+                style={{ height: textAreaHeight }}
+                onInput={handleTextAreaChange}
+              ></textarea>
+            )}
           </div>
           <div className={style.body}>
             {code ? (
@@ -431,7 +476,7 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
                 style={{
                   width: '100%',
                   height: '100%',
-                  minHeight: editPost ? '10dvh' : 'auto',
+                  minHeight: editPost ? '10dvh' : '6dvh',
                   maxHeight: '30dvh',
                   borderRadius: 'var(--bd-rds-lt)',
                   backgroundColor: 'var(--background)',
@@ -694,6 +739,30 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
               User={currentUser}
               sendNewCommentData={createNewComment}
             />
+            <Divider />
+            {post && post.comments.length > 0 ? (
+              post.comments.map((comment: any) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'var(--gap-lt)',
+                  }}
+                >
+                  <Comments
+                    key={`${comment.id}-${comment.date}`}
+                    comment={comment}
+                    currentUser={currentUser}
+                    notifyPost={notifyPost}
+                    idPost={post.id}
+                    updateFeed={updateFeed}
+                  />
+                  <Divider />
+                </div>
+              ))
+            ) : (
+              <span className={style.noComments}>Nenhum comentário...</span>
+            )}
           </div>
         </div>
       </Modal>

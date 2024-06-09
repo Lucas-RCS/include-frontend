@@ -31,7 +31,23 @@ interface Post {
   date: string;
   updateDate: string;
   likes: number;
-  comments: [];
+  comments: [
+    {
+      id: number;
+      idAuthorComment: number;
+      idPost: number;
+      body: {
+        text: string;
+        code: string;
+        language: string;
+        image: string;
+      };
+      date: string;
+      updateDate: string;
+      likes: number;
+      likesIdUser: [];
+    },
+  ];
   images: [];
   likesIdUser: [];
 }
@@ -105,10 +121,6 @@ function Home({ User }: IHome) {
     setOpen(false);
   };
 
-  useEffect(() => {
-    console.log(feedPost);
-  }, [feedPost]);
-
   return (
     <div className={style.container}>
       {toastQueue.map((toast, index) => (
@@ -158,7 +170,7 @@ function Home({ User }: IHome) {
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           TransitionComponent={Slide}
         >
-          <Alert severity="error" color="error">
+          <Alert severity="warning" color="warning">
             A caixa de texto não pode estar vazia! Postagem não realizada.
           </Alert>
         </Snackbar>

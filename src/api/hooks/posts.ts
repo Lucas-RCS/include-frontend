@@ -29,6 +29,21 @@ export const likes = (id: any, status: boolean) => {
 export const newComment = (id: any, data: any) => {
   const config = setting.newComment(id, data);
   return Connection.getApiResult(...config);
+};
+
+export const updateComment = (id: any, idPost: any, data: any) => {
+  const config = setting.updateComment(id, idPost, data);
+  return Connection.getApiResult(...config);
+};
+
+export const deleteComment = (id: any, idPost: any) => {
+  const config = setting.deleteComment(id, idPost);
+  return Connection.getApiResult(...config);
+};
+
+export const likesComment = (id: any, idPost: any, status: boolean) => {
+  const config = setting.likesComment(id, idPost, status);
+  return Connection.getApiResult(...config);
 }
 
 export default feed;

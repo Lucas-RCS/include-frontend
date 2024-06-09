@@ -90,9 +90,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    width: 100%;
     padding: var(--padding-sm) var(--padding-md);
     gap: var(--gap-sm);
-    width: 100%;
 
     .language{
       display: flex;

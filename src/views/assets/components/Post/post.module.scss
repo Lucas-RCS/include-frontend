@@ -89,7 +89,6 @@
 
       .textAreaDefault {
         width: 100%;
-        max-height: 160px;
         border: none;
         border-radius: var(--bd-rds-lt);
         background-color: var(--components);
@@ -102,7 +101,6 @@
 
       .textArea {
         width: 100%;
-        max-height: 100px;
         padding: var(--padding-lt) var(--padding-md);
         border: none;
         border-radius: var(--bd-rds-lt);
@@ -127,7 +125,7 @@
       gap: var(--gap-sm);
       padding: var(--padding-lt) var(--padding-md);
 
-      .editImagePost{
+      .editImagePost {
         display: flex;
         position: absolute;
         top: 1dvh;
@@ -325,6 +323,16 @@
     .comments {
       display: flex;
       flex-direction: column;
+      gap: var(--gap-sm);
+    }
+
+    .noComments {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      color: var(--text-g);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-md);
     }
   }
 }
