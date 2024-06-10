@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Avatar, Button } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Avatar, Badge, Button, IconButton } from '@mui/material';
 import style from './sidebar.module.scss';
 import {
   CaretRight,
@@ -8,6 +8,8 @@ import {
   UsersThree,
   WechatLogo,
   UserCircle,
+  Bell,
+  BellRinging,
 } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 
@@ -27,11 +29,20 @@ interface ISidebar {
 
 function Sidebar({ onViewChange, User }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
+  const [numberNotify, setNumberNotify] = useState<number>(2);
 
   const handleButtonClick = (view: string) => {
     onViewChange(view);
     setActiveButton(view);
   };
+
+  useEffect(() => {
+    if (activeButton !== 'friends') {
+      setNumberNotify(Math.floor(Math.random() * 10));
+    } else {
+      setNumberNotify(0);
+    }
+  }, [activeButton]);
 
   return (
     <div className={style.container_sidebar}>
@@ -70,6 +81,18 @@ function Sidebar({ onViewChange, User }: ISidebar) {
               : 'Aprendendo...'}
           </span>
         </div>
+        <IconButton
+          className={style.btn_icon_notify}
+          onClick={() => handleButtonClick('friends')}
+        >
+          <Badge badgeContent={numberNotify} color="primary">
+            {numberNotify > 0 ? (
+              <BellRinging weight="fill" className={style.animation_bell} />
+            ) : (
+              <Bell weight="fill" />
+            )}
+          </Badge>
+        </IconButton>
       </div>
       <div className={style.main}>
         <div className={style.content}>

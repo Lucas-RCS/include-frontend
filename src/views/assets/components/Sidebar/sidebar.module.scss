@@ -22,7 +22,7 @@
       object-fit: cover;
     }
 
-    .user_icon{
+    .user_icon {
       font-size: var(--fnt-sz-md);
       font-weight: var(--fnt-wg-lg);
       color: var(--primary);
@@ -44,21 +44,49 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
-      max-width: 150px;
-
+      max-width: 95px;
     }
 
     .perfil_user_job {
       font-size: var(--fnt-sz-lt);
       font-weight: var(--fnt-wg-sm);
       color: var(--text-g);
-      margin-top: -6px; // ;-;
+      margin-top: -6px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
-      max-width: 140px;
+      max-width: 90px;
     }
+
+    .btn_icon_notify {
+      position: relative;
+
+      .animation_bell {
+        animation: bell 1s infinite;
+      }
+
+      @keyframes bell {
+        0% {
+          transform: rotate(10deg);
+        }
+        25% {
+          transform: rotate(-10deg);
+        }
+        50% {
+          transform: rotate(10deg);
+        }
+        75% {
+          transform: rotate(0deg);
+        }
+        85% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(10deg);
+        }
+      }
+    } 
   }
 
   .main {
