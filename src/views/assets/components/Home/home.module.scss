@@ -6,6 +6,7 @@
     width: 100%;
     gap: var(--gap-md);
     overflow: hidden;
+    animation: allFade 0.5s ease-in-out forwards;
 
     .content{
         display: flex;
@@ -27,3 +28,12 @@
         }
     }
 }
+
+@keyframes allFade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

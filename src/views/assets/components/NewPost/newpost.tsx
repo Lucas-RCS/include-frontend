@@ -31,7 +31,6 @@ interface INewPost {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
-    friends: string[];
   };
   sendNewPostData: (post: any) => void;
 }

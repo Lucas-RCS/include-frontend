@@ -105,6 +105,8 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
     post.body.text,
   );
 
+  const [btnInvite, setBtnInvite] = useState('Solicitar Amizade');
+
   useEffect(() => {
     getUserList();
     generateRandomColor();
@@ -140,7 +142,6 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
     return user ? user.name : '';
   };
 
-  // Função para gerar uma cor aleatória
   const generateRandomColor = () => {
     const hue = Math.floor(Math.random() * 360);
     const saturation = 60;
@@ -242,11 +243,21 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
   const datePost = moment(formatDateForMoment(post.updateDate)).fromNow();
 
   const findUserPostInUserList = (userId: number, usersList: any[]) => {
-    const user = usersList.find((user) => user.id === userId);
+    const user = usersList.find((user) => user.getId === userId);
     return user;
   };
 
   const authorUserPost = findUserPostInUserList(post.author, usersList);
+
+  const findIdPostAuthorInFriendList = (userId: number, friendList: any[]) => {
+    const user = friendList.find((friend) => friend.id === userId);
+    return user;
+  };
+
+  const friendUserPost = findIdPostAuthorInFriendList(
+    post.author,
+    currentUser.friends,
+  );
 
   const extendDatePost = moment(formatDateForMoment(post.updateDate)).format(
     'LLLL',
@@ -441,7 +452,37 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
                   </div>
                 )}
               </div>
-            ) : null}
+            ) : (
+              <div className={style.inviteUser}>
+                <Button
+                  variant={
+                    btnInvite === 'Solicitar Amizade' ? 'contained' : 'outlined'
+                  }
+                  color="primary"
+                  size="small"
+                  sx={{
+                    borderRadius: 'var(--bd-rds-md)',
+                    fontWeight: 'var(--fnt-wg-lg)',
+                    minWidth: '130px',
+                    maxWidth: '130px',
+                    color:
+                      btnInvite === 'Solicitar Amizade'
+                        ? 'var(--primary)'
+                        : 'var(--background)',
+                    backgroundColor:
+                      btnInvite === 'Solicitar Amizade'
+                        ? 'var(--background)'
+                        : 'var(--primary)',
+                    '&:hover': {
+                      backgroundColor: 'var(--primary)',
+                      color: 'var(--background)',
+                    },
+                  }}
+                >
+                  {btnInvite}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
         <div className={style.content}>

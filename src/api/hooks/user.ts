@@ -16,4 +16,9 @@ export const userList = () => {
   return Connection.getApiResult(...config);
 };
 
+export const getUserLogged = () => {
+  const config = setting.getUserLogged();
+  return Connection.getApiResult(...config);
+};
+
 export default getUser;

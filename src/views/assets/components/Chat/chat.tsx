@@ -1,10 +1,17 @@
+import style from './chat.module.scss';
+import Conversation from './Conversation/Conversation';
+
 function Chat() {
-    return (
-      <div>
-        <h1 style={{color: 'var(--primary)'}}>Chat</h1>
+  return (
+    <div className={style.container}>
+      <div className={style.menu}>
+
       </div>
-    );
-  }
-  
-  export default Chat;
-  
+      <div className={style.chat}>
+        <Conversation />
+      </div>
+    </div>
+  );
+}
+
+export default Chat;

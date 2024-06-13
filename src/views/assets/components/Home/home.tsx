@@ -15,7 +15,6 @@ interface IHome {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
-    friends: string[];
   };
 }
 

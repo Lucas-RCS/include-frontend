@@ -24,7 +24,6 @@ interface INewComment {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
-    friends: string[];
   };
   sendNewCommentData: (post: any) => void;
 }

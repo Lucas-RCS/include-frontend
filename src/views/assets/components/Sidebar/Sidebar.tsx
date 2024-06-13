@@ -10,8 +10,16 @@ import {
   UserCircle,
   Bell,
   BellRinging,
+  CheckCircle,
+  Person,
+  Trash,
+  Tray,
 } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
+
+import { getInvitesUser } from '../../../../api/hooks/friendship';
+import { userList } from '../../../../api/hooks/user';
+import CardNotify from './card_notify/cardNotify';
 
 interface ISidebar {
   onViewChange: (view: string) => void;
@@ -23,13 +31,24 @@ interface ISidebar {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
-    friends: string[];
   };
+  idUser: number;
+}
+interface Invite {
+  status: number;
+  getId: number;
+  getIdInviter: number;
+  getIdInvited: number;
+  getStatus: number;
+  getChat: null;
 }
 
-function Sidebar({ onViewChange, User }: ISidebar) {
+function Sidebar({ onViewChange, User, idUser }: ISidebar) {
   const [activeButton, setActiveButton] = useState('home');
-  const [numberNotify, setNumberNotify] = useState<number>(2);
+  const [numberNotify, setNumberNotify] = useState<number>(0);
+  const [dropDown, setDropDown] = useState(false);
+  const [invitationsReceived, setInvitationsReceived] = useState<Invite[]>([]);
+  const [usersList, setUsersList] = useState([]);
 
   const handleButtonClick = (view: string) => {
     onViewChange(view);
@@ -37,12 +56,35 @@ function Sidebar({ onViewChange, User }: ISidebar) {
   };
 
   useEffect(() => {
-    if (activeButton !== 'friends') {
-      setNumberNotify(Math.floor(Math.random() * 10));
-    } else {
-      setNumberNotify(0);
-    }
-  }, [activeButton]);
+    getInvites();
+    getUserList();
+  }, []);
+
+  const getInvites = () => {
+    getInvitesUser()
+      .then((response) => {
+        setNumberNotify(response[0].content.invitationsReceived.length);
+        setInvitationsReceived(response[0].content.invitationsReceived);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getUserList = () => {
+    userList()
+      .then((response) => {
+        const users = response[0].content;
+        setUsersList(users);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const findUserById = (userId: number, usersList: any[]): any | undefined => {
+    return usersList.find((user) => user.id === userId);
+  };
 
   return (
     <div className={style.container_sidebar}>
@@ -81,18 +123,46 @@ function Sidebar({ onViewChange, User }: ISidebar) {
               : 'Aprendendo...'}
           </span>
         </div>
-        <IconButton
-          className={style.btn_icon_notify}
-          onClick={() => handleButtonClick('friends')}
-        >
-          <Badge badgeContent={numberNotify} color="primary">
-            {numberNotify > 0 ? (
-              <BellRinging weight="fill" className={style.animation_bell} />
-            ) : (
-              <Bell weight="fill" />
-            )}
-          </Badge>
-        </IconButton>
+        <div>
+          <IconButton
+            className={style.btn_icon_notify}
+            onClick={() => setDropDown(!dropDown)}
+          >
+            <Badge badgeContent={numberNotify} color="primary">
+              {numberNotify > 0 ? (
+                <BellRinging weight="fill" className={style.animation_bell} />
+              ) : (
+                <Bell weight="fill" />
+              )}
+            </Badge>
+          </IconButton>
+
+          {dropDown ? (
+            <div className={style.dropdown}>
+              <div className={style.header_dropdown}>
+                <div className={style.icon_title}>
+                  <Tray weight="fill" size={30} />
+                  <span>Caixa de Entrada</span>
+                </div>
+                <div className={style.badge}>
+                  <Bell weight="fill" />
+                  <div className={style.number}>
+                    <span>{numberNotify}</span>
+                  </div>
+                </div>
+              </div>
+              <div className={style.body_dropdown}>
+                {invitationsReceived.map((invite) => {
+                  const userInviter = findUserById(
+                    invite.getIdInviter,
+                    usersList,
+                  );
+                  return <CardNotify key={invite.getId} User={userInviter} idInvite={invite.getId} updateListinvites={getInvites}/>;
+                })}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </div>
       <div className={style.main}>
         <div className={style.content}>

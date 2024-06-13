@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Divider } from '../../elements/common';
 import style from './perfil.module.scss';
 import {
@@ -13,12 +13,13 @@ import {
   Slide,
   Alert,
 } from '@mui/material';
-import { FloppyDisk, Image, Pencil } from '@phosphor-icons/react';
+import { FloppyDisk, Image, Pencil, Person } from '@phosphor-icons/react';
 import { colorsLanguages } from '../../../../utils/colorsLanguages';
 import { useState } from 'react';
 import Modal from '../Modal/modal';
 import logoInclude from '../../../../../public/img/logo-include-primary.png';
 import { updateUser } from '../../../../api/hooks/user';
+import { getListFriendsUser } from '../../../../api/hooks/friendship';
 
 interface IPerfil {
   User: {
@@ -29,7 +30,6 @@ interface IPerfil {
     skills: string[];
     jobs: string[];
     imageIconProfile: string;
-    friends: string[];
   };
   onUpdateRequest: () => void;
 }
@@ -60,6 +60,21 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
   );
   const [alertUserUpdate, setAlertUserUpdate] = useState(false);
   const [alertUserUpdateError, setAlertUserUpdateError] = useState(false);
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    getFriends();
+  }, []);
+
+  const getFriends = () => {
+    getListFriendsUser(User.id)
+      .then((response) => {
+        setFriends(response[0].content.idFriends);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const openModal = () => {
     setOpenModalUser(true);
@@ -224,7 +239,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const fileSize = event.target.files[0].size / (1024 * 1024);
+      const fileSize = event.target.files[0].size / (1020 * 1020);
       if (fileSize > 5) {
         alert(
           'O arquivo de imagem é muito grande. Por favor, selecione uma imagem de até 5 MB.',
@@ -457,6 +472,66 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
             <span className={style.title}>DATA DE NASCIMENTO</span>
             <span className={style.text}>{User.birthDate}</span>
           </div>
+          <div className={style.field}>
+            <span className={style.title}>JOBS</span>
+            <span className={style.text}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 'var(--gap-lt)',
+                }}
+              >
+                {Array.isArray(User.jobs) && User.jobs.length > 0 ? (
+                  User.jobs.length > 16 ? (
+                    <>
+                      {User.jobs.slice(0, 16).map((job, index) => (
+                        <span
+                          key={index}
+                          style={{
+                            padding: 'var(--padding-lt)',
+                            paddingInline: 'var(--padding-sm)',
+                            color: 'var(--text-l)',
+                            borderRadius: 'var(--bd-rds-xlg)',
+                            backgroundColor: 'var(--background)',
+                          }}
+                        >
+                          {job}
+                        </span>
+                      ))}
+                      <span
+                        style={{
+                          padding: 'var(--padding-lt)',
+                          paddingInline: 'var(--padding-sm)',
+                          color: 'var(--primary)',
+                          borderRadius: 'var(--bd-rds-xlg)',
+                          backgroundColor: 'var(--background)',
+                        }}
+                      >
+                        + {User.jobs.length - 16} não listados...
+                      </span>
+                    </>
+                  ) : (
+                    User.jobs.map((job, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          padding: 'var(--padding-lt)',
+                          paddingInline: 'var(--padding-sm)',
+                          borderRadius: 'var(--bd-rds-xlg)',
+                          backgroundColor: 'var(--background)',
+                        }}
+                      >
+                        {job}
+                      </span>
+                    ))
+                  )
+                ) : (
+                  <span className={style.spanSkills}>Sem jobs atribuídos.</span>
+                )}
+              </div>
+            </span>
+          </div>
         </div>
         <Divider
           $width="2px"
@@ -465,14 +540,21 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
           $radius="20px"
         />
         <div className={style.infos}>
+          <div className={style.friends}>
+            <span>
+              <b>{friends.length}</b>
+            </span>
+            <span>Amigos</span>
+            <Person weight="fill" />
+          </div>
           <div className={style.skillsTag}>
             <span>Skills</span>
           </div>
           <div className={style.contentSkills}>
             {Array.isArray(User.skills) && User.skills.length > 0 ? (
-              User.skills.length > 24 ? (
+              User.skills.length > 20 ? (
                 <>
-                  {User.skills.slice(0, 24).map((skill, index) => (
+                  {User.skills.slice(0, 20).map((skill, index) => (
                     <div
                       key={index}
                       className={style.skills}
@@ -487,7 +569,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
                     </div>
                   ))}
                   <span className={style.spanSkillsAmount}>
-                    <b>{User.skills.length - 24}</b>
+                    <b>{User.skills.length - 20}</b>
                   </span>
                 </>
               ) : (

@@ -15,6 +15,8 @@
 
   --backgroundGlass: rgba(35, 36, 42, 0.9);
 
+  --border-g: #323236;
+
   /* LANGUAGE COLORS */
   --antDesign: #0170fe;
   --apollo: #3c20a7;
@@ -120,6 +122,7 @@
   --bd-rds-sm: 1rem;
   --bd-rds-md: 1.25rem;
   --bd-rds-lg: 1.5rem;
+  --bd-rds-xlg: 2rem;
   --bd-rds-xl: 100%;
 
   /* TRANSITION */
@@ -157,10 +160,6 @@
   &::-webkit-scrollbar-track {
     background: transparent;
   }
-}
-
-div {
-  animation: allFade 0.5s ease-in-out forwards;
 }
 
 .css-95xem3-MuiInputBase-input-MuiOutlinedInput-input {

@@ -15,6 +15,7 @@
     padding: var(--padding-sm);
     overflow: hidden;
     overflow-y: auto;
+    animation: allFade 0.5s ease-in-out forwards;
   }
 }
 
@@ -66,5 +67,14 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes allFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

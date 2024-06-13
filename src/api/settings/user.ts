@@ -36,6 +36,18 @@ const apiSettings = {
     },
     null,
   ],
+  getUserLogged: (): [Object, Object | null] => [
+    {
+      url: '/user/logged',
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json:charset=UTF-8',
+      },
+      data: [],
+    },
+    null,
+  ],
 };
 
 export default apiSettings;

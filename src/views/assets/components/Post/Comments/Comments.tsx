@@ -307,9 +307,11 @@ function Comments({
                 </Tooltip>
               ) : null}
             </div>
-            <div className={style.date}>
-              <span>{extendDatePost}</span>
-            </div>
+            {!editPost ? (
+              <div className={style.date}>
+                <span>{extendDatePost}</span>
+              </div>
+            ) : null}
           </div>
           {currentUser?.name == userName ? (
             <div className={style.actions}>
@@ -317,45 +319,41 @@ function Comments({
                 <div
                   style={{
                     display: 'flex',
-                    gap: 'var(--gap-sm)',
+                    gap: 'var(--gap-lt)',
                   }}
                 >
-                  <Button
-                    variant="outlined"
+                  <IconButton
                     size="small"
                     color="error"
-                    startIcon={<XCircle size={20} weight="fill" />}
                     sx={{
                       borderRadius: 'var(--bd-rds-md)',
                       background: 'var(--background)',
                       border: '0',
-                      paddingInline: 'var(--padding-sm)',
+                      paddingInline: 'var(--padding-lt)',
                       '&:hover': {
                         border: '0',
                       },
                     }}
                     onClick={() => cancelEditComment()}
                   >
-                    Cancelar
-                  </Button>
-                  <Button
-                    variant="outlined"
+                    <XCircle size={20} weight="fill" />
+                  </IconButton>
+                  <IconButton
                     size="small"
                     color="primary"
                     sx={{
                       borderRadius: 'var(--bd-rds-md)',
                       background: 'var(--background)',
                       border: '0',
-                      paddingInline: 'var(--padding-sm)',
+                      paddingInline: 'var(--padding-lt)',
                       '&:hover': {
                         border: '0',
                       },
                     }}
-                    startIcon={<FloppyDisk size={20} weight="fill" />}
                     onClick={() => dataUpdateComment()}
                   >
-                    Salvar
-                  </Button>
+                    <FloppyDisk size={20} weight="fill" />
+                  </IconButton>
                 </div>
               ) : null}
               <IconButton
