@@ -249,16 +249,6 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
 
   const authorUserPost = findUserPostInUserList(post.author, usersList);
 
-  const findIdPostAuthorInFriendList = (userId: number, friendList: any[]) => {
-    const user = friendList.find((friend) => friend.id === userId);
-    return user;
-  };
-
-  const friendUserPost = findIdPostAuthorInFriendList(
-    post.author,
-    currentUser.friends,
-  );
-
   const extendDatePost = moment(formatDateForMoment(post.updateDate)).format(
     'LLLL',
   );
@@ -452,37 +442,7 @@ function Post({ currentUser, post, updateFeed, notifyPost }: IPost) {
                   </div>
                 )}
               </div>
-            ) : (
-              <div className={style.inviteUser}>
-                <Button
-                  variant={
-                    btnInvite === 'Solicitar Amizade' ? 'contained' : 'outlined'
-                  }
-                  color="primary"
-                  size="small"
-                  sx={{
-                    borderRadius: 'var(--bd-rds-md)',
-                    fontWeight: 'var(--fnt-wg-lg)',
-                    minWidth: '130px',
-                    maxWidth: '130px',
-                    color:
-                      btnInvite === 'Solicitar Amizade'
-                        ? 'var(--primary)'
-                        : 'var(--background)',
-                    backgroundColor:
-                      btnInvite === 'Solicitar Amizade'
-                        ? 'var(--background)'
-                        : 'var(--primary)',
-                    '&:hover': {
-                      backgroundColor: 'var(--primary)',
-                      color: 'var(--background)',
-                    },
-                  }}
-                >
-                  {btnInvite}
-                </Button>
-              </div>
-            )}
+            ) : null}
           </div>
         </div>
         <div className={style.content}>

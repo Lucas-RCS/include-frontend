@@ -69,7 +69,7 @@ function Perfil({ User, onUpdateRequest }: IPerfil) {
   const getFriends = () => {
     getListFriendsUser(User.id)
       .then((response) => {
-        setFriends(response[0].content.idFriends);
+        setFriends(response[0].content);
       })
       .catch((error) => {
         console.log(error);

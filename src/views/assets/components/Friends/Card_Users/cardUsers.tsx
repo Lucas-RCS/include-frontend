@@ -80,14 +80,10 @@ function CardUsers({ User, notifyPost }: ICardUsers) {
       <div className={style.body}>
         <div className={style.infoUser}>
           <span className={style.userName}>{User && User.name}</span>
-          {/* <div className={style.userJobs}>
-            {User &&
-              User.jobs &&
-              User.jobs.map((job, index) => <span className={style.userJobs} key={index}>{job}</span>)}
-          </div> */}
-          <span className={style.userJobs}>
-            teste, teste, teste, teste, teste, teste, teste
-          </span>
+          <div className={style.userJobs}>
+            {User && User.jobs && <span>{User.jobs.join(', ')}</span>}
+          </div>
+
           <div className={style.actions}>
             <Button
               variant={

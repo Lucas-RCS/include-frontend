@@ -1,7 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import {
-  IconButton,
-  TextField,
   Tab,
   Tabs,
   SnackbarCloseReason,
@@ -13,6 +11,7 @@ import style from './friends.module.scss';
 import { MagnifyingGlass, Person, UsersFour } from '@phosphor-icons/react';
 import CardUsers from './Card_Users/cardUsers';
 import { userList } from '../../../../api/hooks/user';
+import { getListFriendsUser } from '../../../../api/hooks/friendship';
 
 interface IFriends {
   User: {
@@ -29,6 +28,7 @@ interface IFriends {
 function Friends({ User }: IFriends) {
   const [value, setValue] = useState('allUser');
   const [usersList, setUsersList] = useState([]);
+  const [friendsList, setFriendsList] = useState([] as any[]);
 
   const [toastQueue, setToastQueue] = useState<ToastMessage[]>([]);
 
@@ -57,6 +57,7 @@ function Friends({ User }: IFriends) {
 
   useEffect(() => {
     getUserList();
+    getFriendsList();
   }, []);
 
   const getUserList = () => {
@@ -70,8 +71,15 @@ function Friends({ User }: IFriends) {
       });
   };
 
-  console.log(usersList);
-  
+  const getFriendsList = () => {
+    getListFriendsUser(User.id)
+      .then((response) => {
+        setFriendsList(response[0].content);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className={style.container}>
@@ -94,7 +102,7 @@ function Friends({ User }: IFriends) {
           </Alert>
         </Snackbar>
       ))}
-      <div className={style.header}>
+      {/* <div className={style.header}>
         <div className={style.seach_ipt}>
           <TextField
             fullWidth
@@ -121,7 +129,7 @@ function Friends({ User }: IFriends) {
             <MagnifyingGlass weight="bold" />
           </IconButton>
         </div>
-      </div>
+      </div> */}
       <div className={style.body}>
         <Tabs value={value} onChange={handleChange}>
           <Tab
@@ -141,7 +149,10 @@ function Friends({ User }: IFriends) {
           <div className={style.content}>
             {usersList && usersList.length > 0 ? (
               usersList.map((user: any) => {
-                if (user.id !== User.id) {
+                if (
+                  user.id !== User.id &&
+                  !friendsList.some((friend) => friend.id === user.id)
+                ) {
                   return (
                     <CardUsers
                       key={user.id}
@@ -160,9 +171,21 @@ function Friends({ User }: IFriends) {
           </div>
         ) : (
           <div className={style.content}>
-            <span className={style.notFoundUser}>
-              Você não tem nenhum amigo adicionado...
-            </span>
+            {friendsList && friendsList.length > 0 ? (
+              friendsList.map((friend: any) => {
+                return (
+                  <CardUsers
+                    key={friend.id}
+                    User={friend}
+                    notifyPost={showToast}
+                  />
+                );
+              })
+            ) : (
+              <span className={style.notFoundUser}>
+                Você não tem nenhum amigo adicionado...
+              </span>
+            )}
           </div>
         )}
       </div>
