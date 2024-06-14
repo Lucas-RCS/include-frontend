@@ -14,13 +14,14 @@ interface ICardUsers {
     jobs: string[];
     imageIconProfile: string;
   };
+  friend?: boolean;
   notifyPost: (
     message: string,
     type: 'error' | 'warning' | 'info' | 'success',
   ) => void;
 }
 
-function CardUsers({ User, notifyPost }: ICardUsers) {
+function CardUsers({ User, notifyPost, friend }: ICardUsers) {
   const [btnValue, setBtnValue] = useState('Solicitar Amizade');
 
   const sendFriendRequest = () => {
@@ -85,34 +86,36 @@ function CardUsers({ User, notifyPost }: ICardUsers) {
           </div>
 
           <div className={style.actions}>
-            <Button
-              variant={
-                btnValue === 'Solicitar Amizade' ? 'contained' : 'outlined'
-              }
-              color="primary"
-              size="small"
-              onClick={() => sendFriendRequest()}
-              sx={{
-                borderRadius: 'var(--bd-rds-md)',
-                fontWeight: 'var(--fnt-wg-lg)',
-                minWidth: '130px',
-                maxWidth: '130px',
-                color:
-                  btnValue === 'Solicitar Amizade'
-                    ? 'var(--primary)'
-                    : 'var(--background)',
-                backgroundColor:
-                  btnValue === 'Solicitar Amizade'
-                    ? 'var(--background)'
-                    : 'var(--primary)',
-                '&:hover': {
-                  backgroundColor: 'var(--primary)',
-                  color: 'var(--background)',
-                },
-              }}
-            >
-              {btnValue}
-            </Button>
+            {!friend && (
+              <Button
+                variant={
+                  btnValue === 'Solicitar Amizade' ? 'contained' : 'outlined'
+                }
+                color="primary"
+                size="small"
+                onClick={() => sendFriendRequest()}
+                sx={{
+                  borderRadius: 'var(--bd-rds-md)',
+                  fontWeight: 'var(--fnt-wg-lg)',
+                  minWidth: '130px',
+                  maxWidth: '130px',
+                  color:
+                    btnValue === 'Solicitar Amizade'
+                      ? 'var(--primary)'
+                      : 'var(--background)',
+                  backgroundColor:
+                    btnValue === 'Solicitar Amizade'
+                      ? 'var(--background)'
+                      : 'var(--primary)',
+                  '&:hover': {
+                    backgroundColor: 'var(--primary)',
+                    color: 'var(--background)',
+                  },
+                }}
+              >
+                {btnValue}
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -158,6 +158,7 @@ function Friends({ User }: IFriends) {
                       key={user.id}
                       User={user}
                       notifyPost={showToast}
+                      friend={false}
                     />
                   );
                 }
@@ -178,6 +179,7 @@ function Friends({ User }: IFriends) {
                     key={friend.id}
                     User={friend}
                     notifyPost={showToast}
+                    friend={true}
                   />
                 );
               })
