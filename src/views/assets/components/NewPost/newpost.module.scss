@@ -1,0 +1,108 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--padding-sm);
+  gap: var(--gap-lt);
+  border-radius: var(--bd-rds-sm);
+  background-color: var(--components);
+
+  .msg {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: var(--gap-md);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .textarea {
+      width: 100%;
+      max-height: 100px;
+      padding: var(--padding-lt) var(--padding-md);
+      border: none;
+      border-radius: var(--bd-rds-sm);
+      background-color: var(--background);
+      color: var(--text-l);
+      font-size: var(--fnt-sz-sm);
+      resize: none;
+      outline: none;
+      transition: var(--trns);
+
+      &:focus {
+        border: 1px solid var(--primary);
+      }
+    }
+  }
+
+  .options {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding-inline: var(--padding-xl);
+    gap: var(--gap-lg);
+  }
+
+  .contentPost{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-md);
+    padding-inline: var(--padding-xl);
+
+    span{
+      color: var(--text-l);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-sm);
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      max-height: 30dvh ;
+      object-fit: contain;
+    }
+  }
+}
+
+.container_modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 65dvw;
+  height: 75dvh;
+  border-radius: var(--bd-rds-sm);
+  border: 1px solid var(--components);
+  background-color: var(--background);
+  animation: popUp 0.5s ease-in-out forwards;
+
+  .editor_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: var(--padding-sm) var(--padding-md);
+    gap: var(--gap-sm);
+
+    .language{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 100%;
+      color: var(--text-l);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-sm);
+    }
+  }
+}

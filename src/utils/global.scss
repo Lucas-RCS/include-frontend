@@ -1,0 +1,187 @@
+:root {
+  /* COLORS SYSTEM */
+  --primary: #5865f2;
+  --secondary: #f2e457;
+  --tertiary: #f25757;
+  --intermediary: #464eaf;
+
+  --background: #23242a;
+  --components: #2c2e33;
+  --shadown: #292c53;
+  --border: #5865f2;
+
+  --primarydark: #5360e3;
+  --secondarydark: #e3d053;
+
+  --backgroundGlass: rgba(35, 36, 42, 0.9);
+
+  --border-g: #323236;
+
+  /* LANGUAGE COLORS */
+  --antDesign: #0170fe;
+  --apollo: #3c20a7;
+  --bootstrap: #563d7c;
+  --csharp: #68217a;
+  --css: #2965f1;
+  --dart: #0175c2;
+  --docker: #0db7ed;
+  --elixir: #4e2a8e;
+  --emotion: #f6e7f2;
+  --flutter: #02569b;
+  --git: #f34f29;
+  --github: #181717;
+  --gitlab: #fc6d26;
+  --go: #00add8;
+  --graphql: #e10098;
+  --haskell: #5e5086;
+  --html: #e44d26;
+  --java: #5382a1;
+  --jenkins: #d24939;
+  --javascript: #f0db4f;
+  --jquery: #0868ac;
+  --kotlin: #0095d5;
+  --lua: #000080;
+  --materialUi: #0081cb;
+  --materialize: #ee6e73;
+  --mobx: #ff9955;
+  --node: #3c873a;
+  --perl: #39457e;
+  --php: #8892be;
+  --python: #306998;
+  --react: #61dafb;
+  --reactNative: #5bcbea;
+  --redux: #764abc;
+  --rest: #5570ff;
+  --ruby: #cc342d;
+  --rust: #000000;
+  --sass: #c69;
+  --scss: #d2639b;
+  --scala: #c22d40;
+  --shell: #89e051;
+  --socketio: #010101;
+  --sql: #336791;
+  --styledComponents: #db7093;
+  --swift: #f05138;
+  --tailwind: #38b2ac;
+  --typescript: #3178c6;
+  --websockets: #ffcc00;
+  
+  /* TYPOGRAPHY */
+  --text-d: #000012;
+  --text-l: #f8f9fc;
+  --text-g: #737482;
+  --text-primary: var(--primary);
+  --text-disabled: var(--intermediary);
+
+  /* FONT */
+  --fnt-sz-lt: 0.75rem;
+  --fnt-sz-sm: 1rem;
+  --fnt-sz-md: 1.25rem;
+  --fnt-sz-lg: 1.5rem;
+  --fnt-sz-xl: 2rem;
+
+  --fnt-wg-lt: 300;
+  --fnt-wg-sm: 400;
+  --fnt-wg-md: 500;
+  --fnt-wg-lg: 600;
+  --fnt-wg-xl: 700;
+
+  /* ICONS */
+  --icon: var(--primary);
+
+  /* BUTTONS */
+  --btn: var(--primary);
+  --btn-hover: var(--secondary);
+
+  /* PADDING */
+  --padding-xlt: 0.4rem;
+  --padding-lt: 0.5rem;
+  --padding-sm: 1rem;
+  --padding-md: 1.5rem;
+  --padding-lg: 2rem;
+  --padding-xl: 4rem;
+  --padding-xxl: 8rem;
+
+  /* MARGIN */
+  --margin-lt: 0.5rem;
+  --margin-sm: 1rem;
+  --margin-md: 1.25rem;
+  --margin-lg: 1.5rem;
+  --margin-xl: 2rem;
+
+  /* GAP */
+  --gap-xlt: 0.2rem;
+  --gap-lt: 0.5rem;
+  --gap-sm: 1rem;
+  --gap-md: 1.25rem;
+  --gap-lg: 1.5rem;
+  --gap-xl: 2rem;
+
+  /* BORDER-RADIUS */
+  --bd-rds-lt: 0.5rem;
+  --bd-rds-sm: 1rem;
+  --bd-rds-md: 1.25rem;
+  --bd-rds-lg: 1.5rem;
+  --bd-rds-xlg: 2rem;
+  --bd-rds-xl: 100%;
+
+  /* TRANSITION */
+  --trns: 0.5s ease-in-out;
+
+  /* Z-INDEX */
+  --zindex: 1;
+}
+
+@font-face {
+  font-family: 'gg sans Normal Regular';
+  src:
+    local('gg sans Normal Regular'),
+    url('../utils/fonts/gg sans Regular.woff') format('woff');
+  font-style: normal;
+  font-weight: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  font-family: 'gg sans Normal Regular' !important;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: var(--bd-rds-lg);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+.css-95xem3-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 1rem !important;
+}
+
+@keyframes allFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

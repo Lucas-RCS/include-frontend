@@ -6,9 +6,16 @@
       http-equiv="Content-Security-Policy"
       content="script-src 'self' 'unsafe-inline'"
     />
-    <title>Hello Electron React!</title>
+    <title>Include App</title>
   </head>
   <body>
     <div id="root"></div>
   </body>
+  <script>
+    window.process = {
+       env: {
+         REACT_APP_API_BASE_URL: 'http://localhost:8080'
+       }
+    };
+   </script>
 </html>

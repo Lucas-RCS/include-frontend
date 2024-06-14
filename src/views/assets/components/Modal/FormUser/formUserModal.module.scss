@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: var(--gap-sm);
+
+  .perfil_image {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-g);
+    }
+
+    .user_img_btn {
+      width: 160px;
+      height: 160px;
+      padding: var(--padding-sm);
+      border-radius: var(--bd-rds-xl);
+      background-color: var(--components);
+      padding: var(--padding-lt);
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: var(--bd-rds-xl);
+      }
+
+      .ipt_img {
+        display: none;
+      }
+    }
+  }
+  .birthDate {
+    display: flex;
+    flex-direction: column;
+
+    .date_inpt {
+      all: unset;
+      padding: var(--padding-lt);
+      border: 1px solid rgba(255, 255, 255, 0.23);
+      border-radius: var(--bd-rds-lt);
+      background-color: transparent;
+      cursor: text;
+
+      &:hover {
+        border: 1px solid var(--border);
+      }
+
+      &:focus {
+        border: 1px solid var(--primary);
+      }
+    }
+
+    .date_inpt::-webkit-calendar-picker-indicator {
+      filter: invert(1) brightness(100%) sepia(100%) saturate(100%)
+        hue-rotate(180deg);
+        cursor: pointer;
+    }
+  }
+}

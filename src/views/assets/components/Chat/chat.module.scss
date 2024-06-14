@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--bd-rds-lt);
+  background-color: var(--components);
+  overflow: hidden;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    width: 24%;
+    height: 90%;
+    gap: var(--gap-md);
+    border-right: 3px solid var(--background);
+    overflow-y: auto;
+
+    .textHeader {
+      padding-inline: var(--padding-md);
+      color: var(--text-l);
+      font-size: var(--fnt-sz-lg);
+      font-weight: var(--fnt-wg-lg);
+    }
+
+    .friends {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      gap: var(--gap-md);
+      padding: var(--padding-md);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .nameUser {
+        text-align: start;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+    width: 76%;
+    height: 100%;
+    padding: var(--padding-sm);
+    overflow-y: auto;
+  }
+}

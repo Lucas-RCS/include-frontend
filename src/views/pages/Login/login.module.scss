@@ -1,0 +1,109 @@
+.container {
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  background-image: url('../../../../public/img/patterns_background.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container_secondary {
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  background-image: url('../../../../public/img/patterns_background_secondary.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60dvw;
+  height: 60dvh;
+  border-radius: var(--bd-rds-sm);
+  background-color: var(--background);
+  box-shadow: 0px 0px 14px 2px rgba(41, 44, 83, 0.5);
+
+  .container_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: var(--padding-lg);
+
+    .content_form {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: var(--gap-md);
+      padding-bottom: 0;
+    }
+
+    .switchtype {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: var(--gap-sm);
+      color: var(--text-l);
+    }
+  }
+
+  .container_shape {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    background-image: url('../../../../public/img/shape_login.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .container_shape_secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: var(--padding-lg);
+    background-image: url('../../../../public/img/shape_login_secondary.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: var(--gap-lt);
+  position: absolute;
+  bottom: 1dvh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  span {
+    font-size: var(--fnt-sz-sm);
+    color: var(--text-d);
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}

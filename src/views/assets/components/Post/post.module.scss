@@ -1,0 +1,361 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 20dvh;
+  border-radius: var(--bd-rds-sm);
+  background-color: var(--components);
+  animation: allFade 0.5s ease-in-out forwards;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-sm) var(--padding-sm) 0 var(--padding-sm);
+
+    .user {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      position: relative;
+
+      .contentUser {
+        display: flex;
+        align-items: center;
+        gap: var(--gap-sm);
+
+        .userAvatar {
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .userInfo {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          gap: var(--gap-sm);
+
+          .userName {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-lt);
+            font-size: var(--fnt-sz-md);
+            color: var(--text-l);
+          }
+
+          .userDate {
+            display: flex;
+            align-items: center;
+            font-size: var(--fnt-sz-lt);
+            color: var(--text-g);
+          }
+        }
+      }
+
+      .actions {
+        display: flex;
+        position: relative;
+        gap: var(--gap-sm);
+
+        .dropdown {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          position: absolute;
+          top: calc(100% + 0.4dvh);
+          right: calc(0% - 0.5dvh);
+          gap: var(--gap-xs);
+          border-radius: var(--bd-rds-sm);
+          background-color: var(--background);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          z-index: 2;
+        }
+      }
+
+      .inviteUser {
+        display: flex;
+        align-items: center;
+        padding-inline: var(--padding-sm);
+
+        .btnInvite{
+          display: flex;
+          border-radius: var(--bd-rds-md);
+          padding-inline: var(--padding-sm);
+          background-color: var(--background);
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    .textPost {
+      padding: var(--padding-md);
+      padding-bottom: 0;
+
+      .textAreaDefault {
+        width: 100%;
+        border: none;
+        border-radius: var(--bd-rds-lt);
+        background-color: var(--components);
+        color: var(--text-l);
+        font-size: var(--fnt-sz-sm);
+        resize: none;
+        outline: none;
+        cursor: auto;
+      }
+
+      .textArea {
+        width: 100%;
+        padding: var(--padding-lt) var(--padding-md);
+        border: none;
+        border-radius: var(--bd-rds-lt);
+        background-color: var(--background);
+        color: var(--text-l);
+        font-size: var(--fnt-sz-sm);
+        resize: none;
+        outline: none;
+        cursor: text;
+        transition: var(--trns);
+
+        &:focus {
+          border: 1px dashed var(--primary);
+        }
+      }
+    }
+    .body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--padding-lt) var(--padding-md);
+
+      .editImagePost {
+        display: flex;
+        position: absolute;
+        top: 1dvh;
+        right: 1dvw;
+        gap: var(--gap-lt);
+      }
+    }
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--gap-md);
+    padding: var(--padding-sm);
+
+    .like {
+      display: flex;
+      align-items: center;
+      min-width: 120px;
+      max-width: 120px;
+      gap: var(--gap-lt);
+      padding-inline: var(--padding-sm);
+      border-radius: var(--bd-rds-md);
+      font-size: var(--fnt-sz-lt);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-g);
+      background-color: var(--background);
+    }
+
+    .comments {
+      display: flex;
+      align-items: center;
+      min-width: 170px;
+      max-width: 170px;
+      gap: var(--gap-lt);
+      padding-inline: var(--padding-sm);
+      border-radius: var(--bd-rds-md);
+      font-size: var(--fnt-sz-lt);
+      font-weight: var(--fnt-wg-lg);
+      color: var(--text-g);
+      background-color: var(--background);
+    }
+  }
+}
+
+.container_modal_delete {
+  display: flex;
+  position: absolute;
+  width: 40dvw;
+  height: 20dvh;
+  border-radius: var(--bd-rds-sm);
+  z-index: 1000;
+  background-color: var(--components);
+  padding: var(--padding-md);
+
+  .contentModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+
+    span {
+      font-size: var(--fnt-sz-md);
+      color: var(--text-l);
+    }
+
+    .modalDeleteActions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--gap-sm);
+    }
+  }
+}
+
+.container_modal {
+  display: flex;
+  position: absolute;
+  width: 90dvw;
+  height: 90dvh;
+  z-index: 1000;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0.5dvh;
+    right: 0.5dvw;
+    z-index: 1000;
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    padding: var(--padding-md);
+    gap: var(--gap-md);
+    border-radius: var(--bd-rds-lt) 0 0 var(--bd-rds-lt);
+    background-color: var(--backgroundGlass);
+  }
+  .right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--padding-lt);
+    gap: var(--gap-md);
+    background-color: var(--components);
+    overflow-y: auto;
+
+    .modalPost {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-md);
+      padding: var(--padding-lt);
+      padding-bottom: 0;
+
+      .modalPostHeader {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: var(--gap-md);
+
+        .user {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-sm);
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .contentNameUser {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .userName {
+              display: flex;
+              align-items: center;
+              gap: var(--gap-xlt);
+              font-size: var(--fnt-sz-md);
+              color: var(--text-l);
+
+              span {
+                max-width: 160px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+            .userJob {
+              margin-top: -6px;
+              font-size: var(--fnt-sz-lt);
+              color: var(--text-g);
+              width: 100%;
+              max-width: 200px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+
+      .modalPostContent {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-sm);
+        padding: var(--padding-lt);
+        padding-block: 0;
+        font-size: var(--fnt-sz-sm);
+        color: var(--text-l);
+
+        .postDate {
+          display: flex;
+          align-items: center;
+          font-size: var(--fnt-sz-lt);
+          color: var(--text-g);
+          white-space: nowrap;
+
+          ::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+
+    .comments {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+    }
+
+    .noComments {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      color: var(--text-g);
+      font-size: var(--fnt-sz-sm);
+      font-weight: var(--fnt-wg-md);
+    }
+  }
+}
+
+@keyframes allFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

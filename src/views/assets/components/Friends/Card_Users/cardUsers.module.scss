@@ -1,0 +1,93 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 32%;
+  min-height: 26dvh;
+  max-height: 26dvh;
+  gap: var(--gap-sm);
+  border-radius: var(--bd-rds-lt);
+  border: 1px solid var(--border-g);
+  background-color: var(--components);
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+  animation: allFade 0.5s ease-in-out forwards;
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 40%;
+    border-radius: var(--bd-rds-lt) var(--bd-rds-lt) 0 0;
+    background-image: url('../../../../../../public/img/patterns_background-_3_.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .userAvatar {
+      position: absolute;
+      top: 50%;
+      left: 2dvw;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    padding: var(--padding-md);
+
+    .infoUser {
+      display: flex;
+      flex-direction: column;
+      padding-top: var(--padding-sm);
+      width: 100%;
+
+      .userName {
+        font-size: var(--fnt-sz-md);
+        font-weight: var(--fnt-wg-md);
+        color: var(--text-l);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        max-width: 92%;
+      }
+
+      .userJobs {
+        font-size: var(--fnt-sz-sm);
+        font-weight: var(--fnt-wg-md);
+        color: var(--text-g);
+        margin-top: -6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        max-width: 92%;
+      }
+    }
+
+    .actions{
+      position: absolute;
+      top: 0;
+      right: 1dvw;
+    }
+  }
+}
+
+@keyframes allFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

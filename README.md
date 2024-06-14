@@ -1,7 +1,7 @@
 Include App by [IncludeTeam]
 <br>
 
-![Mascot IncludeApp](public/mascot_icon.png)
+![Mascot IncludeApp](public/img/mascot_icon.png)
 <br>
 <a href="https://electron-react-boilerplate.js.org"><h3>This project uses <b>Electron React Boilerplate</b>
 for React to work together with Electron</h3></a>
